@@ -1,0 +1,20 @@
+<persistence version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="GamifiedMarketingAppEJB"
+		transaction-type="JTA">
+		<jta-data-source>MissionDB</jta-data-source>
+		<class>entities.User</class>
+		<class>entities.QuestionsToProduct</class>
+		<class>entities.Response</class>
+		<class>entities.StatisticalQuestions</class>
+		<class>entities.Questions</class>
+		<class>entities.OffensiveWords</class>
+		<class>entities.ProductOfTheDay</class>
+		<class>entities.Product</class>
+		<properties>
+			<property name="eclipselink.logging.level" value="FINE" />
+		</properties>
+	</persistence-unit>
+</persistence>
