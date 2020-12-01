@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -14,24 +15,28 @@ public class ProductOfTheDay {
 	
 	private Date productOTD;
 	
+	// FK
 	private int productId;
-	
-	@ManyToOne
-	@JoinColumn(name="productOfTheDayId")
-	private QuestionsToProduct questionsToProduct;
 
+	@OneToMany(mappedBy="pOTD")
+	private Set<StatisticalResponse> response;
+	
+	@OneToMany(mappedBy="pOTD")
+	private Set<Questions> questions;
+	
 	@ManyToOne
 	@JoinColumn(name="productId")
 	private Product product;
 	
 	public ProductOfTheDay() { }
 	
-	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId, 
-				QuestionsToProduct questionsToProduct, Product product) {
+	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId, Product product,
+			Set<StatisticalResponse> response, Set<Questions> questions) {
 		this.productOfTheDayId = productOfTheDayId;
 		this.productOTD = productOTD;
 		this.productId = productId;
-		this.questionsToProduct = questionsToProduct;
+		this.response = response;
+		this.questions = questions;
 	}
 	
 	public int getProductOfTheDayId() {
@@ -46,12 +51,16 @@ public class ProductOfTheDay {
 		return this.productId;
 	}
 	
-	public QuestionsToProduct getQuestionsToProduct() {
-		return this.questionsToProduct;
-	}
-	
 	public Product getProduct() {
 		return this.product;
+	}
+	
+	public Set<StatisticalResponse> getResponses() {
+		return this.response;
+	}
+	
+	public Set<Questions> getQuestions() {
+		return this.questions;
 	}
 	
 	public void setProductOfTheDay(int productOfTheDayId) {
@@ -66,12 +75,16 @@ public class ProductOfTheDay {
 		this.productId = productId;
 	}
 	
-	public void setQuestionsToProduct(QuestionsToProduct questionsToProduct) {
-		this.questionsToProduct = questionsToProduct;
-	}
-	
 	public void setProduct(Product prod) {
 		this.product = prod;
+	}
+	
+	public void setResponse(Set<StatisticalResponse> response) {
+		this.response = response;
+	}
+	
+	public void setQuestion(Set<Questions> questions) {
+		this.questions = questions;
 	}
 	
 }

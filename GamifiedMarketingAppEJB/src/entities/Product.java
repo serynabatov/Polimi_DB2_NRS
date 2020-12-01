@@ -14,24 +14,24 @@ public class Product {
 	
 	private String linkImage;
 	
-	private int productOfTheDayId;
-	
 	private String productName;
 	
 	@Lob
+	@Basic(fetch=FetchType.LAZY)
 	private Byte[] image;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "productId")
+	// product is a field. This Collection is on the inverse 
+	// side of the relation
+	@OneToMany(mappedBy = "product")
+	@OrderBy("name ASC")
 	private List<ProductOfTheDay> pOTD;
 
 	public Product() { }
 	
-	public Product(int productId, int productOfTheDayId, String link, String productName, 
-			Byte[] image) {
+	public Product(int productId, String link, String productName, Byte[] image) {
 		this.productId = productId;
 		this.productName = productName;
 		this.linkImage = link;
-		this.productOfTheDayId = productOfTheDayId;	
 	}
 	
 	public int getProductId() {
@@ -40,10 +40,6 @@ public class Product {
 	
 	public String getLinkImage() {
 		return this.linkImage;
-	}
-
-	public int getProductOfTheDayId() {
-		return this.productOfTheDayId;
 	}
 	
 	public String getProductName() {
@@ -64,10 +60,6 @@ public class Product {
 		
 	public void setLinkImage(String link) {
 		this.linkImage = link;
-	}
-	
-	public void setProductOfTheDayId(int productOfTheDayId) {
-		this.productOfTheDayId = productOfTheDayId;
 	}
 	
 	public void setProductName(String productName) {

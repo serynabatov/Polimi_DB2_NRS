@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,18 +12,27 @@ public class Questions {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int questionId;
 	
+	@Lob
 	private String text;
 	
+	// FK
+	private int pOTDId;
+	
 	@ManyToOne
-	@JoinColumn(name="questionId")
-	private QuestionsToProduct questionsToProduct;
-
+	@JoinColumn(name="pOTDId")
+	private ProductOfTheDay pOTD;
+	
+	@OneToMany(mappedBy="question")
+	private Set<Response> responses;
+	
 	public Questions() { }
 	
-	public Questions(int questionId, String text, QuestionsToProduct questionsToProduct) {
+	public Questions(int questionId, String text, ProductOfTheDay pOTD,
+			Set<Response> responses) {
 		this.questionId = questionId;
 		this.text = text;
-		this.questionsToProduct = questionsToProduct;
+		this.pOTD = pOTD;
+		this.responses = responses;
 	}
 	
 	public int getQuestionId() {
@@ -32,8 +43,16 @@ public class Questions {
 		return this.text;
 	}
 	
-	public QuestionsToProduct getQuestionsToProduct() {
-		return this.questionsToProduct;
+	public ProductOfTheDay getPOTD() {
+		return this.pOTD;
+	}
+	
+	public Set<Response> getResponses() {
+		return this.responses;
+	}
+	
+	public int getPOTDId() {
+		return this.pOTDId;
 	}
 	
 	public void setText(String text) {
@@ -44,8 +63,15 @@ public class Questions {
 		this.questionId = questionId;
 	}
 	
-	public void setQuestionsToProduct(QuestionsToProduct questionsToProduct) {
-		this.questionsToProduct = questionsToProduct;
+	public void setPOTD(ProductOfTheDay pOTD) {
+		this.pOTD = pOTD;
 	}
 
+	public void setResponses(Set<Response> responses) {
+		this.responses = responses;
+	}
+	
+	public void setPOTDId(int id) {
+		this.pOTDId = id;
+	}
 }

@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,22 +21,27 @@ public class User {
 	private int points;
 	
 	private Boolean blocked;
+		
+	@OneToMany(mappedBy="question")
+	@OrderBy("name ASC")
+	private List<Response> responses;
 	
-	@ManyToOne
-	@JoinColumn(name = "userId")
-	private QuestionsToProduct questionsToProduct;
+	@OneToMany(mappedBy="user")
+	@OrderBy("name ASC")
+	private List<StatisticalResponse> statist;
 	
 	public User() { }
 		
 	public User(String userName, String mail, String pass, 
-				QuestionsToProduct questionsToProduct) {
+				List<Response> responses, List<StatisticalResponse> statist) {
 		
 		this.userName = userName;
 		this.mail = mail;
 		this.password = pass;
-		this.questionsToProduct = questionsToProduct;
 		this.blocked = Boolean.FALSE;
 		this.points = 0;
+		this.responses = null;
+		this.statist = null;
 	}
 	
 	public int getUserId() {
@@ -61,8 +68,12 @@ public class User {
 		return this.points;
 	}
 	
-	public QuestionsToProduct getQuestionsToProduct() {
-		return this.questionsToProduct;
+	public List<StatisticalResponse> getStat() {
+		return this.statist;
+	}
+	
+	public List<Response> getResponses() {
+		return this.responses;
 	}
 	
 	public void setUserId(int userId) {
@@ -89,7 +100,11 @@ public class User {
 		this.blocked = blocked;
 	}
 	
-	public void setQuestionsToProduct(QuestionsToProduct questionsToProduct) {
-		this.questionsToProduct = questionsToProduct;
+	public void setStat(List<StatisticalResponse> statist) {
+		this.statist = statist;
+	}
+	
+	public void setResponses(List<Response> responses) {
+		this.responses = responses;
 	}
 }

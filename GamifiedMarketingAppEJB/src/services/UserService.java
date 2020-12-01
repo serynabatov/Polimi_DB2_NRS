@@ -8,8 +8,6 @@ import javax.persistence.*;
 
 import entities.User;
 import exceptions.CredentialsException;
-import it.polimi.db2.album.services.NonUniqueResultException;
-import it.polimi.db2.album.services.PersistenceException;
 
 @Stateless
 public class UserService {
