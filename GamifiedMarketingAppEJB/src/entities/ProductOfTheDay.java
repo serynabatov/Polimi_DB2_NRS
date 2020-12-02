@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="product_of_the_day", schema="")
+@NamedQuery(name = "ProductOfTheDay.findByDate", 
+			query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD = ?1")
 public class ProductOfTheDay {
 
 	@Id

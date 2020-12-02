@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="product", schema="")
+@NamedQuery(name = "Product.findByName", 
+query = "SELECT p FROM Product p  WHERE p.productName = ?1")
 public class Product {
 	
 	@Id

@@ -27,6 +27,7 @@ public class UserService {
 		List<User> uList = null;
 		try {
 			uList = em.createNamedQuery("User.checkCredentials", User.class)
+						// TODO: encrypt the password
 					   .setParameter(1, username).setParameter(2, password)
 					   .getResultList();
 		} catch (PersistenceException e) {

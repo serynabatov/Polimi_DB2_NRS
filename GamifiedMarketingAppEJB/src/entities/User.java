@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "User", schema="")
+@NamedQuery(name = "User.checkCredentials", 
+query = "SELECT r FROM User r  WHERE r.userName = ?1 and r.password = ?2")
 public class User {
 	
 	@Id
