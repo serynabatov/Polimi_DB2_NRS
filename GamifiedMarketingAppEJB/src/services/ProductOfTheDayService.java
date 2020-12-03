@@ -1,15 +1,22 @@
 package services;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import entities.Product;
 import entities.ProductOfTheDay;
+import entities.Questions;
+import entities.Response;
 
 
 public class ProductOfTheDayService {
@@ -48,12 +55,11 @@ public class ProductOfTheDayService {
 	}
 	
 	// return the product of the day for today's date
-	public ProductOfTheDay todayProductOfTheDay() {
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDateTime now = LocalDateTime.now();
+	private ProductOfTheDay todayProductOfTheDay() {
+		LocalDate now = LocalDate.now();
 		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", 
 											           ProductOfTheDay.class)
-							  .setParameter(1, dtf.format(now))
+							  .setParameter(1, convertToDateViaSqlDate(now))
 							  .getResultList();
 		
 		if (p.size() == 0)
@@ -123,7 +129,43 @@ public class ProductOfTheDayService {
 			return false;
 		}
 	}
-
-	// TODO: return the name, the image and product reviews for it
+	
+	private Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+	    return java.sql.Date.valueOf(dateToConvert);
+	}
+	
+	
+	// return the name, the image, review
+	// not good method, maybe redo it in database
+	public Map<Integer, List<Object>> getNameImageReview() {
+		LocalDate now = LocalDate.now();
+		if (checkForTheDate(convertToDateViaSqlDate(now))) {
+			ProductOfTheDay p = todayProductOfTheDay();
+			if (p == null) {
+				return null;
+			} else {
+				List<Object> li = new ArrayList<Object>();
+				Product prod = p.getProduct();
+				
+				li.add(prod.getProductName());
+	
+				if (prod.getLinkImage() == null)
+					li.add(prod.getImage());
+				else
+					li.add(prod.getLinkImage());
+				
+				//List<String> questions = new ArrayList<String>();
+				Set<Questions> q = p.getQuestions();
+				Map<String, Response> reviews = new HashMap<String, Response>();
+				
+				for (Questions question : q) {
+					//question.getText();
+					Set<Response> resp = question.getResponses();
+				}
+			}
+		} else {
+			return null;
+		}
+	}
 	
 }
