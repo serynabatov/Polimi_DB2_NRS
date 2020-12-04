@@ -12,6 +12,7 @@
 		<class>entities.ProductOfTheDay</class>
 		<class>entities.Product</class>
 		<class>entities.StatisticalResponse</class>
+		<class>entities.LogInTime</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>

@@ -6,8 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "User", schema="")
-@NamedQuery(name = "User.checkCredentials", 
-query = "SELECT r FROM User r  WHERE r.userName = ?1 and r.password = ?2")
+@NamedQueries( {
+	@NamedQuery(name = "User.checkCredentials", 
+			query = "SELECT r FROM User r  WHERE r.userName = ?1 and r.password = ?2"),
+	@NamedQuery(name = "User.checkCredentialsMail",
+			query = "SELECT r FROM User r WHERE r.mail = ?1")
+
+})
 public class User {
 	
 	@Id
@@ -32,10 +37,13 @@ public class User {
 	@OrderBy("name ASC")
 	private List<StatisticalResponse> statist;
 	
+	@OneToMany(mappedBy="user")
+	@OrderBy("name ASC")
+	private List<LogInTime> logins;
+	
 	public User() { }
 		
-	public User(String userName, String mail, String pass, 
-				List<Response> responses, List<StatisticalResponse> statist) {
+	public User(String userName, String mail, String pass) {
 		
 		this.userName = userName;
 		this.mail = mail;
@@ -44,6 +52,7 @@ public class User {
 		this.points = 0;
 		this.responses = null;
 		this.statist = null;
+		this.logins = null;
 	}
 	
 	public int getUserId() {
@@ -78,6 +87,10 @@ public class User {
 		return this.responses;
 	}
 	
+	public List<LogInTime> getLogins() {
+		return this.logins;
+	}
+	
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
@@ -108,5 +121,9 @@ public class User {
 	
 	public void setResponses(List<Response> responses) {
 		this.responses = responses;
+	}
+	
+	public void setLogins(List<LogInTime> logins) {
+		this.logins = logins;
 	}
 }

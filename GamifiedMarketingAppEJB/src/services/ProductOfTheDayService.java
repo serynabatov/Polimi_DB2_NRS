@@ -1,23 +1,16 @@
 package services;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import entities.Product;
 import entities.ProductOfTheDay;
-import entities.Questions;
-import entities.Response;
-
 
 public class ProductOfTheDayService {
 
@@ -33,7 +26,7 @@ public class ProductOfTheDayService {
 		if (checkForTheDate(productOTD)) {
 			ProductOfTheDay pOTD = new ProductOfTheDay();
 			pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD(productOTD);
+			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(p.getProductId());
 			pOTD.setProduct(p); 
 			em.persist(pOTD);
@@ -80,7 +73,7 @@ public class ProductOfTheDayService {
 			em.persist(p);
 			ProductOfTheDay pOTD = new ProductOfTheDay();
 			pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD(productOTD);
+			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(productId);
 			pOTD.setProduct(p); 
 			em.persist(pOTD);
@@ -100,7 +93,7 @@ public class ProductOfTheDayService {
 			em.persist(p);
 			ProductOfTheDay pOTD = new ProductOfTheDay();
 			pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD(productOTD);
+			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(productId);
 			pOTD.setProduct(p); 
 			em.persist(pOTD);
@@ -120,7 +113,7 @@ public class ProductOfTheDayService {
 			em.persist(p);
 			ProductOfTheDay pOTD = new ProductOfTheDay();
 			pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD(productOTD);
+			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(productId);
 			pOTD.setProduct(p); 
 			em.persist(pOTD);
@@ -134,35 +127,28 @@ public class ProductOfTheDayService {
 	    return java.sql.Date.valueOf(dateToConvert);
 	}
 	
+	public ProductOfTheDay findById(int id) {
+		return em.find(ProductOfTheDay.class, id);
+	}
 	
-	// return the name, the image, review
-	// not good method, maybe redo it in database
-	public Map<Integer, List<Object>> getNameImageReview() {
+	private Product findByProductId(int id) {
+		return em.find(Product.class, id);
+	}
+	
+	// return the name, the image
+	public Map<String, Byte[]> getNameImage() {
 		LocalDate now = LocalDate.now();
+		
 		if (checkForTheDate(convertToDateViaSqlDate(now))) {
+			
 			ProductOfTheDay p = todayProductOfTheDay();
-			if (p == null) {
-				return null;
-			} else {
-				List<Object> li = new ArrayList<Object>();
-				Product prod = p.getProduct();
-				
-				li.add(prod.getProductName());
-	
-				if (prod.getLinkImage() == null)
-					li.add(prod.getImage());
-				else
-					li.add(prod.getLinkImage());
-				
-				//List<String> questions = new ArrayList<String>();
-				Set<Questions> q = p.getQuestions();
-				Map<String, Response> reviews = new HashMap<String, Response>();
-				
-				for (Questions question : q) {
-					//question.getText();
-					Set<Response> resp = question.getResponses();
-				}
-			}
+			Map<String, Byte[]> m = new HashMap<String, Byte[]>();
+			int productId = p.getProductId();
+			Product p1 = findByProductId(productId);
+						
+			m.put(p1.getProductName(), p1.getImage());
+			
+			return m;
 		} else {
 			return null;
 		}
