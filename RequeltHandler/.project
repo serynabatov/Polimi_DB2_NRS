@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>RequestHandler</name>
+	<name>GamifiedMarketingAppWEB</name>
 	<comment></comment>
 	<projects>
+		<project>GamifiedMarketingAppEJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

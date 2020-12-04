@@ -5,14 +5,14 @@
 	<persistence-unit name="GamifiedMarketingAppEJB"
 		transaction-type="JTA">
 		<jta-data-source>MissionDB</jta-data-source>
-		<class>entities.User</class>
-		<class>entities.Response</class>
-		<class>entities.Questions</class>
-		<class>entities.OffensiveWords</class>
-		<class>entities.ProductOfTheDay</class>
-		<class>entities.Product</class>
-		<class>entities.StatisticalResponse</class>
 		<class>entities.LogInTime</class>
+		<class>entities.OffensiveWords</class>
+		<class>entities.Product</class>
+		<class>entities.ProductOfTheDay</class>
+		<class>entities.Questions</class>
+		<class>entities.Response</class>
+		<class>entities.StatisticalResponse</class>
+		<class>entities.User</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 		</properties>
