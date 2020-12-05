@@ -6,9 +6,8 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-@Table(name="product_of_the_day", schema="")
-@NamedQuery(name = "ProductOfTheDay.findByDate", 
-			query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD = ?1")
+@Table(name="product_of_the_day", schema="marketing")
+@NamedQuery(name = "ProductOfTheDay.findByDate", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD = ?1")
 public class ProductOfTheDay {
 
 	@Id
@@ -20,7 +19,7 @@ public class ProductOfTheDay {
 	// FK
 	private int productId;
 
-	@OneToMany(mappedBy="pOTD")
+	@OneToMany(mappedBy="pOTD")	
 	private Set<StatisticalResponse> response;
 	
 	@OneToMany(mappedBy="pOTD")

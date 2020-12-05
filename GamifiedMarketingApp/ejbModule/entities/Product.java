@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="product", schema="")
+@Table(name="product", schema="marketing")
 @NamedQuery(name = "Product.findByName", 
 query = "SELECT p FROM Product p  WHERE p.productName = ?1")
 public class Product {
@@ -18,7 +18,7 @@ public class Product {
 	
 	private String productName;
 	
-	@Lob
+	@Lob 
 	@Basic(fetch=FetchType.LAZY)
 	private Byte[] image;
 	

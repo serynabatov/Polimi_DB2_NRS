@@ -5,7 +5,7 @@ import java.util.Set;
 import javax.persistence.*;
 
 @Entity
-@Table(name="questions", schema="")
+@Table(name="questions", schema="marketing")
 public class Questions {
 
 	@Id

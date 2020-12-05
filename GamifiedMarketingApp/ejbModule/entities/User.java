@@ -5,11 +5,11 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "User", schema="")
+@Table(name = "user", schema="marketing")
 @NamedQueries( {
-	@NamedQuery(name = "User.checkCredentials", 
+	@NamedQuery(name = "user.checkCredentials", 
 			query = "SELECT r FROM User r  WHERE r.userName = ?1 and r.password = ?2"),
-	@NamedQuery(name = "User.checkCredentialsMail",
+	@NamedQuery(name = "user.checkCredentialsMail",
 			query = "SELECT r FROM User r WHERE r.mail = ?1")
 
 })

@@ -19,7 +19,8 @@ public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;  
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().print(productOfTheDayService.getNameImage().toString());	
+		//response.getWriter().print(productOfTheDayService.getNameImage().toString());
+		response.getWriter().print(productOfTheDayService.findById(1));
 		//response.getWriter().append("Served at: ").append(request.getContextPath());	
 	}
 

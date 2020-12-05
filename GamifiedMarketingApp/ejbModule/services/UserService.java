@@ -17,7 +17,7 @@ public class UserService {
 	// so we don't need EntityManagerFactory
 	// PersistenceContext is a set of managed entity instances within an entity manager at
 	// any given time
-	@PersistenceContext(unitName = "GamifiedMarketingAppEJB")
+	@PersistenceContext(unitName = "GamifiedMarketingApp")
 	private EntityManager em;
 	
 	public UserService() { }
@@ -74,8 +74,8 @@ public class UserService {
 		}
 	}
 	
-	public User getLeaderBoard() {
-		
-	}
+//	public User getLeaderBoard() {
+//		
+//	}
 	
 }

@@ -6,15 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import entities.Product;
 import entities.ProductOfTheDay;
 
+@Stateless
 public class ProductOfTheDayService {
 
-	@PersistenceContext(unitName = "GamifiedMarketingAppEJB")
+	@PersistenceContext(unitName = "GamifiedMarketingApp")
 	private EntityManager em;
 	
 	public ProductOfTheDayService() { }
@@ -137,9 +139,9 @@ public class ProductOfTheDayService {
 	
 	// return the name, the image
 	public Map<String, Byte[]> getNameImage() {
-		LocalDate now = LocalDate.now();
+		//LocalDate now = LocalDate.now();
 		
-		if (checkForTheDate(convertToDateViaSqlDate(now))) {
+		if (checkForTheDate(convertToDateViaSqlDate(LocalDate.parse("1998-05-22")))) {
 			
 			ProductOfTheDay p = todayProductOfTheDay();
 			Map<String, Byte[]> m = new HashMap<String, Byte[]>();

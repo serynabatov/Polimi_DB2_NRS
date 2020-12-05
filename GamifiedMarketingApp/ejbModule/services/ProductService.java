@@ -1,14 +1,16 @@
 package services;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import entities.Product;
 
+@Stateless
 public class ProductService {
 
-	@PersistenceContext(unitName = "GamifiedMarketingAppEJB")
+	@PersistenceContext(unitName = "GamifiedMarketingApp")
 	private EntityManager em;
 
 	// method to search for the product when created product of the day

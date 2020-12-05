@@ -3,20 +3,20 @@ package entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name="offensive_words", schema="")
+@Table(name="offensive_words", schema="marketing")
 public class OffensiveWords {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private String words;
+	private String word;
 	
 	public OffensiveWords() { }
 	
 	public OffensiveWords(int id, String words) {
 		this.id = id;
-		this.words = words;
+		this.word = words;
 	}
 	
 	public int getId() {
@@ -24,7 +24,7 @@ public class OffensiveWords {
 	}
 	
 	public String getWords() {
-		return this.words;
+		return this.word;
 	}
 	
 	public void setId(int id) {
@@ -32,6 +32,6 @@ public class OffensiveWords {
 	}
 	
 	public void setWords(String words) {
-		this.words = words;
+		this.word = words;
 	}
 }

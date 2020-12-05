@@ -5,7 +5,7 @@ import java.sql.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name="time_logged_in", schema="")
+@Table(name="time_logged_in", schema="marketing")
 public class LogInTime {
 
 	@Id
