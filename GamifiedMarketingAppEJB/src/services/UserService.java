@@ -74,4 +74,8 @@ public class UserService {
 		}
 	}
 	
+	public User getLeaderBoard() {
+		
+	}
+	
 }
