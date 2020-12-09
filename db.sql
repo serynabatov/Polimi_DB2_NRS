@@ -1,4 +1,4 @@
-use user_responce;
+use marketing;
 show tables;
 show triggers;
 CREATE TABLE `user` (
@@ -31,8 +31,10 @@ CREATE TABLE `responses` (
     `question_id` int NOT NULL,
     `user_id` int NOT NULL,
 	`response_datetime` datetime default current_timestamp NOT NULL,
+    `productOTD_id` int NOT NULL,
     primary key(`response_id`),
     constraint `response_to_user` foreign key (`user_id`) references `user` (`user_id`) on delete cascade,
+    constraint `response_to_POTD` foreign key (`productOTD_id`) references `productOTD` (`productOTD_id`),
     constraint `response_to_question` foreign key (`user_id`) references `questions` (`question_id`)
 );
 
@@ -42,15 +44,18 @@ CREATE TABLE `statistical_responses` (
     `age` int NOT NULL,
     `sex` boolean NOT NULL,
     `exp_level` int NOT NULL,
+    `productOTD_id` int NOT NULL,
 	`response_date` datetime default current_timestamp NOT NULL,
     primary key(`stat_id`),
-    constraint `stat_response_to_user` foreign key (`user_id`) references `user` (`user_id`) on delete cascade
+    constraint `stat_response_to_user` foreign key (`user_id`) references `user` (`user_id`) on delete cascade,
+    constraint `stat_response_to_POTD` foreign key (`productOTD_id`) references `productOTD` (`productOTD_id`)
 );
 
 CREATE TABLE `product` (
 	`product_id` int NOT NULL auto_increment,
-	`linkimage` varchar(100) NOT NULL,
+	`linkimage` varchar(100) NULL,
     `product_name` varchar(50) NOT NULL,
+    `image`blob NULL,
     primary key(`product_id`)
 );
 
