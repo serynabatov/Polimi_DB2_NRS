@@ -34,8 +34,8 @@ CREATE TABLE `responses` (
     `productOTD_id` int NOT NULL,
     primary key(`response_id`),
     constraint `response_to_user` foreign key (`user_id`) references `user` (`user_id`) on delete cascade,
-    constraint `response_to_POTD` foreign key (`productOTD_id`) references `productOTD` (`productOTD_id`),
-    constraint `response_to_question` foreign key (`user_id`) references `questions` (`question_id`)
+    constraint `response_to_POTDproduct` foreign key (`productOTD_id`) references `productOTD` (`productOTD_id`),
+    constraint `response_to_question` foreign key (`question_id`) references `questions` (`question_id`)
 );
 
 CREATE TABLE `statistical_responses` (

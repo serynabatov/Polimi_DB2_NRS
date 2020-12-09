@@ -1,4 +1,6 @@
-package entities;
+package it.mirea.marketing.entities;
+
+import java.sql.Timestamp;
 
 import javax.persistence.*;
 
@@ -8,37 +10,45 @@ public class StatisticalResponse {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="stat_id")
 	private int statId;
 	
 	private int age;
 	
 	private Boolean sex;
 	
+	@Column(name="exp_level")
 	private int expertLevel;
 	
 	//FK
+	@Column(name="productOTD_id")
 	private int productOfTheDayId;
 	
 	//FK
+	@Column(name="user_id")
 	private int userId;
 	
+	@Column(name="response_date")
+	private Timestamp responseDate;
+	
 	@ManyToOne
-	@JoinColumn(name="productOfTheDayId")
+	@JoinColumn(name="productOTD_id")
 	private ProductOfTheDay pOTD;
 	
 	@ManyToOne
-	@JoinColumn(name="userId")
+	@JoinColumn(name="user_id")
 	private User user;
 	
 	public StatisticalResponse() { }
 	
 	public StatisticalResponse(int statId, int age, Boolean sex, int expertLevel, 
-				ProductOfTheDay pOTD, User user) {
+				ProductOfTheDay pOTD, Timestamp responseDate, User user) {
 		this.statId = statId;
 		this.age = age;
 		this.sex = sex;
 		this.expertLevel = expertLevel;
 		this.pOTD = pOTD;
+		this.responseDate = responseDate;
 		this.user = user;
 	}
 	
@@ -68,6 +78,10 @@ public class StatisticalResponse {
 	
 	public ProductOfTheDay getPOTD() {
 		return this.pOTD;
+	}
+	
+	public Timestamp getResponseDate() {
+		return this.responseDate;
 	}
 	
 	public User getUser() {
@@ -104,5 +118,9 @@ public class StatisticalResponse {
 	
 	public void setUserId(int id) {
 		this.userId = id;
+	}
+	
+	public void setReponseDate(Timestamp respo) {
+		this.responseDate = respo;
 	}
 }

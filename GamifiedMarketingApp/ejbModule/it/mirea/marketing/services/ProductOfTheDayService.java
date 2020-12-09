@@ -1,7 +1,7 @@
-package services;
+package it.mirea.marketing.services;
 
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +10,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import entities.Product;
-import entities.ProductOfTheDay;
+import it.mirea.marketing.entities.Product;
+//import it.mirea.marketing.entities.Product;
+import it.mirea.marketing.entities.ProductOfTheDay;
 
 @Stateless
 public class ProductOfTheDayService {
@@ -57,7 +58,7 @@ public class ProductOfTheDayService {
 							  .setParameter(1, convertToDateViaSqlDate(now))
 							  .getResultList();
 		
-		if (p.size() == 0)
+		if (p.size() == 1)
 			return p.get(0);
 		else
 			return null;
@@ -139,16 +140,16 @@ public class ProductOfTheDayService {
 	
 	// return the name, the image
 	public Map<String, Byte[]> getNameImage() {
-		//LocalDate now = LocalDate.now();
+		LocalDate now = LocalDate.now();
 		
-		if (checkForTheDate(convertToDateViaSqlDate(LocalDate.parse("1998-05-22")))) {
-			
+		if (!checkForTheDate(convertToDateViaSqlDate(now))) {
 			ProductOfTheDay p = todayProductOfTheDay();
+			
 			Map<String, Byte[]> m = new HashMap<String, Byte[]>();
 			int productId = p.getProductId();
 			Product p1 = findByProductId(productId);
 						
-			m.put(p1.getProductName(), p1.getImage());
+			m.put(p1.getProductName(), null);
 			
 			return m;
 		} else {

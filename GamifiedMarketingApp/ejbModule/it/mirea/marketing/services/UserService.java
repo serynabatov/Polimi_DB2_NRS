@@ -1,4 +1,4 @@
-package services;
+/*package it.mirea.marketing.services;
 
 
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.*;
 
-import entities.User;
-import exceptions.CredentialsException;
-import exceptions.EmailCredentialsException;
+import it.mirea.marketing.entities.User;
+import it.mirea.marketing.exceptions.CredentialsException;
+import it.mirea.marketing.exceptions.EmailCredentialsException;
 
-@Stateless
+//@Stateless
 public class UserService {
 
 	// annotation PersistenceContext() declare a dependency on a persistence context
@@ -78,4 +78,4 @@ public class UserService {
 //		
 //	}
 	
-}
+}*/

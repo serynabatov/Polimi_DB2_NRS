@@ -1,13 +1,13 @@
-package services;
+/*package it.mirea.marketing.services;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import entities.Product;
+import it.mirea.marketing.entities.Product;
 
-@Stateless
+//@Stateless
 public class ProductService {
 
 	@PersistenceContext(unitName = "GamifiedMarketingApp")
@@ -27,4 +27,4 @@ public class ProductService {
 	
 	
 	
-}
+}*/

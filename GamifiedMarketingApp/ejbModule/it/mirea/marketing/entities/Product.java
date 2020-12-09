@@ -1,4 +1,4 @@
-package entities;
+package it.mirea.marketing.entities;
 
 import java.util.List;
 
@@ -12,10 +12,12 @@ public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="product_id")
 	private int productId;
 	
 	private String linkImage;
 	
+	@Column(name="product_name")
 	private String productName;
 	
 	@Lob 
@@ -25,17 +27,18 @@ public class Product {
 	// product is a field. This Collection is on the inverse 
 	// side of the relation
 	@OneToMany(mappedBy = "product")
-	@OrderBy("name ASC")
+	@OrderBy("productOTD ASC")
 	private List<ProductOfTheDay> pOTD;
-
+	
 	public Product() { }
 	
 	public Product(int productId, String link, String productName, Byte[] image) {
 		this.productId = productId;
 		this.productName = productName;
 		this.linkImage = link;
+		this.image = image;
 	}
-	
+		
 	public int getProductId() {
 		return this.productId;
 	}

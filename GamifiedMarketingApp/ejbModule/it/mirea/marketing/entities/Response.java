@@ -1,4 +1,6 @@
-package entities;
+package it.mirea.marketing.entities;
+
+import java.sql.Timestamp;
 
 import javax.persistence.*;
 
@@ -8,19 +10,25 @@ public class Response {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="response_id")
 	private int responseId;
 	
 	@Lob
 	private String text;
 	
 	//FK
+	@Column(name="question_id")
 	private int questionId;
 	
+	@Column(name="user_id")
 	private int userId;
 	
-	@ManyToOne
-	@JoinColumn(name="questionId")
-	private Questions question;
+	@Column(name="response_datetime")
+	private Timestamp responseDatetime;
+	
+	//@ManyToOne
+	//@JoinColumn(name="questionId")
+	//private Questions question;
 	
 	@ManyToOne
 	@JoinColumn(name="userId")
@@ -28,10 +36,10 @@ public class Response {
 	
 	public Response() { }
 	
-	public Response(int id, String text, Questions question, User user) {
+	public Response(int id, String text/*, Questions question*/, User user) {
 		this.responseId = id;
 		this.text = text;
-		this.question = question;
+		//this.question = question;
 		this.user = user;
 	}
 	
@@ -46,9 +54,9 @@ public class Response {
 			this.text = text;
 	}
 	
-	public void setQuestion(Questions question) {
-		this.question = question;
-	}
+	//public void setQuestion(Questions question) {
+	//	this.question = question;
+	//}
 	
 	public void setUser(User user) {
 		this.user = user;
@@ -70,9 +78,9 @@ public class Response {
 		return this.text;
 	}
 	
-	public Questions getQuestion() {
-		return this.question;
-	}
+	//public Questions getQuestion() {
+	//	return this.question;
+	//}
 	
 	public User getUser() {
 		return this.user;

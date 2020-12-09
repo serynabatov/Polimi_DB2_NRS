@@ -5,15 +5,13 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
 	<persistence-unit name="GamifiedMarketingApp"
 		transaction-type="JTA">
-		<jta-data-source>MissionDB</jta-data-source>
-		<class>entities.LogInTime</class>
-		<class>entities.OffensiveWords</class>
-		<class>entities.Product</class>
-		<class>entities.ProductOfTheDay</class>
-		<class>entities.Questions</class>
-		<class>entities.Response</class>
-		<class>entities.StatisticalResponse</class>
-		<class>entities.User</class>
+		<jta-data-source>marketingResource</jta-data-source>
+		<class>it.mirea.marketing.entities.ProductOfTheDay</class>
+		<class>it.mirea.marketing.entities.Product</class>
+		<class>it.mirea.marketing.entities.StatisticalResponse</class>
+		<class>it.mirea.marketing.entities.User</class>
+		<class>it.mirea.marketing.entities.LogInTime</class>
+		<class>it.mirea.marketing.entities.Response</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINEST" />
 		</properties>

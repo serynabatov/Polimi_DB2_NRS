@@ -1,4 +1,4 @@
-package exceptions;
+package it.mirea.marketing.exceptions;
 
 public class CredentialsException extends Exception{
 	// field to define the version of a particular class while serializing

@@ -1,6 +1,6 @@
-package entities;
+package it.mirea.marketing.entities;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.*;
 
@@ -10,20 +10,23 @@ public class LogInTime {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
 	private int idLog;
 	
 	// FK
+	@Column(name="user_id")
 	private int userId;
 	
-	private Date loggedIn;
+	@Column(name="logged_in")
+	private Timestamp loggedIn;
 	
 	@ManyToOne
-	@JoinColumn(name="userId")
+	@JoinColumn(name="user_id")
 	private User user;
 	
 	public LogInTime() { }
 	
-	public LogInTime(int userId, Date loggedIn, int idLog) {
+	public LogInTime(int userId, Timestamp loggedIn, int idLog) {
 		this.userId = userId;
 		this.loggedIn = loggedIn;
 		this.idLog = idLog;
@@ -33,7 +36,7 @@ public class LogInTime {
 		return this.userId;
 	}
 	
-	public Date getLogged() {
+	public Timestamp getLogged() {
 		return this.loggedIn;
 	}
 	
@@ -49,7 +52,7 @@ public class LogInTime {
 		this.userId = userId;
 	}
 	
-	public void setLogg(Date loggedIn) {
+	public void setLogg(Timestamp loggedIn) {
 		this.loggedIn = loggedIn;
 	}
 	

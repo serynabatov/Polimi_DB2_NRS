@@ -1,4 +1,4 @@
-package entities;
+/*package it.mirea.marketing.entities;
 
 import java.util.Set;
 
@@ -74,4 +74,4 @@ public class Questions {
 	public void setPOTDId(int id) {
 		this.pOTDId = id;
 	}
-}
+}*/

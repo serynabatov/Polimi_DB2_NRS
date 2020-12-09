@@ -1,4 +1,4 @@
-package exceptions;
+package it.mirea.marketing.exceptions;
 
 public class EmailCredentialsException extends Exception{
 	

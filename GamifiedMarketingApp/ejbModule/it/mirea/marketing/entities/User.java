@@ -1,4 +1,4 @@
-package entities;
+package it.mirea.marketing.entities;
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private int userId;
 	
 	private String userName;
@@ -29,16 +30,16 @@ public class User {
 	
 	private Boolean blocked;
 		
-	@OneToMany(mappedBy="question")
-	@OrderBy("name ASC")
-	private List<Response> responses;
+	//@OneToMany(mappedBy="question")
+	//@OrderBy("name ASC")
+	//private List<Response> responses;
 	
 	@OneToMany(mappedBy="user")
-	@OrderBy("name ASC")
+	@OrderBy("statId ASC")
 	private List<StatisticalResponse> statist;
 	
 	@OneToMany(mappedBy="user")
-	@OrderBy("name ASC")
+	@OrderBy("loggedIn DESC")
 	private List<LogInTime> logins;
 	
 	public User() { }
@@ -50,7 +51,7 @@ public class User {
 		this.password = pass;
 		this.blocked = Boolean.FALSE;
 		this.points = 0;
-		this.responses = null;
+		//this.responses = null;
 		this.statist = null;
 		this.logins = null;
 	}
@@ -83,9 +84,9 @@ public class User {
 		return this.statist;
 	}
 	
-	public List<Response> getResponses() {
-		return this.responses;
-	}
+	//public List<Response> getResponses() {
+	//	return this.responses;
+	//}
 	
 	public List<LogInTime> getLogins() {
 		return this.logins;
@@ -119,9 +120,9 @@ public class User {
 		this.statist = statist;
 	}
 	
-	public void setResponses(List<Response> responses) {
-		this.responses = responses;
-	}
+	//public void setResponses(List<Response> responses) {
+	//	this.responses = responses;
+	//}
 	
 	public void setLogins(List<LogInTime> logins) {
 		this.logins = logins;
