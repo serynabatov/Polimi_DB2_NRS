@@ -1,4 +1,4 @@
-/*package it.mirea.marketing.entities;
+package it.mirea.marketing.entities;
 
 import java.util.Set;
 
@@ -10,20 +10,15 @@ public class Questions {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="question_id")
 	private int questionId;
 	
 	@Lob
 	private String text;
-	
-	// FK
-	private int pOTDId;
-	
-	@ManyToOne
-	@JoinColumn(name="pOTDId")
-	private ProductOfTheDay pOTD;
-	
+			
 	@OneToMany(mappedBy="question")
 	private Set<Response> responses;
+	
 	
 	public Questions() { }
 	
@@ -31,7 +26,6 @@ public class Questions {
 			Set<Response> responses) {
 		this.questionId = questionId;
 		this.text = text;
-		this.pOTD = pOTD;
 		this.responses = responses;
 	}
 	
@@ -43,18 +37,10 @@ public class Questions {
 		return this.text;
 	}
 	
-	public ProductOfTheDay getPOTD() {
-		return this.pOTD;
-	}
-	
 	public Set<Response> getResponses() {
 		return this.responses;
 	}
-	
-	public int getPOTDId() {
-		return this.pOTDId;
-	}
-	
+		
 	public void setText(String text) {
 		this.text = text;
 	}
@@ -63,15 +49,8 @@ public class Questions {
 		this.questionId = questionId;
 	}
 	
-	public void setPOTD(ProductOfTheDay pOTD) {
-		this.pOTD = pOTD;
-	}
-
 	public void setResponses(Set<Response> responses) {
 		this.responses = responses;
 	}
 	
-	public void setPOTDId(int id) {
-		this.pOTDId = id;
-	}
-}*/
+}

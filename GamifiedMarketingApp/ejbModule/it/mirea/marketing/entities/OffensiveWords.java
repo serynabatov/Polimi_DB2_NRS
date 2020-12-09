@@ -1,4 +1,4 @@
-/*package it.mirea.marketing.entities;
+package it.mirea.marketing.entities;
 
 import javax.persistence.*;
 
@@ -34,4 +34,4 @@ public class OffensiveWords {
 	public void setWords(String words) {
 		this.word = words;
 	}
-}*/
+}

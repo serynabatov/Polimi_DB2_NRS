@@ -1,7 +1,7 @@
 package it.mirea.marketing.entities;
 
 import java.sql.Date;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -22,25 +22,27 @@ public class ProductOfTheDay {
 	@Column(name="product_id")
 	private int productId;
 
-	@OneToMany(mappedBy="pOTD")	
-	private Collection<StatisticalResponse> response;
+	@OneToMany(mappedBy="pOTD")
+	@OrderBy(value="responseDate DESC")
+	private List<StatisticalResponse> statResponse;
 	
-	//@OneToMany(mappedBy="pOTD")
-	//private Set<Questions> questions;
-	
+	@OneToMany(mappedBy="pOTD")
+	@OrderBy(value="responseDatetime DESC")
+	private List<Response> response;
+		
 	@ManyToOne
 	@JoinColumn(name="product_id", insertable=false, updatable=false)
 	private Product product;
 	
 	public ProductOfTheDay() { }
 	
-	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId
-			/*Set<StatisticalResponse> response*/ /*Set<Questions> questions*/) {
+	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId,
+			List<StatisticalResponse> statResponse, List<Response> response) {
 		this.productOfTheDayId = productOfTheDayId;
 		this.productOTD = productOTD;
 		this.productId = productId;
-		//this.response = response;
-		//this.questions = questions;
+		this.response = response;
+		this.statResponse = statResponse;
 	}
 	
 	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId, Product product) {
@@ -66,13 +68,13 @@ public class ProductOfTheDay {
 		return this.product;
 	}
 	
-	//public Set<StatisticalResponse> getResponses() {
-	//	return this.response;
-	//}
+	public List<StatisticalResponse> getStatResponses() {
+			return this.statResponse;
+	}
 	
-//	public Set<Questions> getQuestions() {
-	//	return this.questions;
-	//}
+	public List<Response> getResponses() {
+		return this.response;
+	}
 	
 	public void setProductOfTheDay(int productOfTheDayId) {
 		this.productOfTheDayId = productOfTheDayId;
@@ -90,12 +92,12 @@ public class ProductOfTheDay {
 		this.product = prod;
 	}
 	
-	//public void setResponse(Set<StatisticalResponse> response) {
-	//	this.response = response;
-	//}
+	public void setStatResponse(List<StatisticalResponse> response) {
+			this.statResponse = response;
+	}
 	
-	//public void setQuestion(Set<Questions> questions) {
-	//	this.questions = questions;
-	//}
+	public void setResponse(List<Response> response) {
+		this.response = response;
+	}
 	
 }

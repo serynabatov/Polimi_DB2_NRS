@@ -30,9 +30,9 @@ public class User {
 	
 	private Boolean blocked;
 		
-	//@OneToMany(mappedBy="question")
-	//@OrderBy("name ASC")
-	//private List<Response> responses;
+	@OneToMany(mappedBy="user")
+	@OrderBy("responseDatetime DESC")
+	private List<Response> responses;
 	
 	@OneToMany(mappedBy="user")
 	@OrderBy("statId ASC")
@@ -51,7 +51,7 @@ public class User {
 		this.password = pass;
 		this.blocked = Boolean.FALSE;
 		this.points = 0;
-		//this.responses = null;
+		this.responses = null;
 		this.statist = null;
 		this.logins = null;
 	}
@@ -84,9 +84,9 @@ public class User {
 		return this.statist;
 	}
 	
-	//public List<Response> getResponses() {
-	//	return this.responses;
-	//}
+	public List<Response> getResponses() {
+		return this.responses;
+	}
 	
 	public List<LogInTime> getLogins() {
 		return this.logins;
@@ -120,9 +120,9 @@ public class User {
 		this.statist = statist;
 	}
 	
-	//public void setResponses(List<Response> responses) {
-	//	this.responses = responses;
-	//}
+	public void setResponses(List<Response> responses) {
+		this.responses = responses;
+	}
 	
 	public void setLogins(List<LogInTime> logins) {
 		this.logins = logins;

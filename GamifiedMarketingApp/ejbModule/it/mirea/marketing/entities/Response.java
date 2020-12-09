@@ -26,21 +26,29 @@ public class Response {
 	@Column(name="response_datetime")
 	private Timestamp responseDatetime;
 	
-	//@ManyToOne
-	//@JoinColumn(name="questionId")
-	//private Questions question;
+	@Column(name="productOTD_id")
+	private int productOfTheDayId;
 	
 	@ManyToOne
-	@JoinColumn(name="userId")
+	@JoinColumn(name="question_id")
+	private Questions question;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
 	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name="productOTD_id")
+	private ProductOfTheDay pOTD;
 	
 	public Response() { }
 	
-	public Response(int id, String text/*, Questions question*/, User user) {
+	public Response(int id, String text, Questions question, User user, Timestamp response) {
 		this.responseId = id;
 		this.text = text;
-		//this.question = question;
+		this.question = question;
 		this.user = user;
+		this.responseDatetime = response;
 	}
 	
 	public void setResponseId(int responseId) {
@@ -54,9 +62,9 @@ public class Response {
 			this.text = text;
 	}
 	
-	//public void setQuestion(Questions question) {
-	//	this.question = question;
-	//}
+	public void setQuestion(Questions question) {
+		this.question = question;
+	}
 	
 	public void setUser(User user) {
 		this.user = user;
@@ -70,6 +78,18 @@ public class Response {
 		this.questionId = questionId;
 	}
 	
+	public void setPOTDId(int id) {
+		this.productOfTheDayId = id;
+	}
+	
+	public void setResponse(Timestamp response) {
+		this.responseDatetime = response;
+	}
+	
+	public void setProductOfTheDay(ProductOfTheDay pOTD) {
+		this.pOTD = pOTD;
+	}
+	
 	public int getResponseId() {
 		return this.responseId;
 	}
@@ -78,9 +98,9 @@ public class Response {
 		return this.text;
 	}
 	
-	//public Questions getQuestion() {
-	//	return this.question;
-	//}
+	public Questions getQuestion() {
+		return this.question;
+	}
 	
 	public User getUser() {
 		return this.user;
@@ -92,5 +112,17 @@ public class Response {
 	
 	public int questionId() {
 		return this.questionId;
+	}
+	
+	public int getPOTDId() {
+		return this.productOfTheDayId;
+	}
+	
+	public Timestamp getResponseDT() {
+		return this.responseDatetime;
+	}
+	
+	public ProductOfTheDay getProductOfTheDay() {
+		return this.pOTD;
 	}
 }

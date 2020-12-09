@@ -12,6 +12,8 @@
 		<class>it.mirea.marketing.entities.User</class>
 		<class>it.mirea.marketing.entities.LogInTime</class>
 		<class>it.mirea.marketing.entities.Response</class>
+		<class>it.mirea.marketing.entities.Questions</class>
+		<class>it.mirea.marketing.entities.OffensiveWords</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINEST" />
 		</properties>
