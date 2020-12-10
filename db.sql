@@ -22,7 +22,9 @@ CREATE TABLE `time_logged_in` (
 CREATE TABLE `questions` (
 	`question_id` int NOT NULL auto_increment,
 	`text` varchar(250) NOT NULL,
-    primary key(`question_id`)
+    productOTD_id int NOT NULL,
+    primary key(`question_id`),
+    constraint `question_to_POTDproduct_name` foreign key (`productOTD_id`) references `productOTD` (`productOTD_id`)
 );
 
 CREATE TABLE `responses` (
@@ -76,7 +78,8 @@ where  new.productOTD_id = `productOTD_id`;
 
 create table `offensive_words`(
 	word varchar(50) not null,
-    primary key(word)
+    id int NOT NULL auto_increment,
+    primary key(id)
 );
 
 create trigger `adding_mandatory_points`
