@@ -10,7 +10,9 @@ import javax.persistence.*;
 	@NamedQuery(name = "user.checkCredentials", 
 			query = "SELECT r FROM User r  WHERE r.userName = ?1 and r.password = ?2"),
 	@NamedQuery(name = "user.checkCredentialsMail",
-			query = "SELECT r FROM User r WHERE r.mail = ?1")
+			query = "SELECT r FROM User r WHERE r.mail = ?1"),
+	@NamedQuery(name = "user.leaderboard",
+			query = "SELECT r FROM User r ORDER BY r.points DESC")
 
 })
 public class User {

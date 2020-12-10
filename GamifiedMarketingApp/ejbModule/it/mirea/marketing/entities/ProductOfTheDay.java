@@ -29,7 +29,11 @@ public class ProductOfTheDay {
 	@OneToMany(mappedBy="pOTD")
 	@OrderBy(value="responseDatetime DESC")
 	private List<Response> response;
-		
+	
+	@OneToMany(mappedBy="pOTD")
+	@OrderBy(value="questionId DESC")
+	private List<Questions> questions;
+	
 	@ManyToOne
 	@JoinColumn(name="product_id", insertable=false, updatable=false)
 	private Product product;
@@ -37,12 +41,13 @@ public class ProductOfTheDay {
 	public ProductOfTheDay() { }
 	
 	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId,
-			List<StatisticalResponse> statResponse, List<Response> response) {
+			List<StatisticalResponse> statResponse, List<Response> response, List<Questions> questions) {
 		this.productOfTheDayId = productOfTheDayId;
 		this.productOTD = productOTD;
 		this.productId = productId;
 		this.response = response;
 		this.statResponse = statResponse;
+		this.questions = questions;
 	}
 	
 	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId, Product product) {
@@ -76,6 +81,10 @@ public class ProductOfTheDay {
 		return this.response;
 	}
 	
+	public List<Questions> getQuestions() {
+		return this.questions;
+	}
+	
 	public void setProductOfTheDay(int productOfTheDayId) {
 		this.productOfTheDayId = productOfTheDayId;
 	}
@@ -98,6 +107,10 @@ public class ProductOfTheDay {
 	
 	public void setResponse(List<Response> response) {
 		this.response = response;
+	}
+	
+	public void setQuestions(List<Questions> questions) {
+		this.questions = questions;
 	}
 	
 }

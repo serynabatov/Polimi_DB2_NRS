@@ -15,10 +15,15 @@ public class Questions {
 	
 	@Lob
 	private String text;
-			
+	
+	private int productOTD_id;
+	
 	@OneToMany(mappedBy="question")
 	private Set<Response> responses;
 	
+	@ManyToOne
+	@JoinColumn(name="productOTD_id")
+	private ProductOfTheDay pOTD;
 	
 	public Questions() { }
 	
@@ -37,6 +42,10 @@ public class Questions {
 		return this.text;
 	}
 	
+	public int getPOTDId() {
+		return this.productOTD_id;
+	}
+	
 	public Set<Response> getResponses() {
 		return this.responses;
 	}
@@ -47,6 +56,10 @@ public class Questions {
 	
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
+	}
+	
+	public void setPOTDId(int id) {
+		this.productOTD_id = id;
 	}
 	
 	public void setResponses(Set<Response> responses) {

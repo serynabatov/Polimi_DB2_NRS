@@ -1,4 +1,4 @@
-/*package it.mirea.marketing.services;
+package it.mirea.marketing.services;
 
 
 import java.util.List;
@@ -10,7 +10,7 @@ import it.mirea.marketing.entities.User;
 import it.mirea.marketing.exceptions.CredentialsException;
 import it.mirea.marketing.exceptions.EmailCredentialsException;
 
-//@Stateless
+@Stateless
 public class UserService {
 
 	// annotation PersistenceContext() declare a dependency on a persistence context
@@ -74,8 +74,35 @@ public class UserService {
 		}
 	}
 	
-//	public User getLeaderBoard() {
-//		
-//	}
+	public List<User> getLeaderBoard() {
+		
+		List<User> uList = null;
+		try {
+			uList = em.createNamedQuery("user.leaderboard", User.class)
+					  .getResultList();
+		} catch (PersistenceException e) {
+			return null;
+		}
+		if (uList.isEmpty())
+			return null;
+		else 
+			return uList;
+	}
 	
-}*/
+	public Boolean deleteUser(int id) {
+		
+		User u = em.find(User.class, id);
+		
+		em.getTransaction().begin();
+		em.remove(u);
+		em.getTransaction().commit();
+		
+		User u1 = em.find(User.class, id);
+		
+		if (u1 == null)
+			return true;
+		else
+			return false;
+	}
+	
+}

@@ -2,6 +2,7 @@ package it.mirea.marketing.services;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,8 @@ import javax.persistence.PersistenceContext;
 import it.mirea.marketing.entities.Product;
 //import it.mirea.marketing.entities.Product;
 import it.mirea.marketing.entities.ProductOfTheDay;
+import it.mirea.marketing.entities.Questions;
+import it.mirea.marketing.entities.Response;
 
 @Stateless
 public class ProductOfTheDayService {
@@ -51,7 +54,7 @@ public class ProductOfTheDayService {
 	}
 	
 	// return the product of the day for today's date
-	private ProductOfTheDay todayProductOfTheDay() {
+	public ProductOfTheDay todayProductOfTheDay() {
 		LocalDate now = LocalDate.now();
 		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", 
 											           ProductOfTheDay.class)
@@ -137,24 +140,43 @@ public class ProductOfTheDayService {
 	private Product findByProductId(int id) {
 		return em.find(Product.class, id);
 	}
-	
-	// return the name, the image
-	public Map<String, Byte[]> getNameImage() {
-		LocalDate now = LocalDate.now();
 		
-		if (!checkForTheDate(convertToDateViaSqlDate(now))) {
-			ProductOfTheDay p = todayProductOfTheDay();
-			
-			Map<String, Byte[]> m = new HashMap<String, Byte[]>();
-			int productId = p.getProductId();
-			Product p1 = findByProductId(productId);
+	// return the name, the image
+	public Map<String, Byte[]> getNameImage(ProductOfTheDay p) {
+		Map<String, Byte[]> m = new HashMap<String, Byte[]>();
+		
+		int productId = p.getProductId();
+		Product p1 = findByProductId(productId);
 						
-			m.put(p1.getProductName(), null);
+		m.put(p1.getProductName(), p1.getImage());
 			
-			return m;
-		} else {
-			return null;
-		}
+		return m;
 	}
 	
+	// TODO: get paging here!
+	public List<String> getReviews(ProductOfTheDay p) {
+			
+		List<Response> responsesObj = p.getResponses();
+		List<String> responses = new ArrayList<String>();
+			
+		for (int i = 0; i < 20; i ++) {
+			Response response = responsesObj.get(i);
+			responses.add(response.getText());
+		}
+			
+		return responses;
+	}
+	
+	public List<String> getQuestions(ProductOfTheDay p) {
+		
+		List<Questions> questionsObj = p.getQuestions();
+		List<String> questions = new ArrayList<String>();
+		
+		for (int i = 0; i < 20; i ++) {
+			Questions q = questionsObj.get(i);
+			questions.add(q.getText());
+		}
+		
+		return questions;
+	}
 }
