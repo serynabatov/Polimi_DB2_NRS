@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Login page</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+	
+<!--
+<div class="container" onclick="onclick">
+	<div class="top">
+		<h1>Welcome to the Gamified Application</h1>
+	</div>
+	<div class="bottom"></div>
+  	<div class="center">
+	    <h2>Please Sign In</h2>
+	    <input type="email" placeholder="email"/>
+	    <input type="password" placeholder="password"/>
+	    <h2>&nbsp;</h2>
+	</div>
+</div>
+-->
+
+	<form action="CheckLogin" method="POST">
+		Username: <input type="text" name="username" required> <br>
+		Password: <input type="password" name="password" required><br>
+		<input type="submit" value="login">
+		<p th:text=" ${errorMsg}"></p>
+	</form>
+
+</body>	
+</html>
+
+	
+	
+	
+	
+	
+		
+	
