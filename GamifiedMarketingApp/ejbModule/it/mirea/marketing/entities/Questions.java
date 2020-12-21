@@ -18,11 +18,11 @@ public class Questions {
 	
 	private int productOTD_id;
 	
-	@OneToMany(mappedBy="question")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="question")
 	private Set<Response> responses;
 	
-	@ManyToOne
-	@JoinColumn(name="productOTD_id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="productOTD_id", insertable=false, updatable=false)
 	private ProductOfTheDay pOTD;
 	
 	public Questions() { }

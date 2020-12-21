@@ -32,15 +32,15 @@ public class User {
 	
 	private Boolean blocked;
 		
-	@OneToMany(mappedBy="user")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
 	@OrderBy("responseDatetime DESC")
 	private List<Response> responses;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
 	@OrderBy("statId ASC")
 	private List<StatisticalResponse> statist;
 	
-	@OneToMany(mappedBy="user")
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")
 	@OrderBy("loggedIn DESC")
 	private List<LogInTime> logins;
 	

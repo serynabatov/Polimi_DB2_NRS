@@ -22,19 +22,19 @@ public class ProductOfTheDay {
 	@Column(name="product_id")
 	private int productId;
 
-	@OneToMany(mappedBy="pOTD")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="pOTD")
 	@OrderBy(value="responseDate DESC")
 	private List<StatisticalResponse> statResponse;
 	
-	@OneToMany(mappedBy="pOTD")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="pOTD")
 	@OrderBy(value="responseDatetime DESC")
 	private List<Response> response;
 	
-	@OneToMany(mappedBy="pOTD")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="pOTD")
 	@OrderBy(value="questionId DESC")
 	private List<Questions> questions;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="product_id", insertable=false, updatable=false)
 	private Product product;
 	

@@ -20,8 +20,8 @@ public class LogInTime {
 	@Column(name="logged_in")
 	private Timestamp loggedIn;
 	
-	@ManyToOne
-	@JoinColumn(name="user_id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id", insertable=false, updatable=false)
 	private User user;
 	
 	public LogInTime() { }

@@ -29,16 +29,16 @@ public class Response {
 	@Column(name="productOTD_id")
 	private int productOfTheDayId;
 	
-	@ManyToOne
-	@JoinColumn(name="question_id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="question_id", insertable=false, updatable=false)
 	private Questions question;
 	
-	@ManyToOne
-	@JoinColumn(name="user_id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id", insertable=false, updatable=false)
 	private User user;
 	
-	@ManyToOne
-	@JoinColumn(name="productOTD_id")
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="productOTD_id", insertable=false, updatable=false)
 	private ProductOfTheDay pOTD;
 	
 	public Response() { }
