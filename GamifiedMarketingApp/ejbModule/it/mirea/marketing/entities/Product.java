@@ -26,7 +26,7 @@ public class Product {
 	
 	// product is a field. This Collection is on the inverse 
 	// side of the relation
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product",cascade = CascadeType.REMOVE)
 	@OrderBy("productOTD ASC")
 	private List<ProductOfTheDay> pOTD;
 	

@@ -32,11 +32,11 @@ public class User {
 	
 	private Boolean blocked;
 		
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("responseDatetime DESC")
 	private List<Response> responses;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="user")
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("statId ASC")
 	private List<StatisticalResponse> statist;
 	

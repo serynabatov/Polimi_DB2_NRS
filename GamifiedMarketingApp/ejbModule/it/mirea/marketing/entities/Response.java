@@ -29,15 +29,15 @@ public class Response {
 	@Column(name="productOTD_id")
 	private int productOfTheDayId;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.PERSIST)
 	@JoinColumn(name="question_id", insertable=false, updatable=false)
 	private Questions question;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.PERSIST)
 	@JoinColumn(name="user_id", insertable=false, updatable=false)
 	private User user;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.PERSIST)
 	@JoinColumn(name="productOTD_id", insertable=false, updatable=false)
 	private ProductOfTheDay pOTD;
 	

@@ -21,7 +21,7 @@ public class Questions {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="question")
 	private Set<Response> responses;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.PERSIST)
 	@JoinColumn(name="productOTD_id", insertable=false, updatable=false)
 	private ProductOfTheDay pOTD;
 	

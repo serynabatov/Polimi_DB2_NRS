@@ -31,11 +31,11 @@ public class StatisticalResponse {
 	@Column(name="response_date")
 	private Timestamp responseDate;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.PERSIST)
 	@JoinColumn(name="productOTD_id", insertable=false, updatable=false)
 	private ProductOfTheDay pOTD;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.PERSIST)
 	@JoinColumn(name="user_id", insertable=false, updatable=false)
 	private User user;
 	
