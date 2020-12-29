@@ -22,33 +22,33 @@ public class ProductOfTheDay {
 	@Column(name="product_id")
 	private int productId;
 
-//	@OneToMany(mappedBy="pOTD")
-//	@OrderBy(value="responseDate DESC")
-//	private List<StatisticalResponse> statResponse;
-//	
-//	@OneToMany(mappedBy="pOTD")
-//	@OrderBy(value="responseDatetime DESC")
-//	private List<Response> response;
-//	
-//	@OneToMany(mappedBy="pOTD")
-//	@OrderBy(value="questionId DESC")
-//	private List<Questions> questions;
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="pOTD",cascade = CascadeType.REMOVE)
+	@OrderBy(value="responseDate DESC")
+	private List<StatisticalResponse> statResponse;
 	
-	@ManyToOne
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="pOTD", cascade = CascadeType.REMOVE)
+	@OrderBy(value="responseDatetime DESC")
+	private List<Response> response;
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="pOTD",cascade = CascadeType.REMOVE)
+	@OrderBy(value="questionId DESC")
+	private List<Questions> questions;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="product_id", insertable=false, updatable=false)
 	private Product product;
 	
 	public ProductOfTheDay() { }
 	
-//	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId,
-//			List<StatisticalResponse> statResponse, List<Response> response, List<Questions> questions) {
-//		this.productOfTheDayId = productOfTheDayId;
-//		this.productOTD = productOTD;
-//		this.productId = productId;
-//		this.response = response;
-//		this.statResponse = statResponse;
-//		this.questions = questions;
-//	}
+	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId,
+			List<StatisticalResponse> statResponse, List<Response> response, List<Questions> questions) {
+		this.productOfTheDayId = productOfTheDayId;
+		this.productOTD = productOTD;
+		this.productId = productId;
+		this.response = response;
+		this.statResponse = statResponse;
+		this.questions = questions;
+	}
 	
 	public ProductOfTheDay(int productOfTheDayId, Date productOTD, int productId, Product product) {
 		this.productOfTheDayId = productOfTheDayId;
@@ -72,18 +72,18 @@ public class ProductOfTheDay {
 	public Product getProduct() {
 		return this.product;
 	}
-//	
-//	public List<StatisticalResponse> getStatResponses() {
-//			return this.statResponse;
-//	}
-//	
-//	public List<Response> getResponses() {
-//		return this.response;
-//	}
-//	
-//	public List<Questions> getQuestions() {
-//		return this.questions;
-//	}
+	
+	public List<StatisticalResponse> getStatResponses() {
+			return this.statResponse;
+	}
+	
+	public List<Response> getResponses() {
+		return this.response;
+	}
+	
+	public List<Questions> getQuestions() {
+		return this.questions;
+	}
 	
 	public void setProductOfTheDay(int productOfTheDayId) {
 		this.productOfTheDayId = productOfTheDayId;
@@ -100,17 +100,17 @@ public class ProductOfTheDay {
 	public void setProduct(Product prod) {
 		this.product = prod;
 	}
-//	
-//	public void setStatResponse(List<StatisticalResponse> response) {
-//			this.statResponse = response;
-//	}
-//	
-//	public void setResponse(List<Response> response) {
-//		this.response = response;
-//	}
-//	
-//	public void setQuestions(List<Questions> questions) {
-//		this.questions = questions;
-//	}
+	
+	public void setStatResponse(List<StatisticalResponse> response) {
+			this.statResponse = response;
+	}
+	
+	public void setResponse(List<Response> response) {
+		this.response = response;
+	}
+	
+	public void setQuestions(List<Questions> questions) {
+		this.questions = questions;
+	}
 	
 }
