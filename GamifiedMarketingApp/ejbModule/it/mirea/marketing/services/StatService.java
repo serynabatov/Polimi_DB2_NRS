@@ -11,7 +11,7 @@
 //
 //public class StatService {
 //
-//	@PersistenceContext(unitName = "GamifiedMarketingApp")
+//	@PersistenceContext(unitName = "GamifiedMarketingEJB")
 //	private EntityManager em;
 //
 //	public Map<Boolean, List<Integer, Integer>> getAllStatAnswers(ProductOfTheDay p) {

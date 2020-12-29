@@ -14,13 +14,13 @@ import javax.persistence.PersistenceContext;
 import it.mirea.marketing.entities.Product;
 //import it.mirea.marketing.entities.Product;
 import it.mirea.marketing.entities.ProductOfTheDay;
-import it.mirea.marketing.entities.Questions;
-import it.mirea.marketing.entities.Response;
+//import it.mirea.marketing.entities.Questions;
+//import it.mirea.marketing.entities.Response;
 
 @Stateless
 public class ProductOfTheDayService {
 
-	@PersistenceContext(unitName = "GamifiedMarketingApp")
+	@PersistenceContext(unitName = "GamifiedMarketingEJB")
 	private EntityManager em;
 	
 	public ProductOfTheDayService() { }
@@ -154,29 +154,29 @@ public class ProductOfTheDayService {
 	}
 	
 	// TODO: get paging here!
-	public List<String> getReviews(ProductOfTheDay p) {
-			
-		List<Response> responsesObj = p.getResponses();
-		List<String> responses = new ArrayList<String>();
-			
-		for (int i = 0; i < 20; i ++) {
-			Response response = responsesObj.get(i);
-			responses.add(response.getText());
-		}
-			
-		return responses;
-	}
-	
-	public List<String> getQuestions(ProductOfTheDay p) {
-		
-		List<Questions> questionsObj = p.getQuestions();
-		List<String> questions = new ArrayList<String>();
-		
-		for (int i = 0; i < 20; i ++) {
-			Questions q = questionsObj.get(i);
-			questions.add(q.getText());
-		}
-		
-		return questions;
-	}
+//	public List<String> getReviews(ProductOfTheDay p) {
+//			
+//		List<Response> responsesObj = p.getResponses();
+//		List<String> responses = new ArrayList<String>();
+//			
+//		for (int i = 0; i < 20; i ++) {
+//			Response response = responsesObj.get(i);
+//			responses.add(response.getText());
+//		}
+//			
+//		return responses;
+//	}
+//	
+//	public List<String> getQuestions(ProductOfTheDay p) {
+//		
+//		List<Questions> questionsObj = p.getQuestions();
+//		List<String> questions = new ArrayList<String>();
+//		
+//		for (int i = 0; i < 20; i ++) {
+//			Questions q = questionsObj.get(i);
+//			questions.add(q.getText());
+//		}
+//		
+//		return questions;
+//	}
 }

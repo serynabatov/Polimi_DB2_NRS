@@ -3,17 +3,16 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-	<persistence-unit name="GamifiedMarketingApp"
-		transaction-type="JTA">
+	<persistence-unit name="GamifiedMarketingEJB">
 		<jta-data-source>marketingResource</jta-data-source>
-		<class>it.mirea.marketing.entities.ProductOfTheDay</class>
+		<class>it.mirea.marketing.entities.LogInTime</class>
+		<class>it.mirea.marketing.entities.OffensiveWords</class>
 		<class>it.mirea.marketing.entities.Product</class>
+		<class>it.mirea.marketing.entities.ProductOfTheDay</class>
+		<class>it.mirea.marketing.entities.Questions</class>
+		<class>it.mirea.marketing.entities.Response</class>
 		<class>it.mirea.marketing.entities.StatisticalResponse</class>
 		<class>it.mirea.marketing.entities.User</class>
-		<class>it.mirea.marketing.entities.LogInTime</class>
-		<class>it.mirea.marketing.entities.Response</class>
-		<class>it.mirea.marketing.entities.Questions</class>
-		<class>it.mirea.marketing.entities.OffensiveWords</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINEST" />
 		</properties>

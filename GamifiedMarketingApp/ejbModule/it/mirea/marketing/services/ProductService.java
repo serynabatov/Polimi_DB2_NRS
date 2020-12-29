@@ -1,4 +1,4 @@
-/*package it.mirea.marketing.services;
+package it.mirea.marketing.services;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -7,10 +7,10 @@ import javax.persistence.PersistenceContext;
 
 import it.mirea.marketing.entities.Product;
 
-//@Stateless
+@Stateless
 public class ProductService {
 
-	@PersistenceContext(unitName = "GamifiedMarketingApp")
+	@PersistenceContext(unitName = "GamifiedMarketingEJB")
 	private EntityManager em;
 
 	// method to search for the product when created product of the day
@@ -24,7 +24,4 @@ public class ProductService {
 		else
 			return p;
 	}
-	
-	
-	
-}*/
+}
