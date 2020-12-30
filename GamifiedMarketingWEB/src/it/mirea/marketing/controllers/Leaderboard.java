@@ -1,32 +1,32 @@
 package it.mirea.marketing.controllers;
 
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.Map;
 
 import javax.ejb.EJB;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import it.mirea.marketing.services.ProductOfTheDayService;
 
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-import org.thymeleaf.TemplateEngine; 
 
+import it.mirea.marketing.entities.User;
+import it.mirea.marketing.services.UserService;
 
-@WebServlet("/Home")
-public class Home extends HttpServlet {
+import java.util.List;
+
+@WebServlet("/Leaderboard")
+public class Leaderboard extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB(name = "it.polimi.db2.album.services/ProductOfTheDayService")
-	private ProductOfTheDayService POTDService;
+	@EJB(name = "it.mirea.marketing.services/UserService")
+	private UserService userService;
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -37,22 +37,20 @@ public class Home extends HttpServlet {
 		templateResolver.setSuffix(".html");
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Map<String, Byte[]> productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());
-		String path = "/WEB-INF/home.html";
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		List<User> userList = userService.getLeaderBoard();
+		
+		String path = "/WEB-INF/leaderboard.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-				
-		if (productNameImage != null) {
-			ctx.setVariable("pOTD", productNameImage);
-		}
+		if (userList != null)
+		ctx.setVariable("leaderBoard", userList);
 		
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 

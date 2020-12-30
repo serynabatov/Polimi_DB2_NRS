@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="ISO-8859-1">
-	<title>Questionnaire</title>
-	<link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-	<h1>Questionnaire</h1>
-	<div align="right">
-		<a th:href="@{/Home}">Home</a>
-	</div>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Questionnaire</title>
+		<link rel="stylesheet" href="css/styles.css">
+	</head>
+	<body>
+		<h1>Questionnaire</h1>
+		<div align="right">
+			<a th:href="@{/Home}">Home</a>
+		</div>
 	
-	<tr th:each="pq : ${productQuestions}">
-	    <td th:utext="${pq}"></td>
-	</tr>
-	 
-</body>
+		<tr th:each="pq : ${productQuestions}">
+			<td th:utext="${pq}"></td>
+		</tr>
+	
+	</body>
 </html>

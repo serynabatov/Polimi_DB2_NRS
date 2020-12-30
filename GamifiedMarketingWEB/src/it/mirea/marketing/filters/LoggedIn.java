@@ -26,7 +26,7 @@ public class LoggedIn implements Filter {
 		String loginpath = req.getServletContext().getContextPath() + "/index.html";
 
 		HttpSession s = req.getSession();
-		if (s.isNew() || s.getAttribute("user") == null) {
+		if (s.isNew () || s.getAttribute("user") == null) {
 			res.sendRedirect(loginpath);
 			return;
 		}
