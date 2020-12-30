@@ -10,7 +10,7 @@ import it.mirea.marketing.entities.Product;
 @Stateless
 public class ProductService {
 
-	@PersistenceContext(unitName = "GamifiedMarketingEJB")
+	@PersistenceContext(unitName = "GamifiedMarketingApp")
 	private EntityManager em;
 
 	// method to search for the product when created product of the day
