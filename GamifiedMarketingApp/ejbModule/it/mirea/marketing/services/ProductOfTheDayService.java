@@ -69,7 +69,7 @@ public class ProductOfTheDayService {
 	
 	//create product of the day and then as a product (maybe do as a trigger)
 	public Boolean createProductOfTheDayThenProduct(int productOfTheDayId, Date productOTD,
-			int productId, String productName, String linkImage, Byte[] image) {
+			int productId, String productName, String linkImage, byte[] image) {
 		if (checkForTheDate(productOTD)) {
 			Product p = new Product();
 			p.setProductId(productId);
@@ -90,7 +90,7 @@ public class ProductOfTheDayService {
 	}
 	
 	public Boolean createProductOfTheDayThenProduct(int productOfTheDayId, Date productOTD,
-			int productId, String productName, Byte[] image) {
+			int productId, String productName, byte[] image) {
 		if (checkForTheDate(productOTD)) {
 			Product p = new Product();
 			p.setProductId(productId);
@@ -140,15 +140,16 @@ public class ProductOfTheDayService {
 	private Product findByProductId(int id) {
 		return em.find(Product.class, id);
 	}
-		
+			
 	// return the name, the image
-	public Map<String, Byte[]> getNameImage(ProductOfTheDay p) {
-		Map<String, Byte[]> m = new HashMap<String, Byte[]>();
+	public List<String> getNameImage(ProductOfTheDay p) {
+		List<String> m = new ArrayList<String>(2);
 		
 		int productId = p.getProductId();
 		Product p1 = findByProductId(productId);
 						
-		m.put(p1.getProductName(), p1.getImage());
+		m.add(p1.getProductName());
+		m.add(p1.getImage());
 			
 		return m;
 	}

@@ -21,7 +21,7 @@ public class ProductOfTheDay {
 	// FK
 	@Column(name="product_id")
 	private int productId;
-
+	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="pOTD",cascade = CascadeType.REMOVE)
 	@OrderBy(value="responseDate DESC")
 	private List<StatisticalResponse> statResponse;

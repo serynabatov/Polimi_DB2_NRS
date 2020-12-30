@@ -3,7 +3,7 @@ package it.mirea.marketing.controllers;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.ejb.EJB;
 
@@ -39,13 +39,14 @@ public class Home extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Map<String, Byte[]> productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());
+		List<String> productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());
 		String path = "/WEB-INF/home.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 				
 		if (productNameImage != null) {
-			ctx.setVariable("pOTD", productNameImage);
+								
+			ctx.setVariable("pOTD", productNameImage.get(1));
 		}
 		
 		templateEngine.process(path, ctx, response.getWriter());

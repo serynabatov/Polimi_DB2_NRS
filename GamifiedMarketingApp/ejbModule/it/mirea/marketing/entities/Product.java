@@ -1,5 +1,6 @@
 package it.mirea.marketing.entities;
 
+import java.util.Base64;
 import java.util.List;
 
 import javax.persistence.*;
@@ -22,8 +23,8 @@ public class Product {
 	
 	@Lob 
 	@Basic(fetch=FetchType.LAZY)
-	private Byte[] image;
-	
+	private byte[] image;
+		
 	// product is a field. This Collection is on the inverse 
 	// side of the relation
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product",cascade = CascadeType.REMOVE)
@@ -32,7 +33,7 @@ public class Product {
 	
 	public Product() { }
 	
-	public Product(int productId, String link, String productName, Byte[] image) {
+	public Product(int productId, String link, String productName, byte[] image) {
 		this.productId = productId;
 		this.productName = productName;
 		this.linkImage = link;
@@ -51,10 +52,10 @@ public class Product {
 		return this.productName;
 	}
 	
-	public Byte[] getImage() {
-		return this.image;
+	public String getImage() {
+		return Base64.getMimeEncoder().encodeToString(this.image);
 	}
-	
+		
 	public List<ProductOfTheDay> getPOTD() {
 		return this.pOTD;
 	}
@@ -71,7 +72,8 @@ public class Product {
 		this.productName = productName;
 	}
 	
-	public void setImage(Byte[] im) {
+	public void setImage(byte[] im) {
 		this.image = im;
 	}
+	
 }

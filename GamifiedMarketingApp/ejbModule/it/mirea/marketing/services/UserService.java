@@ -104,5 +104,12 @@ public class UserService {
 		else
 			return false;
 	}
+	
+	public String checkYourPrivilege(int id) {
+		
+		User u = em.find(User.class, id);
+		
+		return u.getRole();
+	}
 
 }

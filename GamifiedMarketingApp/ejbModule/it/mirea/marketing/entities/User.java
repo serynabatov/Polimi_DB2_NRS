@@ -31,6 +31,8 @@ public class User {
 	private int points;
 	
 	private Boolean blocked;
+	
+	private String role;
 		
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("responseDatetime DESC")
@@ -82,6 +84,10 @@ public class User {
 		return this.points;
 	}
 	
+	public String getRole() {
+		return this.role;
+	}
+	
 	public List<StatisticalResponse> getStat() {
 		return this.statist;
 	}
@@ -116,6 +122,10 @@ public class User {
 	
 	public void setBlocked(Boolean blocked) {
 		this.blocked = blocked;
+	}
+	
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	public void setStat(List<StatisticalResponse> statist) {
