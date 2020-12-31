@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Gamified Marketing Home</title>
-		<link rel="stylesheet" href="css/styles.css">
+		<link rel="stylesheet" type="text/css"  media="all" href="css/styles.css">
 	</head>
 	<body>
 
@@ -18,12 +18,15 @@
 			<div align="right">
 				<a th:href="@{/Leaderboard}">Leaderboard</a>
 			</div>
+			<div>
+				<img th:src="${'data:image/jpg;base64,' + pOTD}" width="240" height="300"/>	
+			</div>
 		</section>
 	
-		<tr th:each="instance : ${pOTD}">
-			<td th:text="${instance.key}"></td>
-			<td th:text="${instance.value}"></td>
-		</tr>
+		<!--<tr th:each="instance : ${pOTD}">-->
+			<!-- <td th:text="${instance.key}"></td> -->
+			<!--<td th:text="${instance.value}"></td>-->
+		<!-- </tr> -->
 
 <!--<section>
 <p th:text="${pOTD.}"></p>
