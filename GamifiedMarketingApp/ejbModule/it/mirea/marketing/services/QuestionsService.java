@@ -27,5 +27,14 @@ public class QuestionsService {
 			em.persist(q);
 		}
 	}
+	
+	public List<Questions> getQuestionsForProductOfTheDay(int pOTDId) {
+		
+		List<Questions> questions = em.createNamedQuery("Questions.findByProductId", Questions.class)
+							  .setParameter(1, pOTDId)
+							  .getResultList();
+		
+		return questions;
+	}
 
 }

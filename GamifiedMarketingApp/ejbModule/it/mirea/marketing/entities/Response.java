@@ -110,7 +110,7 @@ public class Response {
 		return this.userId;
 	}
 	
-	public int questionId() {
+	public int getQuestionId() {
 		return this.questionId;
 	}
 	
