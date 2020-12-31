@@ -1,5 +1,6 @@
 package it.mirea.marketing.services;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -61,6 +62,8 @@ public class PagingService {
 	public void submit() {
 		
 		for (Response r : responses) {
+			Timestamp tm = new Timestamp(System.currentTimeMillis());
+			r.setResponseDT(tm);
 			em.persist(r);
 		}
 		

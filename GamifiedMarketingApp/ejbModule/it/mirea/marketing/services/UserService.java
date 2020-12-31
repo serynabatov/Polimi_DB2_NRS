@@ -1,10 +1,12 @@
 package it.mirea.marketing.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
 
+import it.mirea.marketing.entities.LogInTime;
 import it.mirea.marketing.entities.User;
 import it.mirea.marketing.exceptions.CredentialsException;
 import it.mirea.marketing.exceptions.EmailCredentialsException;
@@ -53,8 +55,17 @@ public class UserService {
 		}
 		if (uList.isEmpty())
 			return null;
-		else if (uList.size() == 1)
+		else if (uList.size() == 1) {
+			User u = uList.get(0);
+			LogInTime logTime = new LogInTime();
+			
+			logTime.setLogg(new Timestamp(System.currentTimeMillis()));
+			logTime.setUserId(u.getUserId());
+			
+			em.persist(logTime);
+			
 			return uList.get(0);
+		}
 		throw new EmailCredentialsException("A user with the same email has been already registered");
 
 	}

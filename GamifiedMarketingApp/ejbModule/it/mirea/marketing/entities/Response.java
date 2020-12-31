@@ -82,7 +82,7 @@ public class Response {
 		this.productOfTheDayId = id;
 	}
 	
-	public void setResponse(Timestamp response) {
+	public void setResponseDT(Timestamp response) {
 		this.responseDatetime = response;
 	}
 	
