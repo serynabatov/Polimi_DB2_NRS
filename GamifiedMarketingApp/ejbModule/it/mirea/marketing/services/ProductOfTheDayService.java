@@ -142,8 +142,7 @@ public class ProductOfTheDayService {
 	}
 			
 	// return the name, the image
-	public List<String> getNameImage(ProductOfTheDay p) {
-		List<String> m = new ArrayList<String>(2);
+	public List<String> getNameImage(ProductOfTheDay p) {		List<String> m = new ArrayList<String>(2);
 		
 		int productId = p.getProductId();
 		Product p1 = findByProductId(productId);
@@ -159,23 +158,28 @@ public class ProductOfTheDayService {
 		List<Response> responsesObj = p.getResponses();
 		List<String> responses = new ArrayList<String>();
 
-		for (int i = 0; i < 20; i ++) {
+		int i = 0;
+		while (!responsesObj.isEmpty()) {
 			Response response = responsesObj.get(i);
 			responses.add(response.getText());
-		}
+			i++;
 		
+		}
+
 		return responses;
 	}
 
-		public List<String> getQuestions(ProductOfTheDay p) {
+	public List<String> getQuestions(ProductOfTheDay p) {
 
 		List<Questions> questionsObj = p.getQuestions();
-		//List<String> questions = new ArrayList<String>();
-		List<String> questions = null;
+		List<String> questions = new ArrayList<String>();
+		//List<String> questions = null;
 
-		for (int i = 0; i < 20; i ++) {
-			Questions q = questionsObj.get(i);
-			questions.add(q.getText());
+		int i = 0;
+		while (!questionsObj.isEmpty()) {
+			Questions response = questionsObj.get(i);
+			questions.add(response.getText());
+			i++;
 		}
 
 		return questions;
