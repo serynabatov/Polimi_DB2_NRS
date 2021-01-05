@@ -1,6 +1,8 @@
 package it.mirea.marketing.controllers;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -30,12 +32,14 @@ import javax.naming.*;
 public class CheckLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
+	
 	@EJB(name = "it.mirea.marketing.services/UserService")
 	private UserService userService;
-	private String path = null;
+	private String path;
 	private String usrn = null;
 	private String pwd = null;
 	private User user;
+	static final private List<String> privileges = Arrays.asList("user", "admin");
 	String userPrivilege = null;
 
 	public void init() throws ServletException {
@@ -57,7 +61,7 @@ public class CheckLogin extends HttpServlet {
 				throw new Exception("Missing or empty credential value");
 			}
 		} catch (Exception e) {
-			// for debugging only e.printStackTrace();
+
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
 			return;
 		}
@@ -73,18 +77,23 @@ public class CheckLogin extends HttpServlet {
 
 		// If the user exists, add info to the session and go to home page, otherwise
 		// show login page with error message
-		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		userPrivilege = userService.checkYourPrivilege(user.getUserId());
+		//ServletContext servletContext = getServletContext();
+		userPrivilege = userService.checkYourPrivilege(user.getUserId()).toLowerCase();
 		if (user == null) {
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "Incorrect username or password"); 
+			path = "/index.html";
 			templateEngine.process(path, ctx, response.getWriter());
-		} else if (user != null && !userPrivilege.equals("user") || !userPrivilege.equals("admin")) {
+		} else if (user != null && !privileges.contains(userPrivilege)) {
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "Unknown privilege");
+			path = "/index.html";
 			templateEngine.process(path, ctx, response.getWriter());
 		} else {
 			//QueryService qService = null;
-			try {
+			//try {
 				/*
 				* We need one distinct EJB for each user. Get the Initial Context for the JNDI
 				* lookup for a local EJB. Note that the path may be different in different EJB
@@ -92,23 +101,23 @@ public class CheckLogin extends HttpServlet {
 				* "java:/openejb/local/ArtifactFileNameWeb/ArtifactNameWeb/QueryServiceLocalBean"
 				* );
 				*/
-				InitialContext ic = new InitialContext();
+			//	InitialContext ic = new InitialContext();
 				// Retrieve the EJB using JNDI lookup
 				//qService = (QueryService) ic.lookup("java:/openejb/local/QueryServiceLocalBean");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			//} catch (Exception e) {
+			//	e.printStackTrace();
+			//}
 			request.getSession().setAttribute("user", user);
 			//request.getSession().setAttribute("queryService", qService);
 
 			switch (userPrivilege) {
 	        case "user": path = getServletContext().getContextPath() + "/Home";     				
 	            break;
-	        case "admin": path = getServletContext().getContextPath() + "/AdminPanel";
+	        case "admin": path = getServletContext().getContextPath() + "/Admin";
 	            break;
 			}
 			
-			path = getServletContext().getContextPath() + "/Home";
+			//path = getServletContext().getContextPath() + "/Home";
 			response.sendRedirect(path);			
 	    }
 	}
