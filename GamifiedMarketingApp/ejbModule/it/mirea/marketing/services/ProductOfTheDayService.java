@@ -160,12 +160,12 @@ public class ProductOfTheDayService {
 		List<String> responses = new ArrayList<String>();
 
 		for (int i = 0; i < 20; i ++) {
-		Response response = responsesObj.get(i);
-		responses.add(response.getText());
+			Response response = responsesObj.get(i);
+			responses.add(response.getText());
 		}
-
+		
 		return responses;
-		}
+	}
 
 		public List<String> getQuestions(ProductOfTheDay p) {
 
@@ -174,11 +174,11 @@ public class ProductOfTheDayService {
 		List<String> questions = null;
 
 		for (int i = 0; i < 20; i ++) {
-		Questions q = questionsObj.get(i);
-		questions.add(q.getText());
+			Questions q = questionsObj.get(i);
+			questions.add(q.getText());
 		}
 
 		return questions;
-		}
+	}
 
 }
