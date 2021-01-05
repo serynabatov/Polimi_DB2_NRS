@@ -143,7 +143,8 @@ public class ProductOfTheDayService {
 	}
 			
 	// return the name, the image
-	public List<String> getNameImage(ProductOfTheDay p) {		List<String> m = new ArrayList<String>(2);
+	public List<String> getNameImage(ProductOfTheDay p) {		
+		List<String> m = new ArrayList<String>(2);
 		
 		int productId = p.getProductId();
 		Product p1 = findByProductId(productId);
