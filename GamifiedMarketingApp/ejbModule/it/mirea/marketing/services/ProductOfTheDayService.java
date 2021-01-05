@@ -165,7 +165,9 @@ public class ProductOfTheDayService {
 			i++;
 		
 		}
-
+		for(int j = 0; j < 2; j++) {
+			System.out.println(responses.get(j));
+		}
 		return responses;
 	}
 
