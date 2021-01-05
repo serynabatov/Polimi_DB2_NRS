@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -158,12 +159,13 @@ public class ProductOfTheDayService {
 		List<Response> responsesObj = p.getResponses();
 		List<String> responses = new ArrayList<String>();
 
-		int i = 0;
-		while (!responsesObj.isEmpty()) {
-			Response response = responsesObj.get(i);
-			responses.add(response.getText());
-			i++;
+	    Iterator<Response> iter = responsesObj.iterator();
 		
+		//int i = 0;
+		while (iter.hasNext()) {
+			Response response = (Response) iter.next();
+			responses.add(response.getText());
+			//i++;
 		}
 		for(int j = 0; j < 2; j++) {
 			System.out.println(responses.get(j));

@@ -64,15 +64,7 @@ public class UserService {
 		}
 		if (uList.isEmpty())
 			return null;
-		else if (uList.size() == 1) {
-			User u = uList.get(0);
-			LogInTime logTime = new LogInTime();
-			
-			logTime.setLogg(new Timestamp(System.currentTimeMillis()));
-			logTime.setUserId(u.getUserId());
-			
-			em.persist(logTime);
-			
+		else if (uList.size() == 1) {		
 			return uList.get(0);
 		}
 		throw new EmailCredentialsException("A user with the same email has been already registered");
