@@ -16,6 +16,7 @@
 	<url-pattern>/Previous</url-pattern>
 	<url-pattern>/Questionnaire</url-pattern>
 	<url-pattern>/Leaderboard</url-pattern>
+	<url-pattern>/Admin</url-pattern>
   </filter-mapping>
   
 <!--  <filter>

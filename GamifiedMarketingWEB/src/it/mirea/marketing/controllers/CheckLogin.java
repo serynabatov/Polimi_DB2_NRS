@@ -32,6 +32,11 @@ public class CheckLogin extends HttpServlet {
 	private TemplateEngine templateEngine;
 	@EJB(name = "it.mirea.marketing.services/UserService")
 	private UserService userService;
+	private String path = null;
+	private String usrn = null;
+	private String pwd = null;
+	private User user;
+	String userPrivilege = null;
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -44,9 +49,7 @@ public class CheckLogin extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// obtain and escape params
-		String usrn = null;
-		String pwd = null;
+		// obtain and escape params		
 		try {
 			usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
 			pwd = StringEscapeUtils.escapeJava(request.getParameter("password"));
@@ -59,7 +62,6 @@ public class CheckLogin extends HttpServlet {
 			return;
 		}
 
-		User user;
 		try {
 			//query db to authenticate for user
 			user = userService.checkCredentials(usrn, pwd);
@@ -71,13 +73,14 @@ public class CheckLogin extends HttpServlet {
 
 		// If the user exists, add info to the session and go to home page, otherwise
 		// show login page with error message
-
-		String path;
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		userPrivilege = userService.checkYourPrivilege(user.getUserId());
 		if (user == null) {
-			ServletContext servletContext = getServletContext();
-			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-			ctx.setVariable("errorMsg", "Incorrect username or password");
-			path = "/index.html";
+			ctx.setVariable("errorMsg", "Incorrect username or password"); 
+			templateEngine.process(path, ctx, response.getWriter());
+		} else if (user != null && !userPrivilege.equals("user") || !userPrivilege.equals("admin")) {
+			ctx.setVariable("errorMsg", "Unknown privilege");
 			templateEngine.process(path, ctx, response.getWriter());
 		} else {
 			//QueryService qService = null;
@@ -97,10 +100,17 @@ public class CheckLogin extends HttpServlet {
 			}
 			request.getSession().setAttribute("user", user);
 			//request.getSession().setAttribute("queryService", qService);
-			path = getServletContext().getContextPath() + "/Home";
-			response.sendRedirect(path);
-		}
 
+			switch (userPrivilege) {
+	        case "user": path = getServletContext().getContextPath() + "/Home";     				
+	            break;
+	        case "admin": path = getServletContext().getContextPath() + "/AdminPanel";
+	            break;
+			}
+			
+			path = getServletContext().getContextPath() + "/Home";
+			response.sendRedirect(path);			
+	    }
 	}
 
 }

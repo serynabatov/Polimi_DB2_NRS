@@ -43,9 +43,8 @@ public class Questionnaire extends HttpServlet {
 		String path = "/WEB-INF/questionnaire.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		ctx.setVariable("productQuestions", productQuestions);
 		if (productQuestions != null)
-		ctx.setVariable("productQuestions", productQuestions);
+			ctx.setVariable("productQuestions", productQuestions.get(1));
 		templateEngine.process(path, ctx, response.getWriter());
 
 	}

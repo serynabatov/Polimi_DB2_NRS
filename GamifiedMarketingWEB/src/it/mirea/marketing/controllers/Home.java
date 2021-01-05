@@ -39,14 +39,17 @@ public class Home extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<String> productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());
+		
 		String path = "/WEB-INF/home.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-				
-		if (productNameImage != null) {
-								
-			ctx.setVariable("pOTD", productNameImage.get(1));
+		
+		List<String> productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());//TODO: check null
+		List<String> productReviews = POTDService.getReviews(POTDService.todayProductOfTheDay());//TODO: check null
+		if (productNameImage != null) {		
+			ctx.setVariable("pOTDName", productNameImage.get(0));
+			ctx.setVariable("pOTDImage", productNameImage.get(1));
+			ctx.setVariable("pOTDReviews", productReviews);
 		}
 		
 		templateEngine.process(path, ctx, response.getWriter());
@@ -56,5 +59,4 @@ public class Home extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }

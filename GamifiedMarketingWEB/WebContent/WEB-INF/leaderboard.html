@@ -1,17 +1,31 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="ISO-8859-1">
-		<title>Leaderboard</title>
-		<link rel="stylesheet" href="css/styles.css">
-	</head>
-	<body>
-		<h1>Leaderboard</h1>
-		<div align="right">
-			<a th:href="@{/Home}">Home</a>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Leaderboard</title>
+	<link rel="stylesheet" href="assets/css/style_leaderboard.css">
+</head>
+<body>
+	<h1>Leaderboard</h1>
+	 	
+	<div class="container">
+ 		<table>
+			<th width=5%>Place</th>
+ 			<th width=50%>Login</th>
+ 			<th width=15%>Score</th>
+    	</table>
+    	<div class="values">
+		  	<table>
+		    	 <tr th:each="lb : ${leaderBoard}">
+					<td th:text="${lb.userName}"></td>
+					<td th:text="${lb.points}"></td>
+			    </tr>
+		  	</table>
 		</div>
-
-	<span th:each="lb : ${leaderBoard}" th:text="${lb.userName} +' '"></span>
-
-	</body>
+	</div>
+	<p>
+		<a id=center th:href="@{/Home}">Return to home</a>
+	</p>
+		
+</body>
 </html>
