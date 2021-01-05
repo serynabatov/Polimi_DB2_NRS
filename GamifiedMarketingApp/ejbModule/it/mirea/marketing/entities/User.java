@@ -12,7 +12,7 @@ import javax.persistence.*;
 	@NamedQuery(name = "user.checkCredentialsMail",
 			query = "SELECT r FROM User r WHERE r.mail = ?1"),
 	@NamedQuery(name = "user.leaderboard",
-			query = "SELECT r FROM User r ORDER BY r.points DESC")
+			query = "SELECT r FROM User r WHERE r.role <> ?1 and r.blocked <> ?2 ORDER BY r.points DESC")
 
 })
 public class User {

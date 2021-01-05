@@ -91,6 +91,8 @@ public class UserService {
 		List<User> uList = null;
 		try {
 			uList = em.createNamedQuery("user.leaderboard", User.class)
+					  .setParameter(1, "admin")
+					  .setParameter(2, true)
 					  .getResultList();
 		} catch (PersistenceException e) {
 			return null;
