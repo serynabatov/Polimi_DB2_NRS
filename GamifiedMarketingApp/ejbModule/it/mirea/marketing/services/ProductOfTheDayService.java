@@ -162,14 +162,9 @@ public class ProductOfTheDayService {
 
 	    Iterator<Response> iter = responsesObj.iterator();
 		
-		//int i = 0;
 		while (iter.hasNext()) {
 			Response response = (Response) iter.next();
 			responses.add(response.getText());
-			//i++;
-		}
-		for(int j = 0; j < 2; j++) {
-			System.out.println(responses.get(j));
 		}
 		return responses;
 	}
@@ -178,13 +173,11 @@ public class ProductOfTheDayService {
 
 		List<Questions> questionsObj = p.getQuestions();
 		List<String> questions = new ArrayList<String>();
-		//List<String> questions = null;
+	    Iterator<Questions> iter = questionsObj.iterator();
 
-		int i = 0;
-		while (!questionsObj.isEmpty()) {
-			Questions response = questionsObj.get(i);
-			questions.add(response.getText());
-			i++;
+		while (iter.hasNext()) {
+			Questions q = (Questions) iter.next();
+			questions.add(q.getText());
 		}
 
 		return questions;
