@@ -183,11 +183,18 @@ public class ProductOfTheDayService {
 		return questions;
 	}
 	
-	public List<Questions> getListQuestions(ProductOfTheDay p) {
+	public Map<Integer, String> getMapQuestions(ProductOfTheDay p) {
 		
-		List<Questions> questions = p.getQuestions();
-		
-		return questions;
+		List<Questions> questionsObj = p.getQuestions();
+		Map<Integer, String> mapQuestions = new HashMap<Integer, String>();
+	    Iterator<Questions> iter = questionsObj.iterator();
+	    
+	    while(iter.hasNext()) {
+	    	Questions q = (Questions) iter.next();
+	    	mapQuestions.put(q.getQuestionId(), q.getText());
+	    }
+	    
+	    return mapQuestions;
 	}
 
 }
