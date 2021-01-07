@@ -182,5 +182,12 @@ public class ProductOfTheDayService {
 
 		return questions;
 	}
+	
+	public List<Questions> getListQuestions(ProductOfTheDay p) {
+		
+		List<Questions> questions = p.getQuestions();
+		
+		return questions;
+	}
 
 }
