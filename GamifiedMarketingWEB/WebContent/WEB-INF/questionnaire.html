@@ -8,13 +8,26 @@
 <body>
 
 	<h1>Questionnaire</h1>
+	<h2>Answer the following questions, please</h2>
+	
+	<form action="Questionnaire/StatisticalResponse" method="POST" >	
+		<div th:each="pq, pqInfo: ${prodQuestions}">
+			<label th:text="'Question #' + ${pqInfo.index +1}"></label>
+			<br><textarea placeholder="Your asnwer" th:name="userResponse" required/></textarea>
+			<!--  <br><textarea placeholder="'userResponse' + ${pq.key}" th:text="'userResponse' + ${pq.key}" required/></textarea>-->
+		</div>	
+		
+		<input type="hidden" th:value="${prodQuestionsKeys}" name="prodQuestionsKeys"/>	
+		<input type="hidden" th:value="${prodQuestionsValues}" name="prodQuestionsValues"/>
+		<input type="hidden" th:value="${prodQuestions}" name="prodQuestions"/>
+		<input type="hidden" th:value="${userID}" name="userID"/>
+		<input type="hidden" th:value="${POTDid}" name="POTDid"/>			
+		<input type="submit" value="Next" />
+	</form>
+		
 	<div align="right">
 		<a th:href="@{/Home}">Home</a>
 	</div>
-
-	<tr th:each="pq : ${productQuestions}">
-		<td th:text="${pq}"></td>
-	</tr>
 
 </body>
 </html>

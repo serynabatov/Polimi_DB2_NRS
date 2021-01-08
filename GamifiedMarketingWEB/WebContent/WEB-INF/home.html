@@ -69,13 +69,17 @@
 	  		</div>
 	 	</div> 
 	  	
-	 	<table>
-	   	 	<tr th:each="pr : ${pOTDReviews}">
+	  	<table>
+		  	<tr th:each="pq : ${productQuestions}">
+		  		<tr th:each="pr : ${pOTDReviews}">
+				<td th:text="${pq}"></td>
 				<td th:text="${pr}"></td>
 		    </tr>
-		</table>
+			</tr>
+	  	</table>
+	  	
 
-		 
+		
 	   	<section id="questionnaire" class="links">
 			<div>
 				<a style="color: #079BCF; font-size: 25" th:href="@{/Logout}">Logout</a>
