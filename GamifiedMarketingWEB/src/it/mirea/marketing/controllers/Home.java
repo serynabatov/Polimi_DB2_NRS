@@ -45,11 +45,11 @@ public class Home extends HttpServlet {
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
 		List<String> productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());//TODO: check null
-		List<String> productReviews = POTDService.getReviews(POTDService.todayProductOfTheDay());//TODO: check null
+		//List<String> productReviews = POTDService.getReviews(POTDService.todayProductOfTheDay());//TODO: check null
 		if (productNameImage != null) {		
 			ctx.setVariable("pOTDName", productNameImage.get(0));
 			ctx.setVariable("pOTDImage", productNameImage.get(1));
-			ctx.setVariable("pOTDReviews", productReviews);
+			//ctx.setVariable("pOTDReviews", productReviews);
 		}
 		
 		templateEngine.process(path, ctx, response.getWriter());
