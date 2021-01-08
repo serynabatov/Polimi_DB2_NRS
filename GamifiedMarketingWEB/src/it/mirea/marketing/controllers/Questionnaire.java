@@ -2,6 +2,7 @@ package it.mirea.marketing.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -18,6 +19,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.mirea.marketing.services.ProductOfTheDayService;
 import it.mirea.marketing.entities.ProductOfTheDay;
+import it.mirea.marketing.entities.User;
 
 @WebServlet("/Questionnaire")
 public class Questionnaire extends HttpServlet {
@@ -38,15 +40,23 @@ public class Questionnaire extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<String> productQuestions = POTDService.getQuestions(POTDService.todayProductOfTheDay());
-
+		Map<Integer, String> productQuestions = POTDService.getMapQuestions(POTDService.todayProductOfTheDay());// todo check null
+		User user = (User) request.getSession().getAttribute("user");
+		ProductOfTheDay todayPOTD = POTDService.todayProductOfTheDay();//TODO: check null
+		
 		String path = "/WEB-INF/questionnaire.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		if (productQuestions != null)
-			ctx.setVariable("productQuestions", productQuestions.get(1));
-		templateEngine.process(path, ctx, response.getWriter());
+		System.out.println(productQuestions.values());
+		if (todayPOTD != null) {
+			ctx.setVariable("prodQuestionsKeys", productQuestions.keySet());
+			ctx.setVariable("prodQuestionsValues", productQuestions.values());
+			ctx.setVariable("prodQuestions", productQuestions);
+			ctx.setVariable("userID", user.getUserId());
+			ctx.setVariable("POTDid", todayPOTD.getProductOfTheDayId());
 
+		}
+		templateEngine.process(path, ctx, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

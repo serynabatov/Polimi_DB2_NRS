@@ -2,33 +2,39 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Login page</title>
-	<link rel="stylesheet" href="css/styles.css">
+  <title>Sign In/Up Form Transitions</title>
+	<link rel="stylesheet" href="assets/css/style1.css">
 </head>
 <body>
 	
-<!--
-<div class="container" onclick="onclick">
-	<div class="top">
-		<h1>Welcome to the Gamified Application</h1>
-	</div>
-	<div class="bottom"></div>
-  	<div class="center">
-	    <h2>Please Sign In</h2>
-	    <input type="email" placeholder="email"/>
-	    <input type="password" placeholder="password"/>
-	    <h2>&nbsp;</h2>
-	</div>
-</div>
--->
-
 	<form action="CheckLogin" method="POST">
-		Username: <input type="text" name="username" required> <br>
-		Password: <input type="password" name="password" required><br>
-		<input type="submit" value="login">
+		 <input id="signin" name="action" type="radio" value="signin">
+		 <label for="signin">Sign in</label>
+		 <input id="signup" name="action" type="radio" value="signup">
+		 <label for="signup">Sign up</label>
+		 <input id="reset" name="action" type="radio" value="reset">
+		 <label for="reset">Reset</label>
+		 
+		<div id="wrapper">
+			<div id="arrow"></div>
+			<input id="username" placeholder="Username" name="username" type="text" required>
+			<input id="pass" placeholder="Password" name="password" type="password" required>
+			<input id="repass" placeholder="Repeat password" type="password">
+		</div>
+		
+		<button type="submit" value="login">
+	 		<span>
+		    	Reset password
+		    <br>
+		    	Sign in
+		    <br>
+		   		Sign up
+		  </span>
+		</button>
 		<p th:text=" ${errorMsg}"></p>
 	</form>
-
+	<div id="hint">Click on the tabs</div>
+	
 </body>	
 </html>
 

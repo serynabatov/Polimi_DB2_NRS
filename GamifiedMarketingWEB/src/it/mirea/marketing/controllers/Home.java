@@ -37,19 +37,19 @@ public class Home extends HttpServlet {
 		templateResolver.setSuffix(".html");
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		String path = "/WEB-INF/home.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
 		List<String> productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());//TODO: check null
 		List<String> productReviews = POTDService.getReviews(POTDService.todayProductOfTheDay());//TODO: check null
+		List<String> productQuestions = POTDService.getQuestions(POTDService.todayProductOfTheDay());// todo check null
 		if (productNameImage != null) {		
 			ctx.setVariable("pOTDName", productNameImage.get(0));
 			ctx.setVariable("pOTDImage", productNameImage.get(1));
 			ctx.setVariable("pOTDReviews", productReviews);
+			ctx.setVariable("productQuestions", productQuestions);
 		}
 		
 		templateEngine.process(path, ctx, response.getWriter());

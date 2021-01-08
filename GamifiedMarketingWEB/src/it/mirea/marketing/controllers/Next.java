@@ -39,7 +39,7 @@ public class Next extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		//QueryService qService = (QueryService) request.getSession().getAttribute("queryService");
-		String path = "/WEB-INF/SearchResults.html";
+		String path = "/WEB-INF/questionnaire.html";
 //		qService.next();
 		//List<Photo> results = qService.newPage();
 		ServletContext servletContext = getServletContext();

@@ -19,6 +19,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.mirea.marketing.entities.User;
+import it.mirea.marketing.services.PagingService;
 import it.mirea.marketing.services.UserService;
 import it.mirea.marketing.exceptions.CredentialsException;
 import it.mirea.marketing.services.UserService;
@@ -36,11 +37,11 @@ public class CheckLogin extends HttpServlet {
 	@EJB(name = "it.mirea.marketing.services/UserService")
 	private UserService userService;
 	private String path;
-	private String usrn = null;
-	private String pwd = null;
+	private String usrn;
+	private String pwd;
 	private User user;
 	static final private List<String> privileges = Arrays.asList("user", "admin");
-	String userPrivilege = null;
+	private String userPrivilege;
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -92,8 +93,8 @@ public class CheckLogin extends HttpServlet {
 			path = "/index.html";
 			templateEngine.process(path, ctx, response.getWriter());
 		} else {
-			//QueryService qService = null;
-			//try {
+			PagingService pagingService= null;
+			try {
 				/*
 				* We need one distinct EJB for each user. Get the Initial Context for the JNDI
 				* lookup for a local EJB. Note that the path may be different in different EJB
@@ -101,14 +102,14 @@ public class CheckLogin extends HttpServlet {
 				* "java:/openejb/local/ArtifactFileNameWeb/ArtifactNameWeb/QueryServiceLocalBean"
 				* );
 				*/
-			//	InitialContext ic = new InitialContext();
-				// Retrieve the EJB using JNDI lookup
-				//qService = (QueryService) ic.lookup("java:/openejb/local/QueryServiceLocalBean");
-			//} catch (Exception e) {
-			//	e.printStackTrace();
-			//}
+				InitialContext ic = new InitialContext();
+				 //Retrieve the EJB using JNDI lookup
+				pagingService = (PagingService) ic.lookup("java:/openejb/local/QueryServiceLocalBean");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			request.getSession().setAttribute("user", user);
-			//request.getSession().setAttribute("queryService", qService);
+			request.getSession().setAttribute("pagingService", pagingService);
 
 			switch (userPrivilege) {
 	        case "user": path = getServletContext().getContextPath() + "/Home";     				
