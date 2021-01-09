@@ -71,6 +71,17 @@ public class PagingService {
 		
 	}
 	
+	public Boolean cancel() {
+		responses.clear();
+		stat = null;
+		
+		if (responses.isEmpty() && (stat == null)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public List<Response> getResponses() {
 		return this.responses;
 	}
