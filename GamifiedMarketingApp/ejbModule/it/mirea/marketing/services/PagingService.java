@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 
+import it.mirea.marketing.entities.OffensiveWords;
 import it.mirea.marketing.entities.Response;
 import it.mirea.marketing.entities.StatisticalResponse;
 
@@ -20,10 +21,9 @@ public class PagingService {
 	
 	@PersistenceContext(unitName = "GamifiedMarketingApp", type = PersistenceContextType.EXTENDED)
 	private EntityManager em;
-	//private TypedQuery<Response> responseJPAquery = null;
-	//private TypedQuery<StatisticalResponse> statJPAquery = null;
 	private List<Response> responses = new ArrayList<Response>();
 	private StatisticalResponse stat = null;
+	private OffensiveWords offensive = null;
 	
 	public PagingService() { }
 	
@@ -35,7 +35,7 @@ public class PagingService {
 		resp.setUserId(userId);
 		resp.setText(text);
 		
-		responses.add(resp);
+		this.responses.add(resp);
 	}
 	
 	public void deleteQuestion(int questionId) {
@@ -51,6 +51,7 @@ public class PagingService {
 	
 	public void statQuestion(int age, Boolean sex, int expLevel, int userId, int pOTDid) {
 		
+		stat = new StatisticalResponse();
 		stat.setAge(age);
 		stat.setExpertLevel(expLevel);
 		stat.setProductOfTheDayId(pOTDid);
@@ -59,16 +60,56 @@ public class PagingService {
 		
 	}
 	
+	//private Boolean checkOffense(Response response, List<OffensiveWords> of) {
+		
+		// TODO: it's not good we need to divide it by regex!
+		
+//		if (of.contains(response.getText())) {
+//			return true;
+//		} else {
+//			return false;
+//		}
+		
+	//}
+	
 	public void submit() {
 		
+		//offensive = new OffensiveWords();
+		
+		//List<OffensiveWords> of = em.createNamedQuery("OffensiveWords.findAll", OffensiveWords.class)
+			//				.getResultList();
+
 		for (Response r : responses) {
+			
+			//Boolean offensive = checkOffense(r, of);
+			
+			
 			Timestamp tm = new Timestamp(System.currentTimeMillis());
 			r.setResponseDT(tm);
 			em.persist(r);
 		}
 		
+		Timestamp tm = new Timestamp(System.currentTimeMillis());
+
+		stat.setReponseDate(tm);
+		
 		em.persist(stat);
 		
+	}
+	
+	public Boolean cancel() {
+		responses.clear();
+		stat = null;
+		
+		if (responses.isEmpty() && (stat == null)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public String getResp(int i) {
+		return this.responses.get(i).getText();
 	}
 	
 	public List<Response> getResponses() {

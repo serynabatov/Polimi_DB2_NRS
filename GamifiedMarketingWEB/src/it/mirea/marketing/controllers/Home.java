@@ -28,7 +28,7 @@ public class Home extends HttpServlet {
 	private ProductOfTheDayService POTDService;
 
 	public void init() throws ServletException {
-		ServletContext servletContext = getServletContext();
+X		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
 		templateResolver.setTemplateMode(TemplateMode.HTML);
 		this.templateEngine = new TemplateEngine();
@@ -41,7 +41,7 @@ public class Home extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
-		List<String> productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());//TODO: check null
+		List<String> productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());//TODO: check nullX
 		List<String> productReviews = POTDService.getReviews(POTDService.todayProductOfTheDay());//TODO: check null
 		List<String> productQuestions = POTDService.getQuestions(POTDService.todayProductOfTheDay());// todo check null
 		if (productNameImage != null) {		
@@ -50,7 +50,6 @@ public class Home extends HttpServlet {
 			ctx.setVariable("pOTDReviews", productReviews);
 			ctx.setVariable("productQuestions", productQuestions);
 		}
-		
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
