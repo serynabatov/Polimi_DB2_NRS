@@ -24,4 +24,14 @@ public class ProductService {
 		else
 			return p;
 	}
+	
+	public List<Product> getAll() {
+		List<Product> p = em.createNamedQuery("Product.findAll", Product.class)
+							.getResultList();
+		
+		if(p == null)
+			return null;
+		else
+			return p;
+	}
 }
