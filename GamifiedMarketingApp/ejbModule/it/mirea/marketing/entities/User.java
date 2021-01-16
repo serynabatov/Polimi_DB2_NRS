@@ -35,7 +35,7 @@ public class User {
 	
 	private String role;
 	
-	private Boolean canceled;
+	private int canceled;
 		
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("responseDatetime DESC")
@@ -58,7 +58,7 @@ public class User {
 		this.password = pass;
 		this.blocked = Boolean.FALSE;
 		this.points = 0;
-		this.canceled = Boolean.FALSE;
+		this.canceled = 0;
 		this.responses = null;
 		this.statist = null;
 		this.logins = null;
@@ -92,7 +92,7 @@ public class User {
 		return this.role;
 	}
 	
-	public Boolean getCanceled() {
+	public int getCanceled() {
 		return this.canceled;
 	}
 	
@@ -136,7 +136,7 @@ public class User {
 		this.role = role;
 	}
 	
-	public void setCanceled(Boolean canceled) {
+	public void setCanceled(int canceled) {
 		this.canceled = canceled;
 	}
 	
