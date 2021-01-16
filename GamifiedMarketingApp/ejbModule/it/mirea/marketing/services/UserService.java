@@ -85,6 +85,25 @@ public class UserService {
 			return false;
 		}
 	}
+	
+	public List<User> getCanceled(Boolean t) {
+		List<User> uList = null;
+		
+		try {
+			uList = em.createNamedQuery("user.canceled", User.class)
+					  .setParameter(1, t)
+					  .getResultList();
+		} catch (PersistenceException e) {
+			return null;
+		}
+		
+		if (uList.isEmpty())
+			return null;
+		else
+			return uList;
+	}
+	
+	
 
 	public List<User> getLeaderBoard() {
 
