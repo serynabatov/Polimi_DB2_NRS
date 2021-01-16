@@ -104,7 +104,7 @@ public class CheckLogin extends HttpServlet {
 				*/
 				InitialContext ic = new InitialContext();
 				 //Retrieve the EJB using JNDI lookup
-				pagingService = (PagingService) ic.lookup("java:/openejb/local/QueryServiceLocalBean");
+				pagingService = (PagingService) ic.lookup("java:/openejb/local/PagingServiceLocalBean");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

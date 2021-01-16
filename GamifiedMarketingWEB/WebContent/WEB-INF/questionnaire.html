@@ -14,7 +14,6 @@
 		<div th:each="pq, pqInfo: ${prodQuestions}">
 			<label th:text="'Question #' + ${pqInfo.index +1}"></label>
 			<br><textarea placeholder="Your asnwer" th:name="userResponse" required/></textarea>
-			<!--  <br><textarea placeholder="'userResponse' + ${pq.key}" th:text="'userResponse' + ${pq.key}" required/></textarea>-->
 		</div>	
 		
 		<input type="hidden" th:value="${prodQuestionsKeys}" name="prodQuestionsKeys"/>	

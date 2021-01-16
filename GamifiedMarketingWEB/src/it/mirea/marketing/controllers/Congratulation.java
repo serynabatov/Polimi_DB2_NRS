@@ -1,6 +1,7 @@
 package it.mirea.marketing.controllers;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,6 +16,8 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import it.mirea.marketing.entities.ProductOfTheDay;
+import it.mirea.marketing.entities.User;
 import it.mirea.marketing.services.PagingService;
 
 
@@ -28,7 +31,7 @@ public class Congratulation extends HttpServlet {
 	private String userID;
 	private String POTDid;
  
-    public Congratulation() {
+    public void init() throws ServletException {
     	ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
 		templateResolver.setTemplateMode(TemplateMode.HTML);
@@ -37,7 +40,17 @@ public class Congratulation extends HttpServlet {
 		templateResolver.setSuffix(".html");
     }
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String path = "/WEB-INF/congrats.html";
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		templateEngine.process(path, ctx, response.getWriter());
+	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String path = "/WEB-INF/congrats.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
@@ -58,9 +71,12 @@ public class Congratulation extends HttpServlet {
 		}
 		
 		PagingService pagingService = (PagingService) request.getSession().getAttribute("pagingService");
-	    pagingService.statQuestion(Integer.parseInt(age), Boolean.parseBoolean(expertise), Integer.parseInt(userID), Integer.parseInt(POTDid), Integer.parseInt(sex));
+	    pagingService.statQuestion(Integer.parseInt(age), Boolean.parseBoolean(sex), Integer.parseInt(expertise), Integer.parseInt(userID), Integer.parseInt(POTDid));
 	
-		
+	    pagingService.submit();
+	    
+		templateEngine.process(path, ctx, response.getWriter());
+
 	}
 
 }

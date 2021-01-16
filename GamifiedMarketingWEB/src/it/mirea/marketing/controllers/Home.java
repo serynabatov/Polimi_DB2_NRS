@@ -50,6 +50,7 @@ public class Home extends HttpServlet {
 			ctx.setVariable("pOTDImage", productNameImage.get(1));
 			ctx.setVariable("pOTDReviews", productReviews);
 			ctx.setVariable("productQuestions", productQuestions);
+		}
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
