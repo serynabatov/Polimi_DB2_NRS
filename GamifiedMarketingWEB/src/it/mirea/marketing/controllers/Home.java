@@ -1,7 +1,6 @@
 package it.mirea.marketing.controllers;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ import org.thymeleaf.TemplateEngine;
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB(name = "it.polimi.db2.album.services/ProductOfTheDayService")
+	@EJB(name = "it.mirea.marketing.services.ProductOfTheDayService")
 	private ProductOfTheDayService POTDService;
 
 	public void init() throws ServletException {

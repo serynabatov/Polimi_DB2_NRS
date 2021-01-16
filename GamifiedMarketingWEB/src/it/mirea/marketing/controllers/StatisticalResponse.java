@@ -96,7 +96,7 @@ public class StatisticalResponse extends HttpServlet {
 		ctx.setVariable("userID", userID);
 		ctx.setVariable("POTDid", POTDid);
 		templateEngine.process(path, ctx, response.getWriter());	
-		response.sendRedirect(path);				
+		//response.sendRedirect(path);				
 	}
 }
 
