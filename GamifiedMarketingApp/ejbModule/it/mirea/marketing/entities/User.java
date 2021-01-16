@@ -12,7 +12,8 @@ import javax.persistence.*;
 	@NamedQuery(name = "user.checkCredentialsMail",
 			query = "SELECT r FROM User r WHERE r.mail = ?1"),
 	@NamedQuery(name = "user.leaderboard",
-			query = "SELECT r FROM User r WHERE r.role <> ?1 and r.blocked <> ?2 ORDER BY r.points DESC")
+			query = "SELECT r FROM User r WHERE r.role <> ?1 and r.blocked <> ?2 ORDER BY r.points DESC"),
+	@NamedQuery(name = "user.canceled", query = "SELECT r FROM User r WHERE r.canceled = ?1")
 
 })
 public class User {
@@ -33,6 +34,8 @@ public class User {
 	private Boolean blocked;
 	
 	private String role;
+	
+	private Boolean canceled;
 		
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("responseDatetime DESC")
@@ -55,6 +58,7 @@ public class User {
 		this.password = pass;
 		this.blocked = Boolean.FALSE;
 		this.points = 0;
+		this.canceled = Boolean.FALSE;
 		this.responses = null;
 		this.statist = null;
 		this.logins = null;
@@ -86,6 +90,10 @@ public class User {
 	
 	public String getRole() {
 		return this.role;
+	}
+	
+	public Boolean getCanceled() {
+		return this.canceled;
 	}
 	
 	public List<StatisticalResponse> getStat() {
@@ -126,6 +134,10 @@ public class User {
 	
 	public void setRole(String role) {
 		this.role = role;
+	}
+	
+	public void setCanceled(Boolean canceled) {
+		this.canceled = canceled;
 	}
 	
 	public void setStat(List<StatisticalResponse> statist) {
