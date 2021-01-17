@@ -15,6 +15,7 @@ import javax.persistence.TypedQuery;
 import it.mirea.marketing.entities.OffensiveWords;
 import it.mirea.marketing.entities.Response;
 import it.mirea.marketing.entities.StatisticalResponse;
+import it.mirea.marketing.entities.User;
 
 @Stateful
 public class PagingService {
@@ -63,13 +64,12 @@ public class PagingService {
 	private String[] divideText(String text) {
 		
 		// we could insert more complex regex (if there is a time for it)
-		String []s = text.split(" ");
+		String []s = text.replaceAll("^[,\\s]+", "").split("[,\\s]+");;
 		
 		return s;
 		
 	}
-	
-	// maybe do it via binary search?
+		
 	private Boolean checkOffense(Response response, List<OffensiveWords> of) {
 		
 		String[] letters = divideText(response.getText());
@@ -84,7 +84,9 @@ public class PagingService {
 		
 	}
 	
-	public void submit() {
+	public void submit(int userId) {
+		
+		Boolean t = false;
 		
 		offensive = new OffensiveWords();
 		
@@ -96,19 +98,26 @@ public class PagingService {
 			Boolean offensive = checkOffense(r, of);
 			
 			if (offensive == true) {
-				// TODO: block the user				
-			} else {
+
+				User u = em.find(User.class, userId);
+				u.setBlocked(true);
+				t = true;
+				break;
+			} 
+		}
+
+		if (t == false) {
+			for (Response r : responses) {
 				Timestamp tm = new Timestamp(System.currentTimeMillis());
 				r.setResponseDT(tm);
 				em.persist(r);
 			}
-		}
-		
-		Timestamp tm = new Timestamp(System.currentTimeMillis());
+			Timestamp tm = new Timestamp(System.currentTimeMillis());
 
-		stat.setReponseDate(tm);
-		
-		em.persist(stat);
+			stat.setReponseDate(tm);
+			
+			em.persist(stat);
+		}
 		
 	}
 	
