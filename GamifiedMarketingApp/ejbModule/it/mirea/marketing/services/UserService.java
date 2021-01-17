@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.*;
 
 import it.mirea.marketing.entities.LogInTime;
+import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.entities.User;
 import it.mirea.marketing.exceptions.CredentialsException;
 import it.mirea.marketing.exceptions.EmailCredentialsException;
@@ -122,6 +123,22 @@ public class UserService {
 		if (uList.isEmpty())
 			return null;
 		else
+			return uList;
+	}
+	
+	public List<User> getLeaderBoardProduct() {
+		List<User> uList = null;
+		try {
+			uList = em.createNamedQuery("user.leaderboardProduct", User.class)
+					  .setParameter(1, "admin")
+					  .setParameter(2, true)
+					  .getResultList();
+		} catch (PersistenceException e) {
+			return null;
+		}
+		if (uList.isEmpty())
+			return null;
+		else 
 			return uList;
 	}
 

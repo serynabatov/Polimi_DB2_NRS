@@ -76,11 +76,11 @@ public class PagingService {
 		
 		for (String s : letters) {
 			if (of.contains(s)) {
-				return false;
+				return true;
 			}
 		}
 		
-		return true;
+		return false;
 		
 	}
 	

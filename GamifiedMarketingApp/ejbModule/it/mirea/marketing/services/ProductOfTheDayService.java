@@ -27,15 +27,12 @@ public class ProductOfTheDayService {
 	public ProductOfTheDayService() { }
 	
 	// get the list of the products and choose from them
-	public Boolean createProductOfTheDayAsProduct(/*int productOfTheDayId,*/ Date productOTD, 
-			Product p) {
+	public Boolean createProductOfTheDayAsProduct( Date productOTD, int p) {
 		
 		if (checkForTheDate(productOTD)) {
 			ProductOfTheDay pOTD = new ProductOfTheDay();
-			//pOTD.setProductOfTheDay(productOfTheDayId);
 			pOTD.setProductOTD((java.sql.Date)productOTD);
-			pOTD.setProductId(p.getProductId());
-			pOTD.setProduct(p); 
+			pOTD.setProductId(p);
 			em.persist(pOTD);
 			return true;
 		} else {
