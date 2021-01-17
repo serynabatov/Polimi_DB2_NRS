@@ -13,7 +13,9 @@ import javax.persistence.*;
 			query = "SELECT r FROM User r WHERE r.mail = ?1"),
 	@NamedQuery(name = "user.leaderboard",
 			query = "SELECT r FROM User r WHERE r.role <> ?1 and r.blocked <> ?2 ORDER BY r.points DESC"),
-	@NamedQuery(name = "user.canceled", query = "SELECT r FROM User r WHERE r.canceled = ?1")
+	@NamedQuery(name = "user.canceled", query = "SELECT r FROM User r WHERE r.canceled = ?1"),
+	@NamedQuery(name = "user.leaderboardProduct",
+				query = "SELECT r FROM User r WHERE r.role <> ?1 AND r.blocked <> ?2 ORDER BY r.dayPoints DESC")
 
 })
 public class User {
@@ -36,6 +38,9 @@ public class User {
 	private String role;
 	
 	private int canceled;
+	
+	@Column(name="day_points")
+	private int dayPoints;
 		
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("responseDatetime DESC")
