@@ -1,8 +1,8 @@
 package it.mirea.marketing.controllers;
 
 import java.io.IOException;
-import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +17,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.mirea.marketing.entities.ProductOfTheDay;
-import it.mirea.marketing.entities.User;
 import it.mirea.marketing.services.PagingService;
+import it.mirea.marketing.services.ProductOfTheDayService;
 
 
 @WebServlet("/Questionnaire/Congratulation")
@@ -30,6 +30,9 @@ public class Congratulation extends HttpServlet {
 	private String expertise;
 	private String userID;
 	private String POTDid;
+	@EJB(name = "it.polimi.db2.album.services/ProductOfTheDayService")
+	private ProductOfTheDayService POTDService;
+
  
     public void init() throws ServletException {
     	ServletContext servletContext = getServletContext();
@@ -73,7 +76,9 @@ public class Congratulation extends HttpServlet {
 		PagingService pagingService = (PagingService) request.getSession().getAttribute("pagingService");
 	    pagingService.statQuestion(Integer.parseInt(age), Boolean.parseBoolean(sex), Integer.parseInt(expertise), Integer.parseInt(userID), Integer.parseInt(POTDid));
 	
-	    pagingService.submit(Integer.parseInt(userID));
+	    ProductOfTheDay p = POTDService.todayProductOfTheDay();
+	    
+	    pagingService.submit(Integer.parseInt(userID), p.getProductOTD());
 	    
 		templateEngine.process(path, ctx, response.getWriter());
 

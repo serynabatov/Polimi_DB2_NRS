@@ -13,7 +13,6 @@ import javax.persistence.*;
 			query = "SELECT r FROM User r WHERE r.mail = ?1"),
 	@NamedQuery(name = "user.leaderboard",
 			query = "SELECT r FROM User r WHERE r.role <> ?1 and r.blocked <> ?2 ORDER BY r.points DESC"),
-	@NamedQuery(name = "user.canceled", query = "SELECT r FROM User r WHERE r.canceled = ?1"),
 	@NamedQuery(name = "user.leaderboardProduct",
 				query = "SELECT r FROM User r WHERE r.role <> ?1 AND r.blocked <> ?2 ORDER BY r.dayPoints DESC")
 
@@ -36,23 +35,24 @@ public class User {
 	private Boolean blocked;
 	
 	private String role;
-	
-	private int canceled;
-	
+		
 	@Column(name="day_points")
 	private int dayPoints;
 		
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("responseDatetime DESC")
 	private List<Response> responses;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("statId ASC")
 	private List<StatisticalResponse> statist;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="user")
 	@OrderBy("loggedIn DESC")
 	private List<LogInTime> logins;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="user")
+	private List<Canceled> cancels;
 	
 	public User() { }
 		
@@ -63,7 +63,7 @@ public class User {
 		this.password = pass;
 		this.blocked = Boolean.FALSE;
 		this.points = 0;
-		this.canceled = 0;
+		//this.canceled = 0;
 		this.responses = null;
 		this.statist = null;
 		this.logins = null;
@@ -96,11 +96,7 @@ public class User {
 	public String getRole() {
 		return this.role;
 	}
-	
-	public int getCanceled() {
-		return this.canceled;
-	}
-	
+		
 	public List<StatisticalResponse> getStat() {
 		return this.statist;
 	}
@@ -111,6 +107,10 @@ public class User {
 	
 	public List<LogInTime> getLogins() {
 		return this.logins;
+	}
+	
+	public List<Canceled> getCanceled() {
+		return this.cancels;
 	}
 	
 	public void setUserId(int userId) {
@@ -141,10 +141,6 @@ public class User {
 		this.role = role;
 	}
 	
-	public void setCanceled(int canceled) {
-		this.canceled = canceled;
-	}
-	
 	public void setStat(List<StatisticalResponse> statist) {
 		this.statist = statist;
 	}
@@ -155,5 +151,9 @@ public class User {
 	
 	public void setLogins(List<LogInTime> logins) {
 		this.logins = logins;
+	}
+	
+	public void setCanceled(List<Canceled> canc) {
+		this.cancels = canc;
 	}
 }

@@ -1,11 +1,14 @@
 package it.mirea.marketing.services;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
 
+import it.mirea.marketing.entities.Canceled;
 import it.mirea.marketing.entities.LogInTime;
 import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.entities.User;
@@ -87,18 +90,31 @@ public class UserService {
 		}
 	}
 	
+	private User findById(int id) {
+		return em.find(User.class, id);
+	}
+	
 	// 0 - user didn't do anything
 	// 1 - user canceled
 	// 2 - user submitted
-	public List<User> getCanceled(int t) {
-		List<User> uList = null;
+	public List<String> getCanceled(int t, Date d) {
+		List<String> uList = new ArrayList<String>();
+		List<Canceled> cancList = null;
 		
 		try {
-			uList = em.createNamedQuery("user.canceled", User.class)
-					  .setParameter(1, t)
-					  .getResultList();
+			cancList = em.createNamedQuery("canceled.getCancel", Canceled.class)
+						 .setParameter(1, t)
+						 .setParameter(2, d)
+						 .getResultList();
+			
 		} catch (PersistenceException e) {
 			return null;
+		}
+		
+		for (Canceled c : cancList) {
+			User u = findById(c.getUserId());
+			
+			uList.add(u.getUserName());
 		}
 		
 		if (uList.isEmpty())

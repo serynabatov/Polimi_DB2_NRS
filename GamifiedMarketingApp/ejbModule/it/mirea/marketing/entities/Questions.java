@@ -20,10 +20,10 @@ public class Questions {
 	
 	private int productOTD_id;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="question")
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="question")
 	private Set<Response> responses;
 	
-	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.PERSIST)
+	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.ALL)
 	@JoinColumn(name="productOTD_id", insertable=false, updatable=false)
 	private ProductOfTheDay pOTD;
 	

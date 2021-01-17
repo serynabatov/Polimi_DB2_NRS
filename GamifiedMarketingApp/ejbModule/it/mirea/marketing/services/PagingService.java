@@ -1,5 +1,6 @@
 package it.mirea.marketing.services;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -10,12 +11,15 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
+import it.mirea.marketing.entities.Canceled;
 import it.mirea.marketing.entities.OffensiveWords;
 import it.mirea.marketing.entities.Response;
 import it.mirea.marketing.entities.StatisticalResponse;
 import it.mirea.marketing.entities.User;
+import it.mirea.marketing.exceptions.CredentialsException;
 
 @Stateful
 public class PagingService {
@@ -84,7 +88,31 @@ public class PagingService {
 		
 	}
 	
-	public void submit(int userId) {
+	private void canceled(int userId, int cancel, Date pOTD) {
+		
+		List<Canceled> c = null;
+		
+		try {
+			c = em.createNamedQuery("canceled.byUserId", Canceled.class)
+					   .setParameter(1, userId)
+					   .setParameter(2, pOTD)
+					   .getResultList();
+		} catch (PersistenceException e) {
+			// TODO: create exceptions!
+			System.out.println("troubles with canceled");
+		}
+				
+		if (c.isEmpty())
+			System.out.println("No such user in canceled!");
+		else if (c.size() == 1) {		
+			Canceled canc = c.get(0);
+			canc.setCanceled(cancel);
+			em.persist(canc);
+		}
+
+	}
+	
+	public void submit(int userId, Date pOTD) {
 		
 		Boolean t = false;
 		
@@ -92,7 +120,7 @@ public class PagingService {
 		
 		List<OffensiveWords> of = em.createNamedQuery("OffensiveWords.findAll", OffensiveWords.class)
 							.getResultList();
-
+		
 		for (Response r : responses) {
 			
 			Boolean offensive = checkOffense(r, of);
@@ -117,13 +145,17 @@ public class PagingService {
 			stat.setReponseDate(tm);
 			
 			em.persist(stat);
+			canceled(userId, 2, pOTD);
 		}
 		
 	}
 	
-	public Boolean cancel() {
+	public Boolean cancel(int userId, Date pOTD) {
 		responses.clear();
 		stat = null;
+		
+		canceled(userId, 1, pOTD);
+
 		
 		if (responses.isEmpty() && (stat == null)) {
 			return true;
