@@ -4,9 +4,11 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,6 +19,7 @@ import it.mirea.marketing.entities.Product;
 import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.entities.Questions;
 import it.mirea.marketing.entities.Response;
+import it.mirea.marketing.entities.User;
 
 @Stateless
 public class ProductOfTheDayService {
@@ -27,7 +30,7 @@ public class ProductOfTheDayService {
 	public ProductOfTheDayService() { }
 	
 	// get the list of the products and choose from them
-	public Boolean createProductOfTheDayAsProduct( Date productOTD, int p) {
+	public Boolean createProductOfTheDayAsProduct(Date productOTD, int p) {
 		
 		if (checkForTheDate(productOTD)) {
 			ProductOfTheDay pOTD = new ProductOfTheDay();
@@ -178,6 +181,31 @@ public class ProductOfTheDayService {
 		}
 
 		return questions;
+	}
+	
+	// TODO optimize it!!
+	public Map<String, Set<String>> getQuestionsResponses(ProductOfTheDay p) {
+		
+		List<Questions> questionObj = p.getQuestions();
+		Map<String, Set<String>> questionsNicknames = new HashMap<String, Set<String>>();
+		
+		Iterator<Questions> iter = questionObj.iterator();
+		
+		while(iter.hasNext()) {
+			Questions q = (Questions) iter.next();
+			Set<Response> r = q.getResponses();
+			HashSet<String> st = new HashSet<String>();
+			
+			Iterator<Response> set = r.iterator();
+			while(set.hasNext()) {
+				Response text = (Response) set.next();
+				st.add(text.getText());
+			}
+			
+			questionsNicknames.put(q.getText(), st);
+		}
+		
+		return questionsNicknames;
 	}
 	
 	public Map<Integer, String> getMapQuestions(ProductOfTheDay p) {

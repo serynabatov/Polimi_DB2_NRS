@@ -13,7 +13,6 @@ import javax.persistence.*;
 			query = "SELECT r FROM User r WHERE r.mail = ?1"),
 	@NamedQuery(name = "user.leaderboard",
 			query = "SELECT r FROM User r WHERE r.role <> ?1 and r.blocked <> ?2 ORDER BY r.points DESC"),
-	//@NamedQuery(name = "user.canceled", query = "SELECT r FROM User r WHERE r.canceled = ?1"),
 	@NamedQuery(name = "user.leaderboardProduct",
 				query = "SELECT r FROM User r WHERE r.role <> ?1 AND r.blocked <> ?2 ORDER BY r.dayPoints DESC")
 
@@ -36,21 +35,24 @@ public class User {
 	private Boolean blocked;
 	
 	private String role;
-	
+		
 	@Column(name="day_points")
 	private int dayPoints;
 		
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("responseDatetime DESC")
 	private List<Response> responses;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="user", cascade = CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="user", cascade = CascadeType.REMOVE)
 	@OrderBy("statId ASC")
 	private List<StatisticalResponse> statist;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="user")
 	@OrderBy("loggedIn DESC")
 	private List<LogInTime> logins;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="user")
+	private List<Canceled> cancels;
 	
 	public User() { }
 		
@@ -93,7 +95,7 @@ public class User {
 	public String getRole() {
 		return this.role;
 	}
-	
+
 	public List<StatisticalResponse> getStat() {
 		return this.statist;
 	}
@@ -104,6 +106,10 @@ public class User {
 	
 	public List<LogInTime> getLogins() {
 		return this.logins;
+	}
+	
+	public List<Canceled> getCanceled() {
+		return this.cancels;
 	}
 	
 	public void setUserId(int userId) {
@@ -144,5 +150,9 @@ public class User {
 	
 	public void setLogins(List<LogInTime> logins) {
 		this.logins = logins;
+	}
+	
+	public void setCanceled(List<Canceled> canc) {
+		this.cancels = canc;
 	}
 }
