@@ -1,7 +1,6 @@
 package it.mirea.marketing.controllers.admin;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,12 +14,11 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-
-@WebServlet("/Admin")
-public class AdminPanel extends HttpServlet {
+@WebServlet("/Admin/Deletion")
+public class Deletion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private TemplateEngine templateEngine;
-       
+private TemplateEngine templateEngine;
+    
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -33,13 +31,12 @@ public class AdminPanel extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String path = "/WEB-INF/admin/admin_panel.html";
+		String path = "/WEB-INF/admin/admin_deletion.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
 		templateEngine.process(path, ctx, response.getWriter());
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

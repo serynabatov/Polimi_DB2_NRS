@@ -24,11 +24,11 @@ import org.thymeleaf.TemplateEngine;
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	@EJB(name = "it.mirea.marketing.services.ProductOfTheDayService")
+	@EJB(name = "it.mirea.marketing.services/ProductOfTheDayService")
 	private ProductOfTheDayService POTDService;
 
 	public void init() throws ServletException {
-X		ServletContext servletContext = getServletContext();
+		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
 		templateResolver.setTemplateMode(TemplateMode.HTML);
 		this.templateEngine = new TemplateEngine();
