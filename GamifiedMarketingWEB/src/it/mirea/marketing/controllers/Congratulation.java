@@ -73,7 +73,7 @@ public class Congratulation extends HttpServlet {
 		PagingService pagingService = (PagingService) request.getSession().getAttribute("pagingService");
 	    pagingService.statQuestion(Integer.parseInt(age), Boolean.parseBoolean(sex), Integer.parseInt(expertise), Integer.parseInt(userID), Integer.parseInt(POTDid));
 	
-	    pagingService.submit();
+	    pagingService.submit(Integer.parseInt(userID));
 	    
 		templateEngine.process(path, ctx, response.getWriter());
 
