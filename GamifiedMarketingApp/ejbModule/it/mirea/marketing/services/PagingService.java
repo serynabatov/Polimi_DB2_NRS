@@ -60,33 +60,48 @@ public class PagingService {
 		
 	}
 	
-	//private Boolean checkOffense(Response response, List<OffensiveWords> of) {
+	private String[] divideText(String text) {
 		
-		// TODO: it's not good we need to divide it by regex!
+		// we could insert more complex regex (if there is a time for it)
+		String []s = text.split(" ");
 		
-//		if (of.contains(response.getText())) {
-//			return true;
-//		} else {
-//			return false;
-//		}
+		return s;
 		
-	//}
+	}
+	
+	// maybe do it via binary search?
+	private Boolean checkOffense(Response response, List<OffensiveWords> of) {
+		
+		String[] letters = divideText(response.getText());
+		
+		for (String s : letters) {
+			if (of.contains(s)) {
+				return false;
+			}
+		}
+		
+		return true;
+		
+	}
 	
 	public void submit() {
 		
-		//offensive = new OffensiveWords();
+		offensive = new OffensiveWords();
 		
-		//List<OffensiveWords> of = em.createNamedQuery("OffensiveWords.findAll", OffensiveWords.class)
-			//				.getResultList();
+		List<OffensiveWords> of = em.createNamedQuery("OffensiveWords.findAll", OffensiveWords.class)
+							.getResultList();
 
 		for (Response r : responses) {
 			
-			//Boolean offensive = checkOffense(r, of);
+			Boolean offensive = checkOffense(r, of);
 			
-			
-			Timestamp tm = new Timestamp(System.currentTimeMillis());
-			r.setResponseDT(tm);
-			em.persist(r);
+			if (offensive == true) {
+				// TODO: block the user				
+			} else {
+				Timestamp tm = new Timestamp(System.currentTimeMillis());
+				r.setResponseDT(tm);
+				em.persist(r);
+			}
 		}
 		
 		Timestamp tm = new Timestamp(System.currentTimeMillis());

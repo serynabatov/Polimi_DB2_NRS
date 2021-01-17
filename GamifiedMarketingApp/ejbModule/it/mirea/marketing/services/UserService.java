@@ -86,7 +86,10 @@ public class UserService {
 		}
 	}
 	
-	public List<User> getCanceled(Boolean t) {
+	// 0 - user didn't do anything
+	// 1 - user canceled
+	// 2 - user submitted
+	public List<User> getCanceled(int t) {
 		List<User> uList = null;
 		
 		try {
