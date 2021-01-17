@@ -197,19 +197,19 @@ public class ProductOfTheDayService {
 	}
 	
 	// TODO optimize it!!
-	public Map<String, Set<String>> getQuestionsResponses(Date d) {
+	public Map<String, List<String>> getQuestionsResponses(Date d) {
 		
 		ProductOfTheDay p = getPOTD(d);
 		
 		List<Questions> questionObj = p.getQuestions();
-		Map<String, Set<String>> questionsNicknames = new HashMap<String, Set<String>>();
+		Map<String, List<String>> questionsNicknames = new HashMap<String, List<String>>();
 		
 		Iterator<Questions> iter = questionObj.iterator();
 		
 		while(iter.hasNext()) {
 			Questions q = (Questions) iter.next();
-			Set<Response> r = q.getResponses();
-			HashSet<String> st = new HashSet<String>();
+			List<Response> r = q.getResponses();
+			List<String> st = new ArrayList<String>();
 			
 			Iterator<Response> set = r.iterator();
 			while(set.hasNext()) {
