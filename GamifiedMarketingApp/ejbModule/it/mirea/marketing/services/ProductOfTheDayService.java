@@ -68,6 +68,17 @@ public class ProductOfTheDayService {
 			return null;
 	}
 	
+	private ProductOfTheDay getPOTD(Date d) {
+		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", ProductOfTheDay.class)
+					   	 	 	    .setParameter(1, d)
+					   	 	 	    .getResultList();
+		
+		if(p.size() == 1)
+			return p.get(0);
+		else
+			return null;
+	}
+	
 	//create product of the day and then as a product (maybe do as a trigger)
 	public Boolean createProductOfTheDayThenProduct(int productOfTheDayId, Date productOTD,
 			int productId, String productName, String linkImage, byte[] image) {
@@ -184,7 +195,9 @@ public class ProductOfTheDayService {
 	}
 	
 	// TODO optimize it!!
-	public Map<String, Set<String>> getQuestionsResponses(ProductOfTheDay p) {
+	public Map<String, Set<String>> getQuestionsResponses(Date d) {
+		
+		ProductOfTheDay p = getPOTD(d);
 		
 		List<Questions> questionObj = p.getQuestions();
 		Map<String, Set<String>> questionsNicknames = new HashMap<String, Set<String>>();
