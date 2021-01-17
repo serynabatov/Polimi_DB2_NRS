@@ -93,13 +93,11 @@ public class UserService {
 	public List<User> getCanceled(int t) {
 		List<User> uList = null;
 		
-		try {
-			uList = em.createNamedQuery("user.canceled", User.class)
-					  .setParameter(1, t)
-					  .getResultList();
-		} catch (PersistenceException e) {
-			return null;
-		}
+		/*
+		 * try { uList = em.createNamedQuery("user.canceled", User.class)
+		 * .setParameter(1, t) .getResultList(); } catch (PersistenceException e) {
+		 * return null; }
+		 */
 		
 		if (uList.isEmpty())
 			return null;

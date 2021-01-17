@@ -30,6 +30,7 @@ public class Congratulation extends HttpServlet {
 	private String expertise;
 	private String userID;
 	private String POTDid;
+	private String button;
  
     public void init() throws ServletException {
     	ServletContext servletContext = getServletContext();
@@ -60,9 +61,11 @@ public class Congratulation extends HttpServlet {
 			expertise = StringEscapeUtils.escapeJava(request.getParameter("exp_lvl"));
 			userID = StringEscapeUtils.escapeJava(request.getParameter("userID"));
 			POTDid = StringEscapeUtils.escapeJava(request.getParameter("POTDid"));
+			button = StringEscapeUtils.escapeJava(request.getParameter("button"));
 			
 			if (age == null || sex == null || expertise == null || age.isEmpty() || sex.isEmpty() || expertise.isEmpty()
-					|| userID == null || POTDid == null || userID.isEmpty() || POTDid.isEmpty()) {
+					|| userID == null || POTDid == null || userID.isEmpty() || POTDid.isEmpty() || button.isEmpty()
+					|| button.isEmpty()) {
 				throw new Exception("Missing or empty credential value");
 			}
 		} catch (Exception e) {
@@ -70,13 +73,17 @@ public class Congratulation extends HttpServlet {
 			return;
 		}
 		
-		PagingService pagingService = (PagingService) request.getSession().getAttribute("pagingService");
-	    pagingService.statQuestion(Integer.parseInt(age), Boolean.parseBoolean(sex), Integer.parseInt(expertise), Integer.parseInt(userID), Integer.parseInt(POTDid));
-	
-	    pagingService.submit(Integer.parseInt(userID));
-	    
-		templateEngine.process(path, ctx, response.getWriter());
-
+		if (button.equals("cancel")) {
+			path = getServletContext().getContextPath() + "/Home";     				
+			response.sendRedirect(path);			
+		} else {
+			PagingService pagingService = (PagingService) request.getSession().getAttribute("pagingService");
+		    pagingService.statQuestion(Integer.parseInt(age), Boolean.parseBoolean(sex), Integer.parseInt(expertise), Integer.parseInt(userID), Integer.parseInt(POTDid));
+		
+		    pagingService.submit(Integer.parseInt(userID));
+		    templateEngine.process(path, ctx, response.getWriter());
+		}
+		
 	}
 
 }
