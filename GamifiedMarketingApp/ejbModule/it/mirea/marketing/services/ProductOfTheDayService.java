@@ -33,6 +33,7 @@ public class ProductOfTheDayService {
 	public Boolean createProductOfTheDayAsProduct(Date productOTD, int p) {
 		
 		if (checkForTheDate(productOTD)) {
+			System.out.println("test if");
 			ProductOfTheDay pOTD = new ProductOfTheDay();
 			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(p);
@@ -46,8 +47,9 @@ public class ProductOfTheDayService {
 	private Boolean checkForTheDate(Date productOTD) {
 		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", 
 													  ProductOfTheDay.class)
-				  .setParameter(1, productOTD)
+				  .setParameter(1, (java.sql.Date)productOTD)
 				  .getResultList();
+		System.out.println(p);
 		if (p.size() == 0)
 			return true;
 		else
