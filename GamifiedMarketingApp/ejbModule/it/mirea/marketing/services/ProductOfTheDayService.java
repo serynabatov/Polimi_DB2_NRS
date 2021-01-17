@@ -27,12 +27,12 @@ public class ProductOfTheDayService {
 	public ProductOfTheDayService() { }
 	
 	// get the list of the products and choose from them
-	public Boolean createProductOfTheDayAsProduct(int productOfTheDayId, Date productOTD, 
+	public Boolean createProductOfTheDayAsProduct(/*int productOfTheDayId,*/ Date productOTD, 
 			Product p) {
 		
 		if (checkForTheDate(productOTD)) {
 			ProductOfTheDay pOTD = new ProductOfTheDay();
-			pOTD.setProductOfTheDay(productOfTheDayId);
+			//pOTD.setProductOfTheDay(productOfTheDayId);
 			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(p.getProductId());
 			pOTD.setProduct(p); 
@@ -90,7 +90,7 @@ public class ProductOfTheDayService {
 		}
 	}
 	
-	public Boolean createProductOfTheDayThenProduct(int productOfTheDayId, Date productOTD,
+	public Boolean createProductOfTheDayThenProduct(/*int productOfTheDayId,*/ Date productOTD,
 			int productId, String productName, byte[] image) {
 		if (checkForTheDate(productOTD)) {
 			Product p = new Product();
@@ -99,7 +99,7 @@ public class ProductOfTheDayService {
 			p.setImage(image);
 			em.persist(p);
 			ProductOfTheDay pOTD = new ProductOfTheDay();
-			pOTD.setProductOfTheDay(productOfTheDayId);
+			//pOTD.setProductOfTheDay(productOfTheDayId);
 			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(productId);
 			pOTD.setProduct(p); 
