@@ -7,8 +7,8 @@
 <body>  
 
 	<h1>Admin Creation Page</h1>
-
-	<form action="Creation/Questions" method="POST">
+	
+<!-- 	<form action="Creation" method="POST">
 		<div>
 			<p>Select product:</p>
 			<select name="productId">
@@ -22,7 +22,7 @@
 			<p>Select date:</p>
 			<input type="date" name="prodDate"
         	th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
-       		<!-- min="2018-01-01" max="2018-12-31" -->
+       		<!-- min="2018-01-01" max="2018-12-31" 
 		</div>
 		
 		<div>
@@ -38,35 +38,6 @@
          
         <input type="submit" name ="button" value="Submit">
 		<p th:text=" ${errorMsg}"></p>
-	</form>
-		
-	<!-- 
-	<div class="element-wrapper">
-		<div class="row">
-			<input type="text" name="prodQuestion">
-			<button class="btn-remove-row">Remove row</button>
-		</div>
-	</div>
-	<button class="btn-add-row">Add new row</button>
-	
-	
-	<script src="jquery-3.0.0.min.js">
-	
-	 /* create new row */
-	 $(document).on("click", ".btn-add-row", function() {
-	 	/* clone row class element index 0 */
-	 	var row = $(".row").eq(0).clone().show();
-	 	/* append row clone to element-wrapper */
-	 	$(".element-wrapper").append(row);
-	 });
-	 /* remove row handle */
-	 $(document).on("click", ".btn-remove-row", function() {
-	 	/* get btn index first */
-	 	var index = $(".btn-remove-row").index(this);
-	 	/* do remove row */
-	 	$(".row").eq(index).remove();
-	 });
-	</script>
-	 -->
-</body>
+	</form> -->
+		</body>
 </html>
