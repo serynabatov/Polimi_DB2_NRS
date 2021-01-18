@@ -28,9 +28,6 @@ public class ProductOfTheDayService {
 	@PersistenceContext(unitName = "GamifiedMarketingApp")
 	private EntityManager em;
 
-	//@Resource
-	//private SessionContext sessionContext;
-
 	public ProductOfTheDayService() { }
 	
 	// get the list of the products and choose from them
@@ -71,6 +68,28 @@ public class ProductOfTheDayService {
 		return dates;
 	}
 	
+	public List<Date> getInspection() {
+		
+		LocalDate now = LocalDate.now();
+		Date d = convertToDateViaSqlDate(now);
+		List<ProductOfTheDay> pd = null;
+		List<Date> dates = new ArrayList<Date>();
+		
+		try {
+			pd = em.createNamedQuery("ProductOfTheDay.inspection", ProductOfTheDay.class)
+					.setParameter(1, d)
+					.getResultList();
+		} catch (PersistenceException e) {
+			System.out.println(e);
+		}
+		
+		for (ProductOfTheDay p : pd) {
+			dates.add(p.getProductOTD());
+		}
+		return dates;
+		
+	}
+	
 	private Boolean checkForTheDate(Date productOTD) {
 		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", 
 													  ProductOfTheDay.class)
@@ -106,68 +125,6 @@ public class ProductOfTheDayService {
 			return p.get(0);
 		else
 			return null;
-	}
-	
-	//create product of the day and then as a product (maybe do as a trigger)
-	public Boolean createProductOfTheDayThenProduct(int productOfTheDayId, Date productOTD,
-			int productId, String productName, String linkImage, byte[] image) {
-		if (checkForTheDate(productOTD)) {
-			Product p = new Product();
-			p.setProductId(productId);
-			p.setProductName(productName);
-			p.setImage(image);
-			p.setLinkImage(linkImage);
-			em.persist(p);
-			ProductOfTheDay pOTD = new ProductOfTheDay();
-			pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD((java.sql.Date)productOTD);
-			pOTD.setProductId(productId);
-			pOTD.setProduct(p); 
-			em.persist(pOTD);
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public Boolean createProductOfTheDayThenProduct(/*int productOfTheDayId,*/ Date productOTD,
-			int productId, String productName, byte[] image) {
-		if (checkForTheDate(productOTD)) {
-			Product p = new Product();
-			p.setProductId(productId);
-			p.setProductName(productName);
-			p.setImage(image);
-			em.persist(p);
-			ProductOfTheDay pOTD = new ProductOfTheDay();
-			//pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD((java.sql.Date)productOTD);
-			pOTD.setProductId(productId);
-			pOTD.setProduct(p); 
-			em.persist(pOTD);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public Boolean createProductOfTheDayThenProduct(int productOfTheDayId, Date productOTD,
-			int productId, String productName, String linkImage) {
-		if (checkForTheDate(productOTD)) {
-			Product p = new Product();
-			p.setProductId(productId);
-			p.setProductName(productName);
-			p.setLinkImage(linkImage);
-			em.persist(p);
-			ProductOfTheDay pOTD = new ProductOfTheDay();
-			pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD((java.sql.Date)productOTD);
-			pOTD.setProductId(productId);
-			pOTD.setProduct(p); 
-			em.persist(pOTD);
-			return true;
-		} else {
-			return false;
-		}
 	}
 	
 	private Date convertToDateViaSqlDate(LocalDate dateToConvert) {
@@ -269,15 +226,8 @@ public class ProductOfTheDayService {
 		ProductOfTheDay p = getPOTD(d);
 		
 		int id = p.getProductOfTheDayId();
-		//UserTransaction userTxn = sessionContext.getUserTransaction();
-		//em.getTransaction().begin();
-
-		em.remove(p);
-
-
 		
-		//em.remove(p);
-		//em.getTransaction().commit();
+		em.remove(p);
 		
 		ProductOfTheDay p1 = em.find(ProductOfTheDay.class, id);
 		
