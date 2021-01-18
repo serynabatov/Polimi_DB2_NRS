@@ -34,4 +34,12 @@ public class ProductService {
 		else
 			return p;
 	}
+	
+	public Product getProduct(int id) {
+		
+		Product p = em.find(Product.class, id);
+		
+		return p;
+		
+	}
 }

@@ -4,22 +4,18 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import it.mirea.marketing.entities.Product;
-//import it.mirea.marketing.entities.Product;
 import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.entities.Questions;
 import it.mirea.marketing.entities.Response;
-import it.mirea.marketing.entities.User;
 
 @Stateless
 public class ProductOfTheDayService {
@@ -235,6 +231,24 @@ public class ProductOfTheDayService {
 	    }
 	    
 	    return mapQuestions;
+	}
+	
+	public Boolean deleteProductOfTheDay(Date d) {
+		
+		ProductOfTheDay p = getPOTD(d);
+		
+		int id = p.getProductOfTheDayId();
+		
+		em.getTransaction().begin();
+		em.remove(p);
+		em.getTransaction().commit();
+		
+		ProductOfTheDay p1 = em.find(ProductOfTheDay.class, id);
+		
+		if (p1 == null)
+			return true;
+		else
+			return false;
 	}
 
 }
