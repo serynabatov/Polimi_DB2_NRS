@@ -71,6 +71,28 @@ public class ProductOfTheDayService {
 		return dates;
 	}
 	
+	public List<Date> getInspection() {
+		
+		LocalDate now = LocalDate.now();
+		Date d = convertToDateViaSqlDate(now);
+		List<ProductOfTheDay> pd = null;
+		List<Date> dates = new ArrayList<Date>();
+		
+		try {
+			pd = em.createNamedQuery("ProductOfTheDay.inspection", ProductOfTheDay.class)
+					.setParameter(1, d)
+					.getResultList();
+		} catch (PersistenceException e) {
+			System.out.println(e);
+		}
+		
+		for (ProductOfTheDay p : pd) {
+			dates.add(p.getProductOTD());
+		}
+		return dates;
+		
+	}
+	
 	private Boolean checkForTheDate(Date productOTD) {
 		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", 
 													  ProductOfTheDay.class)
@@ -269,20 +291,8 @@ public class ProductOfTheDayService {
 		ProductOfTheDay p = getPOTD(d);
 		
 		int id = p.getProductOfTheDayId();
-		UserTransaction userTxn = sessionContext.getUserTransaction();
-		//em.getTransaction().begin();
 		
-		try {
-			userTxn.begin();
-			em.remove(p);
-			userTxn.commit();
-		} catch(Exception e) {
-			try {userTxn.rollback();} catch (Exception e2) {}
-			throw new CredentialsException("bruh");
-		}
-		
-		//em.remove(p);
-		//em.getTransaction().commit();
+		em.remove(p);
 		
 		ProductOfTheDay p1 = em.find(ProductOfTheDay.class, id);
 		
