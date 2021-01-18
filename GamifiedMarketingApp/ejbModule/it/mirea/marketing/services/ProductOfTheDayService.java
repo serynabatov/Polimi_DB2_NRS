@@ -8,22 +8,29 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.transaction.UserTransaction;
 
 import it.mirea.marketing.entities.Product;
 import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.entities.Questions;
 import it.mirea.marketing.entities.Response;
+import it.mirea.marketing.exceptions.CredentialsException;
 
 @Stateless
 public class ProductOfTheDayService {
 
 	@PersistenceContext(unitName = "GamifiedMarketingApp")
 	private EntityManager em;
-	
+
+	@Resource
+	private SessionContext sessionContext;
+
 	public ProductOfTheDayService() { }
 	
 	// get the list of the products and choose from them
@@ -257,15 +264,25 @@ public class ProductOfTheDayService {
 	    return mapQuestions;
 	}
 	
-	public Boolean deleteProductOfTheDay(Date d) {
+	public Boolean deleteProductOfTheDay(Date d) throws CredentialsException {
 		
 		ProductOfTheDay p = getPOTD(d);
 		
 		int id = p.getProductOfTheDayId();
+		UserTransaction userTxn = sessionContext.getUserTransaction();
+		//em.getTransaction().begin();
 		
-		em.getTransaction().begin();
-		em.remove(p);
-		em.getTransaction().commit();
+		try {
+			userTxn.begin();
+			em.remove(p);
+			userTxn.commit();
+		} catch(Exception e) {
+			try {userTxn.rollback();} catch (Exception e2) {}
+			throw new CredentialsException("bruh");
+		}
+		
+		//em.remove(p);
+		//em.getTransaction().commit();
 		
 		ProductOfTheDay p1 = em.find(ProductOfTheDay.class, id);
 		
