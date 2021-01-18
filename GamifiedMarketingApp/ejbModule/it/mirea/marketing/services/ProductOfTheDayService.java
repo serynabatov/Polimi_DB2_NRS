@@ -28,9 +28,6 @@ public class ProductOfTheDayService {
 	@PersistenceContext(unitName = "GamifiedMarketingApp")
 	private EntityManager em;
 
-	@Resource
-	private SessionContext sessionContext;
-
 	public ProductOfTheDayService() { }
 	
 	// get the list of the products and choose from them
