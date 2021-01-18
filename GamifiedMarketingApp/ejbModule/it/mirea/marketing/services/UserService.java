@@ -101,10 +101,14 @@ public class UserService {
 		List<String> uList = new ArrayList<String>();
 		List<Canceled> cancList = null;
 		
-		for (Canceled c : cancList) {
-			User u = findById(c.getUserId());
+		try {
+			cancList = em.createNamedQuery("canceled.getCancel", Canceled.class)
+						 .setParameter(1, t)
+						 .setParameter(2, d)
+						 .getResultList();
 			
-			uList.add(u.getUserName());
+		} catch (PersistenceException e) {
+			return null;
 		}
 		
 		for (Canceled c : cancList) {
