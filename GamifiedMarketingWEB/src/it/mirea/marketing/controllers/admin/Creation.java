@@ -60,6 +60,7 @@ public class Creation extends HttpServlet {
 		String path = "/WEB-INF/admin/admin_creation.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		
 		List<Product> products = productService.getAll();
 		ctx.setVariable("nullProducts", products);
 		if (products != null) {		
