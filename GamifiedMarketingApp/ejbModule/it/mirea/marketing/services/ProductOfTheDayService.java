@@ -4,9 +4,11 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -17,6 +19,7 @@ import it.mirea.marketing.entities.Product;
 import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.entities.Questions;
 import it.mirea.marketing.entities.Response;
+import it.mirea.marketing.entities.User;
 
 @Stateless
 public class ProductOfTheDayService {
@@ -27,9 +30,10 @@ public class ProductOfTheDayService {
 	public ProductOfTheDayService() { }
 	
 	// get the list of the products and choose from them
-	public Boolean createProductOfTheDayAsProduct( Date productOTD, int p) {
+	public Boolean createProductOfTheDayAsProduct(Date productOTD, int p) {
 		
 		if (checkForTheDate(productOTD)) {
+			System.out.println("test if");
 			ProductOfTheDay pOTD = new ProductOfTheDay();
 			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(p);
@@ -43,8 +47,9 @@ public class ProductOfTheDayService {
 	private Boolean checkForTheDate(Date productOTD) {
 		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", 
 													  ProductOfTheDay.class)
-				  .setParameter(1, productOTD)
+				  .setParameter(1, (java.sql.Date)productOTD)
 				  .getResultList();
+		System.out.println(p);
 		if (p.size() == 0)
 			return true;
 		else
@@ -60,6 +65,17 @@ public class ProductOfTheDayService {
 							  .getResultList();
 		
 		if (p.size() == 1)
+			return p.get(0);
+		else
+			return null;
+	}
+	
+	private ProductOfTheDay getPOTD(Date d) {
+		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", ProductOfTheDay.class)
+					   	 	 	    .setParameter(1, d)
+					   	 	 	    .getResultList();
+		
+		if(p.size() == 1)
 			return p.get(0);
 		else
 			return null;
@@ -87,7 +103,7 @@ public class ProductOfTheDayService {
 		}
 	}
 	
-	public Boolean createProductOfTheDayThenProduct(int productOfTheDayId, Date productOTD,
+	public Boolean createProductOfTheDayThenProduct(/*int productOfTheDayId,*/ Date productOTD,
 			int productId, String productName, byte[] image) {
 		if (checkForTheDate(productOTD)) {
 			Product p = new Product();
@@ -96,7 +112,7 @@ public class ProductOfTheDayService {
 			p.setImage(image);
 			em.persist(p);
 			ProductOfTheDay pOTD = new ProductOfTheDay();
-			pOTD.setProductOfTheDay(productOfTheDayId);
+			//pOTD.setProductOfTheDay(productOfTheDayId);
 			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(productId);
 			pOTD.setProduct(p); 
@@ -178,6 +194,33 @@ public class ProductOfTheDayService {
 		}
 
 		return questions;
+	}
+	
+	// TODO optimize it!!
+	public Map<String, List<String>> getQuestionsResponses(Date d) {
+		
+		ProductOfTheDay p = getPOTD(d);
+		
+		List<Questions> questionObj = p.getQuestions();
+		Map<String, List<String>> questionsNicknames = new HashMap<String, List<String>>();
+		
+		Iterator<Questions> iter = questionObj.iterator();
+		
+		while(iter.hasNext()) {
+			Questions q = (Questions) iter.next();
+			List<Response> r = q.getResponses();
+			List<String> st = new ArrayList<String>();
+			
+			Iterator<Response> set = r.iterator();
+			while(set.hasNext()) {
+				Response text = (Response) set.next();
+				st.add(text.getText());
+			}
+			
+			questionsNicknames.put(q.getText(), st);
+		}
+		
+		return questionsNicknames;
 	}
 	
 	public Map<Integer, String> getMapQuestions(ProductOfTheDay p) {

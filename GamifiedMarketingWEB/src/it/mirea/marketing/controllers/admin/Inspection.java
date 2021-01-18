@@ -1,6 +1,11 @@
-package it.mirea.marketing.controllers;
+package it.mirea.marketing.controllers.admin;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -17,77 +22,80 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.mirea.marketing.entities.ProductOfTheDay;
-import it.mirea.marketing.services.PagingService;
+import it.mirea.marketing.entities.User;
 import it.mirea.marketing.services.ProductOfTheDayService;
+import it.mirea.marketing.services.UserService;
 
 
-@WebServlet("/Questionnaire/Congratulation")
-public class Congratulation extends HttpServlet {
+@WebServlet("/Admin/Inspection")
+public class Inspection extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-	private String age;
-	private String sex;
-	private String expertise;
-	private String userID;
-	private String POTDid;
-	private String button;
-	@EJB(name = "it.polimi.db2.album.services/ProductOfTheDayService")
+	@EJB(name = "it.mirea.marketing.services/ProductOfTheDayService")
 	private ProductOfTheDayService POTDService;
+	@EJB(name = "it.mirea.marketing.services/UserService")
+	private UserService userService;
+	private java.util.Date inspectionDate;
+	private java.sql.Date sqlDate;
+    
 
-    public void init() throws ServletException {
-    	ServletContext servletContext = getServletContext();
+	public void init() throws ServletException {
+		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
 		templateResolver.setTemplateMode(TemplateMode.HTML);
 		this.templateEngine = new TemplateEngine();
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
-    }
+	}
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String path = "/WEB-INF/congrats.html";
+		String path = "/WEB-INF/admin/admin_inspection_request.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String path = "/WEB-INF/congrats.html";
+		String path = "/WEB-INF/admin/admin_inspection_response.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
 		try {
-			age = StringEscapeUtils.escapeJava(request.getParameter("age"));
-			sex = StringEscapeUtils.escapeJava(request.getParameter("gender"));
-			expertise = StringEscapeUtils.escapeJava(request.getParameter("exp_lvl"));
-			userID = StringEscapeUtils.escapeJava(request.getParameter("userID"));
-			POTDid = StringEscapeUtils.escapeJava(request.getParameter("POTDid"));
-			button = StringEscapeUtils.escapeJava(request.getParameter("button"));
-			
-			if (age == null || sex == null || expertise == null || age.isEmpty() || sex.isEmpty() || expertise.isEmpty()
-					|| userID == null || POTDid == null || userID.isEmpty() || POTDid.isEmpty() || button.isEmpty()
-					|| button.isEmpty()) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd",  Locale.ENGLISH);
+			inspectionDate = format.parse(StringEscapeUtils.escapeJava(request.getParameter("inspectionDate")));
+       	  	
+			if (inspectionDate == null) {
 				throw new Exception("Missing or empty credential value");
 			}
 		} catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
 			return;
 		}
+		sqlDate = new java.sql.Date(inspectionDate.getTime());
+		List<String> canceledUsers = userService.getCanceled(1, sqlDate);
+		List<String> submittedUsers = userService.getCanceled(2, sqlDate);
+		Map<String, List<String>> questionResponses = POTDService.getQuestionsResponses(sqlDate);
 		
-		if (button.equals("cancel")) {
-			path = getServletContext().getContextPath() + "/Home";     				
-			response.sendRedirect(path);			
-		} else {
-			PagingService pagingService = (PagingService) request.getSession().getAttribute("pagingService");
-		    pagingService.statQuestion(Integer.parseInt(age), Boolean.parseBoolean(sex), Integer.parseInt(expertise), Integer.parseInt(userID), Integer.parseInt(POTDid));
+		System.out.print(questionResponses);
 		
-		    ProductOfTheDay p = POTDService.todayProductOfTheDay();
-		    
-		    pagingService.submit(Integer.parseInt(userID), p.getProductOTD());
-		    templateEngine.process(path, ctx, response.getWriter());
-		}
-
+		ctx.setVariable("nullCancel", canceledUsers);
+		ctx.setVariable("nullSubmit", submittedUsers);
+		ctx.setVariable("nullResponse", questionResponses);
+		if (canceledUsers != null) {
+			ctx.setVariable("canceledUsers", canceledUsers);
+		} 
+		
+		if (submittedUsers != null) {
+			ctx.setVariable("submittedUsers", submittedUsers);
+		} 
+		
+		if (questionResponses != null) {
+			ctx.setVariable("questionResponses", questionResponses);
+		} 
+		
+		templateEngine.process(path, ctx, response.getWriter());
 	}
 
 }

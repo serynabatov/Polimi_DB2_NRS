@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<link rel="stylesheet" href="assets/css/style_leaderboard.css">
+ 	<title>Admin Inspection Page</title>
+ </head>
+ <body>
+ 
+ 	<section class="inspection_block">
+	 	<div>
+			<table>
+				<tr>
+					<th>Submitted Users</th>
+				</tr>
+				
+				<tr th:each="su : ${submittedUsers}">
+	  				<td th:text="${su}"></td>
+				</tr>
+			</table>
+		
+		</div>
+	
+		<div>
+			<table>
+				<tr>
+					<th>Canceled Users</th>
+				</tr>
+				
+				<tr th:each="cu : ${canceledUsers}">
+	  				<td th:text="${cu}"></td>
+				</tr>
+			</table>
+		</div>
+	
+		<!-- <div th:if="${not #lists.isEmpty(stateToDistrictMap)}"> -->
+		<div>
+  			<table>
+	    		<tr>
+	    			<td>Question Responses</td>
+	    		</tr>
+	 			<th:block th:each="qrEntry : ${questionResponses}">
+	  				<tr>
+	     				<td th:text="${qrEntry.key}"></td>
+	  				<th:block th:each="response : ${qrEntry.value}">
+	    				<td th:text="${response}"></td>
+	  				</th:block>
+	  				 </tr>
+	 			</th:block>
+	     	</table>
+		</div>
+	
+		<table>
+    		<thead>
+    			<tr>
+			        <th>Question</th>
+			        <th>Responses</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+			    <tr th:each="qrEntry: ${questionResponses}" th:with="response=${qrEntry.value}">
+			        <td th:text="${qrEntry.key}"></td>
+			       	<th:block th:each="response : ${qrEntry.value}">
+	    				<td th:text="${response}"></td>
+	  				</th:block>
+			    </tr>
+    		</tbody>
+		</table>
+		
+ 	</section>
+	
+</body>
+</html>

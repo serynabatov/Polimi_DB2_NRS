@@ -1,6 +1,6 @@
 package it.mirea.marketing.entities;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -20,17 +20,17 @@ public class Questions {
 	
 	private int productOTD_id;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="question")
-	private Set<Response> responses;
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="question")
+	private List<Response> responses;
 	
-	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.PERSIST)
+	@ManyToOne(/*fetch=FetchType.LAZY,*/cascade = CascadeType.ALL)
 	@JoinColumn(name="productOTD_id", insertable=false, updatable=false)
 	private ProductOfTheDay pOTD;
 	
 	public Questions() { }
 	
 	public Questions(int questionId, String text, ProductOfTheDay pOTD,
-			Set<Response> responses) {
+			List<Response> responses) {
 		this.questionId = questionId;
 		this.text = text;
 		this.responses = responses;
@@ -48,7 +48,7 @@ public class Questions {
 		return this.productOTD_id;
 	}
 	
-	public Set<Response> getResponses() {
+	public List<Response> getResponses() {
 		return this.responses;
 	}
 		
@@ -64,7 +64,7 @@ public class Questions {
 		this.productOTD_id = id;
 	}
 	
-	public void setResponses(Set<Response> responses) {
+	public void setResponses(List<Response> responses) {
 		this.responses = responses;
 	}
 	
