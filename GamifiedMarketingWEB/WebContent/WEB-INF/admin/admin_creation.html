@@ -1,51 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="assets/css/style_leaderboard.css">
-<title>Creation</title>
+	<meta charset="ISO-8859-1">
+	<title>Admin Creation Page</title>
 </head>
 <body>  
 
-	<div class="button-container">
-		<div class="element">
-		    <div class="text-container">Select the product</div>
-		  	<select size="1">
-		          <option>Чебурашка</option>
-		          <option>Крокодил Гена</option>
-		          <option>Шапокляк</option>
-		          <option>Крыса Лариса</option>
-		 	 </select>
+	<h1>Admin Creation Page</h1>
+
+	<form action="Creation" method="POST">
+		<div>
+			<p>Select product:</p>
+			<select name="productId">
+				<option th:each="p : ${products}" th:value="${p.productId}"
+						th:text="${p.productName}">
+				</option>
+			</select>
 		</div>
 		
-		<div class="element">
-			<div class="text-container">Chose the questions</div>
-			<div class="element-100">
-				<select name="cars" multiple>
-					<option value="volvo">Volvo</option>
-					<option value="saab">Saab</option>
-					<option value="opel">Opel</option>
-					<option value="audi">Audi</option>
-					<option value="volvo">Volvo</option>
-					<option value="saab">Saab</option>
-					<option value="opel">Opel</option>
-					<option value="audi">Audi</option>
-				</select> 
-			</div>
+		<div>
+			<p>Select date:</p>
+			<input type="date" name="prodDate"
+        	th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+       		<!-- min="2018-01-01" max="2018-12-31" -->
 		</div>
-		 
-		<div class="element">
-			<form>
-				 <div class="text-container">Chose the questions</div>
-				 <input type="date" name="calendar">
-			</form>
-		</div>
-	</div>
 		
-	<div class="button-container">
-	      <button type="submit" class="animated-button">submit</button> 
+		<div>
+			<p>Select image:</p>
+        	<input type="file" name="prodImage">
+		</div>
+		
+		<div>
+			<p>Add a question:</p>
+        	<input type="text"  name="prodQuestion">
+       		<input type="submit" name ="button" value="Add row">
+		</div>  
+         
+        <input type="submit" name ="button" value="Submit">
+		<p th:text=" ${errorMsg}"></p>
+	</form>
+		
+	<!-- 
+	<div class="element-wrapper">
+		<div class="row">
+			<input type="text" name="prodQuestion">
+			<button class="btn-remove-row">Remove row</button>
+		</div>
 	</div>
-     
+	<button class="btn-add-row">Add new row</button>
+	
+	
+	<script src="jquery-3.0.0.min.js">
+	
+	 /* create new row */
+	 $(document).on("click", ".btn-add-row", function() {
+	 	/* clone row class element index 0 */
+	 	var row = $(".row").eq(0).clone().show();
+	 	/* append row clone to element-wrapper */
+	 	$(".element-wrapper").append(row);
+	 });
+	 /* remove row handle */
+	 $(document).on("click", ".btn-remove-row", function() {
+	 	/* get btn index first */
+	 	var index = $(".btn-remove-row").index(this);
+	 	/* do remove row */
+	 	$(".row").eq(index).remove();
+	 });
+	</script>
+	 -->
 </body>
 </html>

@@ -23,11 +23,13 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import java.util.List;
+import java.util.Locale;
 
 import it.mirea.marketing.services.ProductOfTheDayService;
 import it.mirea.marketing.services.ProductService;
+import it.mirea.marketing.services.QuestionsService;
 import it.mirea.marketing.entities.Product;
-
+import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.utils.ImageUtils;
 
 @WebServlet("/Admin/Creation")
@@ -38,10 +40,12 @@ public class Creation extends HttpServlet {
 	private ProductOfTheDayService POTDService;
 	@EJB(name = "it.mirea.marketing.services/ProductService")
 	private ProductService productService;
+	@EJB(name = "it.mirea.marketing.services/QuestionsService")
+	private QuestionsService questionsService;
 	private int productId;
-	private java.util.Date pDate;
-	private String pImage;
+	private java.util.Date prodDate;
 	private java.sql.Date sqlDate;
+	private String buttonVal;
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -51,7 +55,6 @@ public class Creation extends HttpServlet {
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
 	}
-
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = "/WEB-INF/admin/admin_creation.html";
@@ -70,16 +73,10 @@ public class Creation extends HttpServlet {
 			
 		try {
 			productId = Integer.parseInt(StringEscapeUtils.escapeJava(request.getParameter("productId")));
-			SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
-			pDate = format.parse(StringEscapeUtils.escapeJava(request.getParameter("pDate")));
-			pImage = StringEscapeUtils.escapeJava(request.getParameter("pImage"));
-			
-//			pDate.toInstant()                  // Convert from legacy class `java.util.Date` (a moment in UTC) to a modern `java.time.Instant` (a moment in UTC).
-//	        .atZone( ZoneId.of( "Africa/Tunis" ) )  // Adjust from UTC to a particular time zone, to determine a date. Instantiating a `ZonedDateTime`.
-//	        .toLocalDate();  
-//			java.sql.Date sqlDate = java.sql.Date.valueOf( todayLocalDate );
-       	  	sqlDate = new java.sql.Date(pDate.getTime());
-			    
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd",  Locale.ENGLISH);
+			prodDate = format.parse(StringEscapeUtils.escapeJava(request.getParameter("prodDate")));
+			buttonVal = StringEscapeUtils.escapeJava(request.getParameter("button"));
+       	  	
 			if (productId == 0) {
 				throw new Exception("Missing or empty credential value");
 			}
@@ -88,9 +85,23 @@ public class Creation extends HttpServlet {
 			return;
 		}
 		
-		//InputStream stream = new ByteArrayInputStream(pImage.getBytes(StandardCharsets.UTF_8));
+//		ProductOfTheDay pOTD = POTDService.todayProductOfTheDay();
+//		pOTD.getPOTDDATE; // maybe if prodDate = productOTD_date = error.
+		
+		
+		if(buttonVal.equals("Add row"))
+		    System.out.println("BUTTON" + buttonVal);
+		else if(buttonVal.equals("Submit")) {
+			 System.out.println("BUTTON" + buttonVal);
+		}
+
+		
+		sqlDate = new java.sql.Date(prodDate.getTime());
+//		InputStream stream = new ByteArrayInputStream(pImage.getBytes(StandardCharsets.UTF_8));
 //		System.out.print(ImageUtils.readImage(stream).toString());
-		POTDService.createProductOfTheDayAsProduct(sqlDate, productId);		
+		
+		POTDService.createProductOfTheDayAsProduct(sqlDate, productId);	
+//		questionsService.createQuestions(questions, productService.getProduct(productId));
 		
 	}
 

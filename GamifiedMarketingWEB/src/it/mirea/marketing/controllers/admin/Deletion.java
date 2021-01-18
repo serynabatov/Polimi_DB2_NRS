@@ -29,7 +29,6 @@ private TemplateEngine templateEngine;
 		templateResolver.setSuffix(".html");
 	}
 
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = "/WEB-INF/admin/admin_deletion.html";
 		ServletContext servletContext = getServletContext();

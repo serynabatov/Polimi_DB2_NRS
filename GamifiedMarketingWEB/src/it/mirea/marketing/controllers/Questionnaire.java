@@ -18,6 +18,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
 import it.mirea.marketing.services.ProductOfTheDayService;
+import it.mirea.marketing.services.UserService;
 import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.entities.User;
 
@@ -28,6 +29,8 @@ public class Questionnaire extends HttpServlet {
 	private TemplateEngine templateEngine;
 	@EJB(name = "it.mirea.marketing.services/ProductOfTheDayService")
 	private ProductOfTheDayService POTDService;
+	@EJB(name = "it.mirea.marketing.services/UserService")
+	private UserService userService;
 
 
 	public void init() throws ServletException {
@@ -47,7 +50,7 @@ public class Questionnaire extends HttpServlet {
 		String path = "/WEB-INF/questionnaire.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-
+		
 		if (todayPOTD != null) {
 			ctx.setVariable("prodQuestionsKeys", productQuestions.keySet());
 			ctx.setVariable("prodQuestionsValues", productQuestions.values());
@@ -56,6 +59,7 @@ public class Questionnaire extends HttpServlet {
 			ctx.setVariable("POTDid", todayPOTD.getProductOfTheDayId());
 
 		}
+		
 		templateEngine.process(path, ctx, response.getWriter());
 	}
 
