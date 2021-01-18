@@ -17,7 +17,9 @@ import javax.persistence.*;
 				query = "SELECT r FROM User r WHERE r.role <> ?1 AND r.blocked <> ?2 ORDER BY r.dayPoints DESC")
 
 })
-public class User {
+public class User implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

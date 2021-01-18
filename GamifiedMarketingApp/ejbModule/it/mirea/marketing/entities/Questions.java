@@ -1,5 +1,6 @@
 package it.mirea.marketing.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
@@ -8,8 +9,10 @@ import javax.persistence.*;
 @Table(name="questions", schema="marketing")
 @NamedQuery(name = "Questions.findByProductId", 
 query = "SELECT q FROM Questions q WHERE q.productOTD_id = ?1")
-public class Questions {
+public class Questions implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="question_id")

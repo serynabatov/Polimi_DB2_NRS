@@ -1,13 +1,16 @@
 package it.mirea.marketing.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="response", schema="marketing")
-public class Response {
+public class Response implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="response_id")
