@@ -34,7 +34,7 @@ public class Product implements Serializable{
 		
 	// product is a field. This Collection is on the inverse 
 	// side of the relation
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product",cascade = CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "product",cascade = CascadeType.ALL)
 	@OrderBy("productOTD ASC")
 	private List<ProductOfTheDay> pOTD;
 	

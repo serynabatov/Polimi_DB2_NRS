@@ -42,4 +42,13 @@ public class ProductService {
 		return p;
 		
 	}
+	
+	public void addProduct(String name, byte[] image) {
+		
+		Product p = new Product();
+		
+		p.setImage(image);
+		p.setProductName(name);
+		em.persist(p);
+	}
 }
