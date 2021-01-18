@@ -16,6 +16,7 @@ import javax.persistence.TypedQuery;
 
 import it.mirea.marketing.entities.Canceled;
 import it.mirea.marketing.entities.OffensiveWords;
+import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.entities.Response;
 import it.mirea.marketing.entities.StatisticalResponse;
 import it.mirea.marketing.entities.User;
@@ -28,8 +29,7 @@ public class PagingService {
 	private EntityManager em;
 	private List<Response> responses = new ArrayList<Response>();
 	private StatisticalResponse stat = null;
-	private OffensiveWords offensive = null;
-	
+
 	public PagingService() { }
 	
 	public void answerQuestion(int questionId, String text, int userId, int pOTDid) {
@@ -67,19 +67,28 @@ public class PagingService {
 	
 	private String[] divideText(String text) {
 		
-		// we could insert more complex regex (if there is a time for it)
-		String []s = text.replaceAll("^[,\\s]+", "").split("[,\\s]+");;
-		System.out.println(s[0]);
+		String []s = text.replaceAll("^[,\\s]+", "").split("[,\\s]+");
 		return s;
 		
+	}
+	
+	private List<String> divideOffensives(List<OffensiveWords> of) {
+		
+		List<String> offensives = new ArrayList<String>();
+		
+		for (OffensiveWords o : of) {
+			offensives.add(o.getWords());
+		}
+		return offensives;
 	}
 		
 	private Boolean checkOffense(Response response, List<OffensiveWords> of) {
 		
 		String[] letters = divideText(response.getText());
-		
+		List<String> offensives = divideOffensives(of);
+				
 		for (String s : letters) {
-			if (of.contains(s)) {
+			if (offensives.contains(s.toLowerCase())) {
 				return true;
 			}
 		}
@@ -102,12 +111,15 @@ public class PagingService {
 			System.out.println("troubles with canceled");
 		}
 				
-		if (c.isEmpty())
-			System.out.println("No such user in canceled!");
-		else if (c.size() == 1) {		
-			Canceled canc = c.get(0);
+		if (c.isEmpty()) {
+			Canceled canc = new Canceled();
+			canc.setUserId(userId);
+			canc.setDate(pOTD);
 			canc.setCanceled(cancel);
 			em.persist(canc);
+		}
+		else if (c.size() == 1) {		
+			System.out.println("No such user in canceled!");		
 		}
 
 	}
@@ -115,9 +127,7 @@ public class PagingService {
 	public void submit(int userId, Date pOTD) {
 		
 		Boolean t = false;
-		
-		offensive = new OffensiveWords();
-		
+				
 		List<OffensiveWords> of = em.createNamedQuery("OffensiveWords.findAll", OffensiveWords.class)
 							.getResultList();
 		

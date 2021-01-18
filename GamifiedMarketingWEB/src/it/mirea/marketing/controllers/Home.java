@@ -51,25 +51,24 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		String path = "/WEB-INF/home.html";
 		ServletContext servletContext = getServletContext();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd",  Locale.ENGLISH);
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		List<String> productNameImage = null;
 		Map<String, List<String>> questionResponses = null;
 		try {
-		productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());//TODO: check null
-		ctx.setVariable("pOTDName", productNameImage.get(0));
-		ctx.setVariable("pOTDImage", productNameImage.get(1));
-		LocalDate now = LocalDate.now();
-	
-		sqlDate = java.sql.Date.valueOf(now);
-		questionResponses = POTDService.getQuestionsResponses(sqlDate);
-		ctx.setVariable("questionResponses", questionResponses);
+			productNameImage = POTDService.getNameImage(POTDService.todayProductOfTheDay());//TODO: check null
+			ctx.setVariable("pOTDName", productNameImage.get(0));
+			ctx.setVariable("pOTDImage", productNameImage.get(1));
+			LocalDate now = LocalDate.now();
+		
+			sqlDate = java.sql.Date.valueOf(now);
+			questionResponses = POTDService.getQuestionsResponses(sqlDate);
+			ctx.setVariable("questionResponses", questionResponses);
 		
 		} catch (Exception e) {
 			
 			if (productNameImage == null) {	
 				ctx.setVariable("pOTDName", "Today there is no Product of the day");
-				BufferedImage no_img = ImageIO.read(new File("C:\\Users\\atrolabe\\Desktop\\Polimi_DB2_NRS\\Polimi_DB2_NRS\\assest\\noProduct.png"));
+				BufferedImage no_img = ImageIO.read(new File("E:\\eclipse-workspace\\Polimi_DB2_NRS\\assest\\noProduct.png"));
 				ctx.setVariable("pOTDImage", no_img);
 			}
 			if (questionResponses == null) {

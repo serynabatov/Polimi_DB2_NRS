@@ -180,12 +180,28 @@ public class ProductOfTheDayService {
 		return questions;
 	}
 	
+	private List<Questions> getQuestions(int id) {
+		
+		List<Questions> qList = null;
+		
+		try {
+			qList = em.createNamedQuery("Questions.findByProductId", Questions.class)
+					  .setParameter(1, id)
+					  .getResultList();
+		} catch (PersistenceException e) {
+			System.out.println("Mya");
+		}
+		
+		return qList;
+	}
+	
 	// TODO optimize it!!
 	public Map<String, List<String>> getQuestionsResponses(Date d) {
-		
 		ProductOfTheDay p = getPOTD(d);
 		
-		List<Questions> questionObj = p.getQuestions();
+		List<Questions> questionObj = getQuestions(p.getProductOfTheDayId());
+		
+		//List<Questions> questionObj = p.getQuestions();
 		Map<String, List<String>> questionsNicknames = new HashMap<String, List<String>>();
 		
 		Iterator<Questions> iter = questionObj.iterator();
@@ -208,7 +224,7 @@ public class ProductOfTheDayService {
 	}
 	
 	public Map<Integer, String> getMapQuestions(ProductOfTheDay p) {
-		em.getEntityManagerFactory().getCache().evictAll();
+		//em.getEntityManagerFactory().getCache().evictAll();
 		List<Questions> questionsObj = p.getQuestions();
 		Map<Integer, String> mapQuestions = new HashMap<Integer, String>();
 	    Iterator<Questions> iter = questionsObj.iterator();

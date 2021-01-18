@@ -181,4 +181,12 @@ public class UserService {
 		return u.getRole();
 	}
 
+	public Boolean getBlocked(int id) {
+		
+		User u = em.find(User.class, id);
+		
+		return u.getBlocked();
+		
+	}
+	
 }
