@@ -224,7 +224,7 @@ public class ProductOfTheDayService {
 	}
 	
 	public Map<Integer, String> getMapQuestions(ProductOfTheDay p) {
-		
+		em.getEntityManagerFactory().getCache().evictAll();
 		List<Questions> questionsObj = p.getQuestions();
 		Map<Integer, String> mapQuestions = new HashMap<Integer, String>();
 	    Iterator<Questions> iter = questionsObj.iterator();
@@ -236,5 +236,7 @@ public class ProductOfTheDayService {
 	    
 	    return mapQuestions;
 	}
-
+	public EntityManager getEntityManager() {
+		return em;
+	}
 }
