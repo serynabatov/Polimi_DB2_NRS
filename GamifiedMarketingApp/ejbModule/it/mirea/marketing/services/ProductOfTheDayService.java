@@ -199,21 +199,21 @@ public class ProductOfTheDayService {
 	// TODO optimize it!!
 	public Map<String, List<String>> getQuestionsResponses(Date d) {
 		
-		ProductOfTheDay p = getPOTD(d);
+		ProductOfTheDay p = getPOTD(d); System.out.println(p.getProductOTD());
 		
-		List<Questions> questionObj = p.getQuestions();
+		List<Questions> questionObj = p.getQuestions();  System.out.println("Quest " + questionObj + " " + questionObj.size());
 		Map<String, List<String>> questionsNicknames = new HashMap<String, List<String>>();
 		
 		Iterator<Questions> iter = questionObj.iterator();
 		
 		while(iter.hasNext()) {
-			Questions q = (Questions) iter.next();
+			Questions q = (Questions) iter.next(); System.out.println(q.getText());
 			List<Response> r = q.getResponses();
 			List<String> st = new ArrayList<String>();
 			
 			Iterator<Response> set = r.iterator();
 			while(set.hasNext()) {
-				Response text = (Response) set.next();
+				Response text = (Response) set.next(); System.out.println(text.getText());
 				st.add(text.getText());
 			}
 			
