@@ -1,5 +1,6 @@
 package it.mirea.marketing.entities;
 
+import java.io.Serializable;
 import java.util.Base64;
 import java.util.List;
 
@@ -13,7 +14,9 @@ import javax.persistence.*;
 	@NamedQuery(name = "Product.findAll",
 			query = "SELECT p FROM Product p")
 })
-public class Product {
+public class Product implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +34,7 @@ public class Product {
 		
 	// product is a field. This Collection is on the inverse 
 	// side of the relation
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "product",cascade = CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "product",cascade = CascadeType.ALL)
 	@OrderBy("productOTD ASC")
 	private List<ProductOfTheDay> pOTD;
 	

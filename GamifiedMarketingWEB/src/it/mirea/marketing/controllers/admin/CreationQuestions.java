@@ -32,8 +32,9 @@ import it.mirea.marketing.entities.Product;
 import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.utils.ImageUtils;
 
-@WebServlet("/Admin/Creation")
-public class Creation extends HttpServlet {
+@WebServlet("/Admin/Creation/Questions")
+public class CreationQuestions extends HttpServlet{
+	
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
 	@EJB(name = "it.mirea.marketing.services/ProductOfTheDayService")
@@ -48,6 +49,7 @@ public class Creation extends HttpServlet {
 	private String buttonVal;
 	private String numQuestion;
 
+	
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
@@ -58,7 +60,7 @@ public class Creation extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String path = "/WEB-INF/admin/admin_creation.html";
+		String path = "/WEB-INF/admin/admin_creation_2.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		List<Product> products = productService.getAll();
@@ -71,8 +73,45 @@ public class Creation extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-		doGet(request, response);		
+		
+		String path = "/WEB-INF/admin/admin_creation_2.html";
+		ServletContext servletContext = getServletContext();
+		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+
+		
+		try {
+			productId = Integer.parseInt(StringEscapeUtils.escapeJava(request.getParameter("productId")));
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd",  Locale.ENGLISH);
+			prodDate = format.parse(StringEscapeUtils.escapeJava(request.getParameter("prodDate")));
+			buttonVal = StringEscapeUtils.escapeJava(request.getParameter("button"));
+       	  	numQuestion = StringEscapeUtils.escapeJava(request.getParameter("numQuestion"));
+			       	  	
+			if (productId == 0) {
+				throw new Exception("Missing or empty credential value");
+			}
+		} catch (Exception e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
+			return;
+		}
+		
+		Product p = productService.getProduct(productId);
+		
+		if(buttonVal.equals("Add number"))
+		    System.out.println("BUTTON" + buttonVal);
+		else if(buttonVal.equals("Submit")) {
+			 System.out.println("BUTTON" + buttonVal);
+		}
+
+		
+		sqlDate = new java.sql.Date(prodDate.getTime());
+//		InputStream stream = new ByteArrayInputStream(pImage.getBytes(StandardCharsets.UTF_8));
+//		System.out.print(ImageUtils.readImage(stream).toString());
+		
+		POTDService.createProductOfTheDayAsProduct(sqlDate, productId);	
+//		questionsService.createQuestions(questions, productService.getProduct(productId));
+		templateEngine.process(path, ctx, response.getWriter());
+
 	}
+
 
 }

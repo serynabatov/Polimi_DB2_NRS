@@ -69,7 +69,7 @@ public class PagingService {
 		
 		// we could insert more complex regex (if there is a time for it)
 		String []s = text.replaceAll("^[,\\s]+", "").split("[,\\s]+");;
-		
+		System.out.println(s[0]);
 		return s;
 		
 	}

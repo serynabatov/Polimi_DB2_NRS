@@ -1,5 +1,6 @@
 package it.mirea.marketing.entities;
-import org.eclipse.persistence.annotations.*;
+
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -8,9 +9,15 @@ import javax.persistence.Cache;
 
 @Entity
 @Table(name="productotd", schema="marketing")
-@NamedQuery(name = "ProductOfTheDay.findByDate", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD = ?1")
-public class ProductOfTheDay {
+@NamedQueries({
+	@NamedQuery(name = "ProductOfTheDay.findByDate", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD = ?1"),
+	@NamedQuery(name = "ProductOfTheDay.findNotPOTD", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD <> ?1"),
+	@NamedQuery(name = "ProductOfTheDay.inspection", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD < ?1")
+})
+public class ProductOfTheDay implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="productOTD_id")

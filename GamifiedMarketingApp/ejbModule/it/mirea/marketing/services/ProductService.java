@@ -34,4 +34,21 @@ public class ProductService {
 		else
 			return p;
 	}
+	
+	public Product getProduct(int id) {
+		
+		Product p = em.find(Product.class, id);
+		
+		return p;
+		
+	}
+	
+	public void addProduct(String name, byte[] image) {
+		
+		Product p = new Product();
+		
+		p.setImage(image);
+		p.setProductName(name);
+		em.persist(p);
+	}
 }

@@ -4,29 +4,30 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+import javax.transaction.UserTransaction;
 
 import it.mirea.marketing.entities.Product;
-//import it.mirea.marketing.entities.Product;
 import it.mirea.marketing.entities.ProductOfTheDay;
 import it.mirea.marketing.entities.Questions;
 import it.mirea.marketing.entities.Response;
-import it.mirea.marketing.entities.User;
+import it.mirea.marketing.exceptions.CredentialsException;
 
 @Stateless
 public class ProductOfTheDayService {
 
 	@PersistenceContext(unitName = "GamifiedMarketingApp")
 	private EntityManager em;
-	
+
 	public ProductOfTheDayService() { }
 	
 	// get the list of the products and choose from them
@@ -42,6 +43,51 @@ public class ProductOfTheDayService {
 		} else {
 			return false;
 		}
+	}
+	
+	public List<Date> getAllDates() {
+		LocalDate now = LocalDate.now();
+		Date d = convertToDateViaSqlDate(now);
+		List<ProductOfTheDay> pd = null;
+		List<Date> dates = new ArrayList<Date>();
+		
+		try {
+			pd = em.createNamedQuery("ProductOfTheDay.findNotPOTD",
+														  ProductOfTheDay.class)
+					                    .setParameter(1, d)
+					                    .getResultList();
+			
+		} catch (PersistenceException e) {
+			System.out.println(e);
+		}
+		
+		for(ProductOfTheDay p : pd) {
+			dates.add(p.getProductOTD());
+		}
+		
+		return dates;
+	}
+	
+	public List<Date> getInspection() {
+		
+		LocalDate now = LocalDate.now();
+		Date d = convertToDateViaSqlDate(now);
+		List<ProductOfTheDay> pd = null;
+		List<Date> dates = new ArrayList<Date>();
+		
+		try {
+			pd = em.createNamedQuery("ProductOfTheDay.inspection", ProductOfTheDay.class)
+					.setParameter(1, d)
+					.getResultList();
+		} catch (PersistenceException e) {
+			System.out.println(e);
+		}
+		
+		for (ProductOfTheDay p : pd) {
+			dates.add(p.getProductOTD());
+		}
+		return dates;
+		
 	}
 	
 	private Boolean checkForTheDate(Date productOTD) {
@@ -79,68 +125,6 @@ public class ProductOfTheDayService {
 			return p.get(0);
 		else
 			return null;
-	}
-	
-	//create product of the day and then as a product (maybe do as a trigger)
-	public Boolean createProductOfTheDayThenProduct(int productOfTheDayId, Date productOTD,
-			int productId, String productName, String linkImage, byte[] image) {
-		if (checkForTheDate(productOTD)) {
-			Product p = new Product();
-			p.setProductId(productId);
-			p.setProductName(productName);
-			p.setImage(image);
-			p.setLinkImage(linkImage);
-			em.persist(p);
-			ProductOfTheDay pOTD = new ProductOfTheDay();
-			pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD((java.sql.Date)productOTD);
-			pOTD.setProductId(productId);
-			pOTD.setProduct(p); 
-			em.persist(pOTD);
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	public Boolean createProductOfTheDayThenProduct(/*int productOfTheDayId,*/ Date productOTD,
-			int productId, String productName, byte[] image) {
-		if (checkForTheDate(productOTD)) {
-			Product p = new Product();
-			p.setProductId(productId);
-			p.setProductName(productName);
-			p.setImage(image);
-			em.persist(p);
-			ProductOfTheDay pOTD = new ProductOfTheDay();
-			//pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD((java.sql.Date)productOTD);
-			pOTD.setProductId(productId);
-			pOTD.setProduct(p); 
-			em.persist(pOTD);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public Boolean createProductOfTheDayThenProduct(int productOfTheDayId, Date productOTD,
-			int productId, String productName, String linkImage) {
-		if (checkForTheDate(productOTD)) {
-			Product p = new Product();
-			p.setProductId(productId);
-			p.setProductName(productName);
-			p.setLinkImage(linkImage);
-			em.persist(p);
-			ProductOfTheDay pOTD = new ProductOfTheDay();
-			pOTD.setProductOfTheDay(productOfTheDayId);
-			pOTD.setProductOTD((java.sql.Date)productOTD);
-			pOTD.setProductId(productId);
-			pOTD.setProduct(p); 
-			em.persist(pOTD);
-			return true;
-		} else {
-			return false;
-		}
 	}
 	
 	private Date convertToDateViaSqlDate(LocalDate dateToConvert) {
@@ -235,8 +219,21 @@ public class ProductOfTheDayService {
 	    }
 	    
 	    return mapQuestions;
+	}	
+	public Boolean deleteProductOfTheDay(Date d) throws CredentialsException {
+		
+		ProductOfTheDay p = getPOTD(d);
+		
+		int id = p.getProductOfTheDayId();
+		
+		em.remove(p);
+		
+		ProductOfTheDay p1 = em.find(ProductOfTheDay.class, id);
+		
+		if (p1 == null)
+			return true;
+		else
+			return false;
 	}
-	public EntityManager getEntityManager() {
-		return em;
-	}
+
 }
