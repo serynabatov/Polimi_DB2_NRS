@@ -1,5 +1,6 @@
 package it.mirea.marketing.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -11,8 +12,10 @@ import javax.persistence.*;
 	@NamedQuery(name = "ProductOfTheDay.findByDate", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD = ?1"),
 	@NamedQuery(name = "ProductOfTheDay.findNotPOTD", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD <> ?1")
 })
-public class ProductOfTheDay {
+public class ProductOfTheDay implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="productOTD_id")

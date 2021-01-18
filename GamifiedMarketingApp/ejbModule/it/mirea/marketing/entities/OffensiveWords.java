@@ -1,12 +1,16 @@
 package it.mirea.marketing.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="offensive_words", schema="marketing")
 @NamedQuery(name="OffensiveWords.findAll", query="SELECT o from OffensiveWords o")
-public class OffensiveWords {
+public class OffensiveWords implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

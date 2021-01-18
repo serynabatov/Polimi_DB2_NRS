@@ -1,13 +1,16 @@
 package it.mirea.marketing.entities;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="time_logged_in", schema="marketing")
-public class LogInTime {
+public class LogInTime implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")

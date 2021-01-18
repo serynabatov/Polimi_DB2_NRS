@@ -1,5 +1,6 @@
 package it.mirea.marketing.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.CascadeType;
@@ -21,8 +22,10 @@ import javax.persistence.Table;
 	@NamedQuery(name = "canceled.byUserId", query = "SELECT c FROM Canceled c WHERE c.userId = ?1 and c.pOTDDate = ?2")
 })
 
-public class Canceled {
+public class Canceled implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_canceled")
