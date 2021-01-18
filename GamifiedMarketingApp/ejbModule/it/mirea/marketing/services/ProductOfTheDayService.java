@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 import it.mirea.marketing.entities.Product;
 import it.mirea.marketing.entities.ProductOfTheDay;
@@ -38,6 +39,29 @@ public class ProductOfTheDayService {
 		} else {
 			return false;
 		}
+	}
+	
+	public List<Date> getAllDates() {
+		LocalDate now = LocalDate.now();
+		Date d = convertToDateViaSqlDate(now);
+		List<ProductOfTheDay> pd = null;
+		List<Date> dates = new ArrayList<Date>();
+		
+		try {
+			pd = em.createNamedQuery("ProductOfTheDay.findNotPOTD",
+														  ProductOfTheDay.class)
+					                    .setParameter(1, d)
+					                    .getResultList();
+			
+		} catch (PersistenceException e) {
+			System.out.println(e);
+		}
+		
+		for(ProductOfTheDay p : pd) {
+			dates.add(p.getProductOTD());
+		}
+		
+		return dates;
 	}
 	
 	private Boolean checkForTheDate(Date productOTD) {
