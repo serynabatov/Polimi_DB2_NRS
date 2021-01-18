@@ -79,7 +79,7 @@ public class CheckLogin extends HttpServlet {
 		// If the user exists, add info to the session and go to home page, otherwise
 		// show login page with error message
 		//ServletContext servletContext = getServletContext();
-		userPrivilege = userService.checkYourPrivilege(user.getUserId()).toLowerCase();
+
 		if (user == null) {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -87,6 +87,7 @@ public class CheckLogin extends HttpServlet {
 			path = "/index.html";
 			templateEngine.process(path, ctx, response.getWriter());
 		} else if (user != null && !privileges.contains(userPrivilege)) {
+			userPrivilege = userService.checkYourPrivilege(user.getUserId()).toLowerCase();
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "Unknown privilege");
