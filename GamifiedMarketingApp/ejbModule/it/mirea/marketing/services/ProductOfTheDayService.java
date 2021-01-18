@@ -28,8 +28,8 @@ public class ProductOfTheDayService {
 	@PersistenceContext(unitName = "GamifiedMarketingApp")
 	private EntityManager em;
 
-	@Resource
-	private SessionContext sessionContext;
+	//@Resource
+	//private SessionContext sessionContext;
 
 	public ProductOfTheDayService() { }
 	
@@ -269,17 +269,12 @@ public class ProductOfTheDayService {
 		ProductOfTheDay p = getPOTD(d);
 		
 		int id = p.getProductOfTheDayId();
-		UserTransaction userTxn = sessionContext.getUserTransaction();
+		//UserTransaction userTxn = sessionContext.getUserTransaction();
 		//em.getTransaction().begin();
-		
-		try {
-			userTxn.begin();
-			em.remove(p);
-			userTxn.commit();
-		} catch(Exception e) {
-			try {userTxn.rollback();} catch (Exception e2) {}
-			throw new CredentialsException("bruh");
-		}
+
+		em.remove(p);
+
+
 		
 		//em.remove(p);
 		//em.getTransaction().commit();
