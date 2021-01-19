@@ -19,7 +19,7 @@
 	 	</div> 
 	  	
 	  	<div id="scroll_view">
-		<table>
+		<!--  <table>
 		<tr th:each="qrEntry: ${questionResponses}">
 		<td th:text="${qrEntry.key}"></td>
 		<table>
@@ -28,7 +28,30 @@
 		</tr>
 		</table>
 		</tr>
+		</table>-->
+		
+		<table>
+		
+			<tbody th:each="qrEntry : ${questionResponses}">
+					<tr>
+						<td th:text="${qrEntry.key}" th:rowspan="${qrEntry.value.size() + 1}"></td>
+					</tr>
+					<tr th:each="element : ${qrEntry.value}">
+						<td th:text="${element}"></td>
+					</tr>
+			</tbody>
+		
 		</table>
+		
+		<!-- <div th:each="qrEntry : ${questionResponses}">
+			<span th:text="${qrEntry.key}"></span>
+			<table>
+				<tr th:each="element : ${qrEntry.value}">
+					<td th:text="${element}"></td>
+				</tr>
+			</table>
+		</div> -->
+		
 		</div>
 	   	<section id="questionnaire" class="links">
 			<div>
