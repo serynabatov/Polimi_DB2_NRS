@@ -12,8 +12,7 @@ import javax.persistence.Cache;
 @NamedQueries({
 	@NamedQuery(name = "ProductOfTheDay.findByDate", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD = ?1"),
 	@NamedQuery(name = "ProductOfTheDay.findNotPOTD", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD <> ?1"),
-	@NamedQuery(name = "ProductOfTheDay.inspection", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD < ?1"),
-	@NamedQuery(name = "ProductOfTheDay.creation", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD >= ?1")
+	@NamedQuery(name = "ProductOfTheDay.inspection", query = "SELECT p FROM ProductOfTheDay p WHERE p.productOTD < ?1")
 })
 public class ProductOfTheDay implements Serializable {
 
@@ -39,7 +38,7 @@ public class ProductOfTheDay implements Serializable {
 	@OrderBy(value="responseDatetime DESC")
 	private List<Response> response;
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="pOTD",cascade = CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="pOTD",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@OrderBy(value="questionId DESC")
 	private List<Questions> questions;
 	
