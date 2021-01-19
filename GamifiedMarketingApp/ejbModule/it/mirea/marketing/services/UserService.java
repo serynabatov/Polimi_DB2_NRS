@@ -123,7 +123,30 @@ public class UserService {
 			return uList;
 	}
 	
-	
+	public Boolean submitted(int id, int t, Date d) {
+		
+		List<Canceled> cancList = null;
+		
+		try {
+			cancList = em.createNamedQuery("canceled.getCancel", Canceled.class)
+					     .setParameter(1, t)
+					     .setParameter(2, d)
+					     .getResultList();
+		} catch (PersistenceException e) {
+			return null;
+		}
+		
+		Boolean submit = false;
+		
+		for (Canceled c : cancList) {
+			if (c.getUserId() == id) {
+				submit = true;
+				break;
+			}
+		}
+		
+		return submit;
+	}
 
 	public List<User> getLeaderBoard() {
 

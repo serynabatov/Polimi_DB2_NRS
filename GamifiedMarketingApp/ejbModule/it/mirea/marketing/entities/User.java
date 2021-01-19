@@ -50,7 +50,7 @@ public class User implements Serializable{
 	@OrderBy("statId ASC")
 	private List<StatisticalResponse> statist;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="user")
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="user")
 	@OrderBy("loggedIn DESC")
 	private List<LogInTime> logins;
 	
