@@ -17,10 +17,11 @@
     	</table>
     	<div class="values">
 		  	<table>
-		    	 <tr th:each="lb : ${leaderBoard}">
-					<td th:text="${lb.userName}"></td>
-					<td th:text="${lb.points}"></td>
-			    </tr>
+		    	 <tr th:each="lb, ib : ${leaderBoard}">
+		    	 	<td width=5% th:text="${ib.index + 1}"></td>
+					<td width=50% th:text="${lb.userName}"></td>
+					<td width=15% th:text="${lb.points}"></td>
+			     </tr>
 		  	</table>
 		</div>
 	</div>

@@ -38,7 +38,7 @@ public class ProductOfTheDay implements Serializable {
 	@OrderBy(value="responseDatetime DESC")
 	private List<Response> response;
 	
-	@OneToMany(fetch=FetchType.EAGER, mappedBy="pOTD",cascade = CascadeType.REMOVE)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy="pOTD",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@OrderBy(value="questionId DESC")
 	private List<Questions> questions;
 	

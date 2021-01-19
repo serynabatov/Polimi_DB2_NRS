@@ -29,9 +29,8 @@
 		</table>
 		</tr>
 		</table>-->
-		
+		<div id="reviews">
 		<table>
-		
 			<tbody th:each="qrEntry : ${questionResponses}">
 					<tr>
 						<td th:text="${qrEntry.key}" th:rowspan="${qrEntry.value.size() + 1}"></td>
@@ -40,9 +39,8 @@
 						<td th:text="${element}"></td>
 					</tr>
 			</tbody>
-		
 		</table>
-		
+		</div>
 		<!-- <div th:each="qrEntry : ${questionResponses}">
 			<span th:text="${qrEntry.key}"></span>
 			<table>
