@@ -39,19 +39,21 @@ public class ProductOfTheDayService {
 			ProductOfTheDay pOTD = new ProductOfTheDay();
 			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(p);
+			em.persist(pOTD);
 			
+			ProductOfTheDay pp = getPOTDT(productOTD);
+
 			List<Questions> qList = new ArrayList<Questions>();
 			
 			for (String qText : questions) {
 				Questions q = new Questions();
 				q.setText(qText);
-				//em.persist(q);
+
+				q.setPOTDId(pp.getProductOfTheDayId());
+				em.persist(q);
 				qList.add(q);
 			}
 			
-			pOTD.setQuestions(qList);
-			
-			em.persist(pOTD);
 			return true;
 		} else {
 			return false;
@@ -129,6 +131,18 @@ public class ProductOfTheDayService {
 			return null;
 	}
 	
+	private ProductOfTheDay getPOTDT(Date d) {
+	
+		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", ProductOfTheDay.class)
+					   	 	 	    .setParameter(1, d)
+					   	 	 	    .getResultList();
+		
+		if(p.size() == 1) {
+			return p.get(0);	
+		}
+		else
+			return null;
+	}
 
 	private ProductOfTheDay getPOTD(Date d) {
 		
