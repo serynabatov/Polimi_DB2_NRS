@@ -70,8 +70,10 @@ public class CheckLogin extends HttpServlet {
 		try {
 			//query db to authenticate for user
 			user = userService.checkCredentials(usrn, pwd);
-			userPrivilege = userService.checkYourPrivilege(user.getUserId()).toLowerCase();
-			blocked = userService.getBlocked(user.getUserId());
+			if (user != null) {
+				userPrivilege = userService.checkYourPrivilege(user.getUserId()).toLowerCase();
+				blocked = userService.getBlocked(user.getUserId());
+			}
 		} catch (CredentialsException | NonUniqueResultException e) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
@@ -81,8 +83,6 @@ public class CheckLogin extends HttpServlet {
 		// If the user exists, add info to the session and go to home page, otherwise
 		// show login page with error message
 		//ServletContext servletContext = getServletContext();
-		
-		System.out.println("USER "+ user.getUserId() + " " + user.getUserName() );
 		
 		if (user == null) {
 			ServletContext servletContext = getServletContext();
