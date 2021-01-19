@@ -221,18 +221,19 @@ public class ProductOfTheDayService {
 		List<Questions> questionObj = getQuestions(p.getProductOfTheDayId());
 		
 		//List<Questions> questionObj = p.getQuestions();
+
 		Map<String, List<String>> questionsNicknames = new HashMap<String, List<String>>();
 		
 		Iterator<Questions> iter = questionObj.iterator();
 		
 		while(iter.hasNext()) {
-			Questions q = (Questions) iter.next();
+			Questions q = (Questions) iter.next(); System.out.println(q.getText());
 			List<Response> r = q.getResponses();
 			List<String> st = new ArrayList<String>();
 			
 			Iterator<Response> set = r.iterator();
 			while(set.hasNext()) {
-				Response text = (Response) set.next();
+				Response text = (Response) set.next(); System.out.println(text.getText());
 				st.add(text.getText());
 				System.out.println(st);
 			}

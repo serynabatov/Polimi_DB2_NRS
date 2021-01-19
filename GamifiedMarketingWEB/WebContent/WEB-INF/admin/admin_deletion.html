@@ -5,7 +5,22 @@
  	<title>Admin Deletion Page</title>
  </head>
  <body>
+	
+	<h1>Admin Deletion Page</h1>
 
+	<form action="Deletion" method="POST">
+		<div>
+			<p>Select date:</p>
+			<select name="deletionDate">
+				<option th:each="p : ${pOTDDates}" th:value="${p}"
+						th:text="${p}">
+				</option>
+			</select>
+		</div>
+		
+        <input type="submit" name ="button" value="Submit">
+		<p th:text=" ${errorMsg}"></p>
+	</form>
 
 </body>
 </html>

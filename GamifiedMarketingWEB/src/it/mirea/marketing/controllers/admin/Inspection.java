@@ -1,11 +1,11 @@
 package it.mirea.marketing.controllers.admin;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
@@ -16,13 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringEscapeUtils;
+
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
-import it.mirea.marketing.entities.ProductOfTheDay;
-import it.mirea.marketing.entities.User;
 import it.mirea.marketing.services.ProductOfTheDayService;
 import it.mirea.marketing.services.UserService;
 
@@ -53,6 +52,12 @@ public class Inspection extends HttpServlet {
 		String path = "/WEB-INF/admin/admin_inspection_request.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+		
+		List<Date> inspDates = POTDService.getInspection();
+		ctx.setVariable("nullInspDates", inspDates);
+		if (inspDates != null) {		
+			ctx.setVariable("inspDates", inspDates);
+		}
 
 		templateEngine.process(path, ctx, response.getWriter());
 	}
