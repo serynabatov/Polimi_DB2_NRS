@@ -22,9 +22,7 @@ public class Product implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="product_id")
 	private int productId;
-	
-	private String linkImage;
-	
+		
 	@Column(name="product_name")
 	private String productName;
 	
@@ -43,18 +41,13 @@ public class Product implements Serializable{
 	public Product(int productId, String link, String productName, byte[] image) {
 		this.productId = productId;
 		this.productName = productName;
-		this.linkImage = link;
 		this.image = image;
 	}
 		
 	public int getProductId() {
 		return this.productId;
 	}
-	
-	public String getLinkImage() {
-		return this.linkImage;
-	}
-	
+		
 	public String getProductName() {
 		return this.productName;
 	}
@@ -70,11 +63,7 @@ public class Product implements Serializable{
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
-		
-	public void setLinkImage(String link) {
-		this.linkImage = link;
-	}
-	
+			
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
