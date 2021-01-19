@@ -96,7 +96,7 @@ public class Creation extends HttpServlet {
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
 		try {
-			buttonAction = StringEscapeUtils.escapeJava(request.getParameter("buttonAction"));
+			buttonAction = StringEscapeUtils.escapeJava(request.getParameter("button"));
 			
 			if (buttonAction == null  || buttonAction.isEmpty()) {
 				throw new Exception("Missing button action");
@@ -106,8 +106,10 @@ public class Creation extends HttpServlet {
 			return;
 		}	
 		
-		if (buttonAction.equals("addProduct")) {
-			System.out.println("addProduct");
+		System.out.println(buttonAction);
+		
+		if (buttonAction.equals("Add product")) {
+			System.out.println("Add product");
 			try {
 				prodName = StringEscapeUtils.escapeJava(request.getParameter("prodName"));
 				prodImage = StringEscapeUtils.escapeJava(request.getParameter("prodImage"));
@@ -145,8 +147,8 @@ public class Creation extends HttpServlet {
 			response.sendRedirect(path);
 		}
 		
-		if (buttonAction.equals("addRow")) {
-			System.out.println("addROW");
+		if (buttonAction.equals("Add number")) {
+			System.out.println("Add number");
 			try {
 				numQuestion = StringEscapeUtils.escapeJava(request.getParameter("numQuestion"));
 
@@ -166,14 +168,15 @@ public class Creation extends HttpServlet {
 			
 		}
 		
-		if (buttonAction.equals("addPOTD")) {
-			System.out.print("addPOTD");
+		if (buttonAction.equals("Submit")) {
+			System.out.print("Submit");
 			try {
 				prodId = StringEscapeUtils.escapeJava(request.getParameter("prodId"));
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd",  Locale.ENGLISH);
 				prodDate = format.parse(StringEscapeUtils.escapeJava(request.getParameter("prodDate")));
 				prodQuestions = request.getParameterValues("prodQuestions");
-				
+				String button = request.getParameter("button");
+				System.out.print("BUTTON " + button);
 				if (prodId == null || prodId.isEmpty()  || prodDate == null) {
 					throw new Exception("Missing or empty credential value");
 				}
@@ -184,7 +187,7 @@ public class Creation extends HttpServlet {
 			sqlDate = new java.sql.Date(prodDate.getTime());
 			System.out.print("");
 			for(int i = 0; i < prodQuestions.length; i++) {
-	            System.out.println("i: " + i + " Quest: " + prodQuestions[i]);
+	            System.out.println("\ni: " + i + " Quest: " + prodQuestions[i]);
 	        }
 			System.out.print("");
 			POTDService.createProductOfTheDayAsProduct(sqlDate, Integer.parseInt(prodId), Arrays.asList(prodQuestions));

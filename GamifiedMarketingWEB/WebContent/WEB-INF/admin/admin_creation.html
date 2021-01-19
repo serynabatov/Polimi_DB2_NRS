@@ -21,8 +21,8 @@
 		</div>
 
 		
-        <input type="hidden" value="addProduct" name="buttonAction">
-        <input type="submit" value="Add product">
+       <!--  <input type="hidden" value="addProduct" >  -->
+        <input type="submit" value="Add product" name="button">
 		<p th:text=" ${errorMsg}"></p>
 	</form>
 	
@@ -48,9 +48,9 @@
 		<div>
 			<p>Enter the questions' number:</p>
             <input type="text" size="3" maxlength="2" value="1" name="numQuestion">
-            <!-- <input type="hidden" value="addRow" name="buttonAction"> !-->
-             
-            <input type="submit" value="Add number">
+            <!--  <input type="hidden" value="addRow" name="buttonAction"> !-->
+           
+            <input type="submit" value="Add number" name="button" >
             <th:block th:each="i: ${#numbers.sequence(0, numQuestion - 1)}">
             	<div>
                		<input type="text" name="prodQuestions" th:placeholder="'Question #' + ${i + 1}">
@@ -59,8 +59,8 @@
 
 		</div>  
 		
-        <input type="hidden"  value="addPOTD" name="buttonAction">
-        <input type="submit" value="Submit">
+        <!--<input type="hidden"  value="addPOTD" name="buttonAction"> !-->
+        <input type="submit" value="Submit" name="button">
 		<p th:text=" ${errorMsg}"></p>
 	</form>
 		

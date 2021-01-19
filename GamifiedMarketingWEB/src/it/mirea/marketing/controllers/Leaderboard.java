@@ -39,13 +39,19 @@ public class Leaderboard extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		List<User> userList = userService.getLeaderBoard();
+		List<User> userLBList = userService.getLeaderBoard();
+		List<User> userDayList = userService.getLeaderBoardProduct();
 		
 		String path = "/WEB-INF/leaderboard.html";
 		ServletContext servletContext = getServletContext();
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		if (userList != null)
-		ctx.setVariable("leaderBoard", userList);
+		if (userLBList != null) {
+			ctx.setVariable("leaderBoardAll", userLBList);
+		}
+		if (userDayList != null) {
+			ctx.setVariable("leaderBoardDay", userDayList);
+		}
+		
 		
 		templateEngine.process(path, ctx, response.getWriter());
 	}

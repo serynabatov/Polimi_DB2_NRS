@@ -11,12 +11,16 @@
   <filter-mapping>
 	<filter-name>Checker</filter-name>
 	<url-pattern>/Home</url-pattern>
-	<url-pattern>/Logout</url-pattern>
-	<url-pattern>/Next</url-pattern>
-	<url-pattern>/Previous</url-pattern>
-	<url-pattern>/Questionnaire</url-pattern>
+	<url-pattern>/Congratulation</url-pattern>
 	<url-pattern>/Leaderboard</url-pattern>
+	<url-pattern>/Logout</url-pattern>
+	<url-pattern>/Questionnaire</url-pattern>
+	<url-pattern>/Questionnaire/StatisticalResponse</url-pattern>
+
 	<url-pattern>/Admin</url-pattern>
+	<url-pattern>/Admin/Creation</url-pattern>
+	<url-pattern>/Admin/Deletion</url-pattern>
+	<url-pattern>/Admin/Inspection</url-pattern>
   </filter-mapping>
   
 <!--  <filter>
