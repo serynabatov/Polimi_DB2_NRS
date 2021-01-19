@@ -6,14 +6,16 @@
     font-size: 15px;
     font-family: 'Raleway', sans-serif;
 }
-.scroll_view {
-	    display: block;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
+.cont_ques{
+    height:25%;
+    color: gray;
+}
+.questions{
+    align-self: center;
+    width:80%;
+    border: 2px black;
+    overflow: auto;
+    margin: auto;
 }
 #big-container {
     width: 100%;

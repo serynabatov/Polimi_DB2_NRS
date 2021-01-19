@@ -23,7 +23,6 @@ import it.mirea.marketing.services.PagingService;
 import it.mirea.marketing.services.UserService;
 import it.mirea.marketing.exceptions.CredentialsException;
 import it.mirea.marketing.services.UserService;
-//import it.polimi.db2.album.services.QueryService;
 
 import javax.persistence.NonUniqueResultException;
 
@@ -42,6 +41,7 @@ public class CheckLogin extends HttpServlet {
 	private User user;
 	static final private List<String> privileges = Arrays.asList("user", "admin");
 	private String userPrivilege;
+	private Boolean blocked;
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -70,6 +70,8 @@ public class CheckLogin extends HttpServlet {
 		try {
 			//query db to authenticate for user
 			user = userService.checkCredentials(usrn, pwd);
+			userPrivilege = userService.checkYourPrivilege(user.getUserId()).toLowerCase();
+			blocked = userService.getBlocked(user.getUserId());
 		} catch (CredentialsException | NonUniqueResultException e) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");
@@ -79,7 +81,7 @@ public class CheckLogin extends HttpServlet {
 		// If the user exists, add info to the session and go to home page, otherwise
 		// show login page with error message
 		//ServletContext servletContext = getServletContext();
-		userPrivilege = userService.checkYourPrivilege(user.getUserId()).toLowerCase();
+
 		if (user == null) {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
@@ -90,6 +92,12 @@ public class CheckLogin extends HttpServlet {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 			ctx.setVariable("errorMsg", "Unknown privilege");
+			path = "/index.html";
+			templateEngine.process(path, ctx, response.getWriter());
+		} else if (user != null && (blocked == true)) {
+			ServletContext servletContext = getServletContext();
+			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
+			ctx.setVariable("errorMsg", "Swearing is not cool!");
 			path = "/index.html";
 			templateEngine.process(path, ctx, response.getWriter());
 		} else {

@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.persistence.Cache;
 
 @Entity
 @Table(name="productotd", schema="marketing")

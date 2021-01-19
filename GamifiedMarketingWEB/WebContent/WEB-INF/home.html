@@ -3,83 +3,56 @@
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Gamified Marketing Home</title>
-	 <link rel="stylesheet" href="assets/css/style_leaderboard.css">
-	<style type="text/css">
-     a { 
-    text-decoration: none; 
-   } 
-   body {
-    font: 12pt ComicSans,  ComicSans, sans-serif; 
-
-   }
-   h2 {
-    font-size: 1.1em; 
-    color: #800040; 
-    margin-top: 0;
-   }
-   #containerPOTD {
-    flex-direction: row;
-   	margin-top: 5%;
-   	margin-left: 5%; 
-    width: 30%; 
-    height:40%;
-    float: left;
-   }
-    #reviews {
-    position: absolute;
-   	margin-top: 5%;
-   	margin-left: 35%; 
-    overflow: auto;
-    width: 45%; 
-    height: 65%;
-   }
-   #review {
-    margin-top: 10px;
-	margin-left: 10px; 
-   	margin-bottom: 10px; 
-   	margin-right: 10px; 	
-   	width: 95%;
-   	height:130;
-   	border: 3px solid #079BCF;
-   }
-   #questionnaire{
-     position: absolute;
-    align-items: center;
-   	margin-top: 400px;
-   	margin-left: 100px;
-   	width:350px;
-   	height: 50px;
-   }
-   #linker{
-   	color:#fff;
-   }s
-   #left { text-align: left; }
-   #right { text-align: right; }
-   #center { text-align: center; }
-  </style>
+	 <link rel="stylesheet" href="./assets/css/style_leaderboard.css">
+	 	<style type="text/css"></style>
 </head>
 <body>
 
-	<div id="center" class="text-container">Product of the day:</div>
+	<div id="center" class="text-container">Product of the day</div>
 	<div class="button-container-homepage">
-		<span th:text="${pOTDName}"></span> 
+		
   		<div id="containerPOTD">
+  			<div th:text="${pOTDName}"></div> 
 	  		<div>
 				<img th:src="${'data:image/jpg;base64,'+ pOTDImage}" width="200" height="200"/>	
 	  		</div>
 	 	</div> 
 	  	
-	  	<table>
-		  	<tr th:each="pq : ${productQuestions}">
-		  		<tr th:each="pr : ${pOTDReviews}">
-				<td th:text="${pq}"></td>
-				<td th:text="${pr}"></td>
-		    </tr>
-			</tr>
-	  	</table>
-	  	
-
+	  	<div id="scroll_view">
+		<!--  <table>
+		<tr th:each="qrEntry: ${questionResponses}">
+		<td th:text="${qrEntry.key}"></td>
+		<table>
+		<tr th:each="anews : ${qrEntry.value}">
+		<td th:text="${anews}"></td>
+		</tr>
+		</table>
+		</tr>
+		</table>-->
 		
+		<table>
+		
+			<tbody th:each="qrEntry : ${questionResponses}">
+					<tr>
+						<td th:text="${qrEntry.key}" th:rowspan="${qrEntry.value.size() + 1}"></td>
+					</tr>
+					<tr th:each="element : ${qrEntry.value}">
+						<td th:text="${element}"></td>
+					</tr>
+			</tbody>
+		
+		</table>
+		
+		<!-- <div th:each="qrEntry : ${questionResponses}">
+			<span th:text="${qrEntry.key}"></span>
+			<table>
+				<tr th:each="element : ${qrEntry.value}">
+					<td th:text="${element}"></td>
+				</tr>
+			</table>
+		</div> -->
+		
+		</div>
 	   	<section id="questionnaire" class="links">
 			<div>
 				<a style="color: #079BCF; font-size: 25" th:href="@{/Logout}">Logout</a>
