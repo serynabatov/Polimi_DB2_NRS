@@ -20,7 +20,6 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 public class AdminPanel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private TemplateEngine templateEngine;
-       
 
 	public void init() throws ServletException {
 		ServletContext servletContext = getServletContext();
@@ -30,7 +29,6 @@ public class AdminPanel extends HttpServlet {
 		this.templateEngine.setTemplateResolver(templateResolver);
 		templateResolver.setSuffix(".html");
 	}
-
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String path = "/WEB-INF/admin/admin_panel.html";

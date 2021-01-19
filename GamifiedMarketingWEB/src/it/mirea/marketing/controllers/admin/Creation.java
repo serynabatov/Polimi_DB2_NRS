@@ -106,10 +106,7 @@ public class Creation extends HttpServlet {
 			return;
 		}	
 		
-		System.out.println(buttonAction);
-		
 		if (buttonAction.equals("Add product")) {
-			System.out.println("Add product");
 			try {
 				prodName = StringEscapeUtils.escapeJava(request.getParameter("prodName"));
 				prodImage = StringEscapeUtils.escapeJava(request.getParameter("prodImage"));
@@ -121,7 +118,6 @@ public class Creation extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing credential value");
 				return;
 			}
-			
 			BufferedImage img = null;
 			try {
 				img = ImageIO.read(new File(prodImage));
@@ -134,21 +130,12 @@ public class Creation extends HttpServlet {
 			 byte[] bytedImg = baos.toByteArray();
 			 
 			productService.addProduct(prodName, bytedImg); //size
-
-//			Part thumbFile = request.getPart("thumb");
-//			InputStream thumbContent = thumbFile.getInputStream();
-//			byte[] thumbByteArray = ImageUtils.readImage(thumbContent);
-			
-//			if (thumbByteArray.length == 0) {
-//				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid photo parameters");
-//			}
 			
 			path = getServletContext().getContextPath() + "/Admin/Creation";
 			response.sendRedirect(path);
 		}
 		
 		if (buttonAction.equals("Add number")) {
-			System.out.println("Add number");
 			try {
 				numQuestion = StringEscapeUtils.escapeJava(request.getParameter("numQuestion"));
 
@@ -169,7 +156,6 @@ public class Creation extends HttpServlet {
 		}
 		
 		if (buttonAction.equals("Submit")) {
-			System.out.print("Submit");
 			try {
 				prodId = StringEscapeUtils.escapeJava(request.getParameter("prodId"));
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd",  Locale.ENGLISH);
@@ -185,11 +171,6 @@ public class Creation extends HttpServlet {
 				return;
 			}
 			sqlDate = new java.sql.Date(prodDate.getTime());
-			System.out.print("");
-			for(int i = 0; i < prodQuestions.length; i++) {
-	            System.out.println("\ni: " + i + " Quest: " + prodQuestions[i]);
-	        }
-			System.out.print("");
 			POTDService.createProductOfTheDayAsProduct(sqlDate, Integer.parseInt(prodId), Arrays.asList(prodQuestions));
 			path = getServletContext().getContextPath() + "/Admin";
 			response.sendRedirect(path);
