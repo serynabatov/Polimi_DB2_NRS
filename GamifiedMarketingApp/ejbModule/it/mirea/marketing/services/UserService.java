@@ -129,9 +129,11 @@ public class UserService {
 
 		List<User> uList = null;
 		try {
+			em.clear();
 			uList = em.createNamedQuery("user.leaderboard", User.class)
 					  .setParameter(1, "admin")
 					  .setParameter(2, true)
+					  .setHint("javax.persistence.cache.storeMode", "REFRESH")
 					  .getResultList();
 		} catch (PersistenceException e) {
 			return null;
@@ -145,9 +147,11 @@ public class UserService {
 	public List<User> getLeaderBoardProduct() {
 		List<User> uList = null;
 		try {
+			em.clear();
 			uList = em.createNamedQuery("user.leaderboardProduct", User.class)
 					  .setParameter(1, "admin")
 					  .setParameter(2, true)
+					  .setHint("javax.persistence.cache.storeMode", "REFRESH")
 					  .getResultList();
 		} catch (PersistenceException e) {
 			return null;

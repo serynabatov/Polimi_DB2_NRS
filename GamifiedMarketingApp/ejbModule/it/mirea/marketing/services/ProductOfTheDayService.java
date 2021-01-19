@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.transaction.UserTransaction;
@@ -116,13 +117,18 @@ public class ProductOfTheDayService {
 			return null;
 	}
 	
+
 	private ProductOfTheDay getPOTD(Date d) {
+		
+		em.clear();
 		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", ProductOfTheDay.class)
 					   	 	 	    .setParameter(1, d)
+					   	 	 	    .setHint("javax.persistence.cache.storeMode", "REFRESH")
 					   	 	 	    .getResultList();
 		
-		if(p.size() == 1)
-			return p.get(0);
+		if(p.size() == 1) {
+			return p.get(0);	
+		}
 		else
 			return null;
 	}
@@ -185,8 +191,10 @@ public class ProductOfTheDayService {
 		List<Questions> qList = null;
 		
 		try {
+			em.clear();
 			qList = em.createNamedQuery("Questions.findByProductId", Questions.class)
 					  .setParameter(1, id)
+		   	 	 	  .setHint("javax.persistence.cache.storeMode", "REFRESH")
 					  .getResultList();
 		} catch (PersistenceException e) {
 			System.out.println("Mya");
@@ -215,6 +223,7 @@ public class ProductOfTheDayService {
 			while(set.hasNext()) {
 				Response text = (Response) set.next();
 				st.add(text.getText());
+				System.out.println(st);
 			}
 			
 			questionsNicknames.put(q.getText(), st);
