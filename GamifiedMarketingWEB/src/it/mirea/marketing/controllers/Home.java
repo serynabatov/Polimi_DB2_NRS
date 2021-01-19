@@ -68,7 +68,11 @@ public class Home extends HttpServlet {
 			
 			if (productNameImage == null) {	
 				ctx.setVariable("pOTDName", "Today there is no Product of the day");
+<<<<<<< HEAD
+				BufferedImage no_img = ImageIO.read(new File("./assets/img.png"));
+=======
 				BufferedImage no_img = ImageIO.read(new File("C:\\Users\\pc\\Pictures\\default.jpg"));
+>>>>>>> d608201fddcdca238b0ee3cc95fbbd973194beec
 				ctx.setVariable("pOTDImage", no_img);
 			}
 			if (questionResponses == null) {

@@ -9,17 +9,12 @@
 
 	<h1>Questionnaire</h1>
 	<h2>Answer the following questions, please</h2>
-	
-	<form action="Questionnaire/StatisticalResponse" method="POST" >
-	 <div class="questions">	
+
+	<form action="Questionnaire/StatisticalResponse" method="POST" >	
 		<div th:each="pq, pqInfo: ${prodQuestions}">
-		
-		         	<div class="cont_ques">
-                		<label th:text="'Question #' + ${pqInfo.index +1}"></label>
-                		<br><textarea placeholder="Your asnwer" th:name="userResponse" required/></textarea>
-                	</div>
-             </div>
-	  </div>
+			<label th:text="${pq.value}+'?'"></label>
+			<br><textarea placeholder="Your asnwer" th:name="userResponse" required/></textarea>
+		</div>	
 			
 			
 
@@ -30,7 +25,7 @@
 		<input type="hidden" th:value="${userID}" name="userID"/>
 		<input type="hidden" th:value="${POTDid}" name="POTDid"/>			
 		 <div class="button-container">
-         <button type="submit" class="animated-button">cancel</button>
+         <a th:href="@{/Home}" class="animated-button" style="text-align:center;">home</a>
          <button type="submit" class="animated-button">next</button>
          <button type="submit" class="animated-button">submit</button> 
          </div>

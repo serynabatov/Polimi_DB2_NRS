@@ -70,8 +70,10 @@ public class CheckLogin extends HttpServlet {
 		try {
 			//query db to authenticate for user
 			user = userService.checkCredentials(usrn, pwd);
-			userPrivilege = userService.checkYourPrivilege(user.getUserId()).toLowerCase();
-			blocked = userService.getBlocked(user.getUserId());
+			if (user != null) {
+				userPrivilege = userService.checkYourPrivilege(user.getUserId()).toLowerCase();
+				blocked = userService.getBlocked(user.getUserId());
+			}
 		} catch (CredentialsException | NonUniqueResultException e) {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Could not check credentials");

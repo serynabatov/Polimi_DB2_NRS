@@ -17,6 +17,13 @@
     	</table>
     	<div class="values">
 		  	<table>
+<<<<<<< HEAD
+		    	 <tr th:each="lb, ib : ${leaderBoard}">
+		    	 	<td width=5% th:text="${ib.index + 1}"></td>
+					<td width=50% th:text="${lb.userName}"></td>
+					<td width=15% th:text="${lb.points}"></td>
+			     </tr>
+=======
 		    	 <tr th:each="lb : ${leaderBoardAll}">
 					<td th:text="${lb.userName}"></td>
 					<td th:text="${lb.points}"></td>
@@ -39,6 +46,7 @@
 					<td th:text="${lb.userName}"></td>
 					<td th:text="${lb.points}"></td>
 			    </tr>
+>>>>>>> d608201fddcdca238b0ee3cc95fbbd973194beec
 		  	</table>
 		</div>
 	</div>

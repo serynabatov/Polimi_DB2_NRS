@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -65,4 +66,73 @@
 	</div>
 
 </body>
+=======
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Gamified Marketing Home</title>
+	 <link rel="stylesheet" href="./assets/css/style_leaderboard.css">
+	 	<style type="text/css"></style>
+</head>
+<body>
+
+	<div id="center" class="text-container">Product of the day</div>
+	<div class="button-container-homepage">
+		
+  		<div id="containerPOTD">
+  			<div th:text="${pOTDName}"></div> 
+	  		<div>
+				<img th:src="${'data:image/jpg;base64,'+ pOTDImage}" width="200" height="200"/>	
+	  		</div>
+	 	</div> 
+	  	
+	  	<div id="scroll_view">
+		<!--  <table>
+		<tr th:each="qrEntry: ${questionResponses}">
+		<td th:text="${qrEntry.key}"></td>
+		<table>
+		<tr th:each="anews : ${qrEntry.value}">
+		<td th:text="${anews}"></td>
+		</tr>
+		</table>
+		</tr>
+		</table>-->
+		<div id="reviews">
+		<table>
+			<tbody th:each="qrEntry : ${questionResponses}">
+					<tr>
+						<td th:text="${qrEntry.key}" th:rowspan="${qrEntry.value.size() + 1}"></td>
+					</tr>
+					<tr th:each="element : ${qrEntry.value}">
+						<td th:text="${element}"></td>
+					</tr>
+			</tbody>
+		</table>
+		</div>
+		<!-- <div th:each="qrEntry : ${questionResponses}">
+			<span th:text="${qrEntry.key}"></span>
+			<table>
+				<tr th:each="element : ${qrEntry.value}">
+					<td th:text="${element}"></td>
+				</tr>
+			</table>
+		</div> -->
+		
+		</div>
+	   	<section id="questionnaire" class="links">
+			<div>
+				<a style="color: #079BCF; font-size: 25" th:href="@{/Logout}">Logout</a>
+			</div>
+			<div>
+				<a style="color: #079BCF; font-size: 25" th:href="@{/Questionnaire}">Questionnaire</a>
+			</div>
+			<div>
+				<a style="color: #079BCF; font-size: 25" th:href="@{/Leaderboard}">Leaderboard</a>
+			</div>
+		</section>
+	</div>
+
+</body>
+>>>>>>> d608201fddcdca238b0ee3cc95fbbd973194beec
 </html>

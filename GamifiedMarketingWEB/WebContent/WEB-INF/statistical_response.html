@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -61,3 +62,68 @@
 
 </body>
 </html>
+=======
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Statistical Response</title>
+	<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+	<h1>Statistical Response</h1>
+	
+	<form action="Congratulation" method="POST">
+		<div>
+			<p>Age category:</p>
+        	<input type="radio" id="18-25" name="age" value="1" >
+			<label for="1">18-25</label>
+			<input type="radio" id="25-35" name="age" value="2">
+			<label for="2">25-35</label>
+			<input type="radio" id="35-50" name="age" value="3">
+			<label for="3">35-50</label>
+			<input type="radio" id="50+" name="age" value="4">
+			<label for="4">50+</label>
+			<input type="radio" id="not specified" name="age" value="0" checked>
+			<label for="not specified">Not specified</label>
+		</div>
+		
+		<div>
+			<p>Sex:</p>
+        	<input type="radio" id="male" name="gender" value="2" >
+			<label for="male">Male</label>
+			<input type="radio" id="female" name="gender" value="1">
+			<label for="female">Female</label>
+			<input type="radio" id="not specified" name="gender" value="0" checked>
+			<label for="not specified">Not specified</label>
+		</div>
+		
+		<div>
+			<p>Expertise level:</p>
+        	<input type="radio" id="high" name="exp_lvl" value="3" >
+			<label for="high">High</label>
+			<input type="radio" id="medium" name="exp_lvl" value="2">
+			<label for="medium">Medium</label>
+			<input type="radio" id="low" name="exp_lvl" value="1">
+			<label for="low">Low</label>
+			<input type="radio" id="not specified" name="exp_lvl" value="0" checked>
+			<label for="not specified">Not specified</label>
+		</div>
+		
+		<input type="hidden" th:value="${userID}" name="userID"/>
+		<input type="hidden" th:value="${POTDid}" name="POTDid"/>	
+		
+		<input type="submit" name ="button" value="Submit">
+		<input type="submit" name ="button" value="Cancel">
+		
+		<p th:text=" ${result}"></p>
+	</form>
+	
+	<div align="center">
+		<a th:href="@{/Home}">Home</a>
+	</div>
+
+</body>
+</html>
+>>>>>>> d608201fddcdca238b0ee3cc95fbbd973194beec

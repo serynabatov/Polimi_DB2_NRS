@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import url(http://fonts.googleapis.com/css?family=Raleway:700,800);
 #container {
 	width: 50%;
@@ -303,4 +304,311 @@ color:#fff;
 .topnav a.active {
   background-color: #4CAF50;
   color: white;
+=======
+@import url(http://fonts.googleapis.com/css?family=Raleway:700,800);
+#container {
+	width: 50%;
+    margin: auto;
+	height: auto;
+    font-size: 15px;
+    font-family: 'Raleway', sans-serif;
+}
+.cont_ques{
+    height:25%;
+    color: gray;
+}
+.questions{
+    align-self: center;
+    width:80%;
+    border: 2px black;
+    overflow: auto;
+    margin: auto;
+}
+#big-container {
+    width: 100%;
+    height: 50%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+        overflow: auto;
+    justify-content: flex-start;
+
+    border: 5px solid #6ED0F6;
+
+    font-family: 'Raleway', sans-serif;
+}
+.row {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 40px;
+    margin: 2px;
+	border: 2px solid #6ED0F6;
+}
+
+.name {
+	position: relative;
+	display: inline-block;
+	width: 75%;
+	line-height: 45px;
+}
+
+.score {
+	position: relative;
+	display: inline-block;
+	width: 25%;
+}
+.element{
+    width: 33%;
+    margin-right: auto;
+    border: 2px solid #6ED0F6;    
+}
+.calend{
+    width: 40%;
+    margin-right: 5%;
+    margin-left: 5%; 
+    border: 2px solid #6ED0F6;    
+}
+
+.element-100{
+    width: 100%;
+    height: 70%;
+    margin: auto;
+
+}
+
+select {
+    -webkit-writing-mode: horizontal-tb !important;
+    text-rendering: auto;
+    color: -internal-light-dark(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: menulist;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    -webkit-rtl-ordering: logical;
+    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+    cursor: default;
+    margin: 0em;
+    font: 400 13.3333px Arial;
+    border-radius: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+}
+
+.button-container-homepage{
+    width: 80%;
+    height: 90%;
+    margin: auto;
+    border: 5px solid #6ED0F6;
+    padding: 20px;
+    font-family: 'Raleway', sans-serif;
+}
+.text-container{
+  font-family: 'Raleway', sans-serif;
+  font-size: 27px;
+}
+.button-container{
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+
+    flex-direction: row;
+
+    justify-content: flex-start;
+
+    border: 5px solid #6ED0F6;
+
+    padding: 20px;
+}
+.form-container{
+    width: 80%;
+    height: 300px;
+    margin: auto;
+    display: flex;
+
+    flex-direction: row;
+
+    justify-content: flex-start;
+
+    border: 5px solid #6ED0F6;
+
+    padding: 20px;
+}
+.deletion-container{
+    width: 80%;
+    height: auto;
+    margin: auto;
+    display: flex;
+
+    flex-direction: row;
+
+    justify-content: flex-start;
+
+    border: 5px solid #6ED0F6;
+
+    padding: 20px;
+}
+.animated-button {
+  background: #079BCF;
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  
+  cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+  font-size: 27px;
+  height: 50px;
+  width: 30%;
+  margin: auto;
+  overflow: hidden;
+  transition: all .3s cubic-bezier(.6,0,.4,1);
+}
+.animated-button span {
+  display: block;
+  line-height: 50px;
+  position: relative;
+  top: -2px;
+  transform: translate3d(0,0,0);
+}
+.animated-button:hover {
+  background: #007BA5;
+}
+.demotable {
+  counter-reset: schetchik;
+}
+.demotable table {
+  border-collapse: collapse;
+}
+.demotable tr {
+  counter-increment: schetchik;
+}
+.demotable td,
+.demotable tr:before {
+  padding: .1em .5em;
+  border: 1px solid #E7D5C0;
+}
+.demotable tr:before {
+  content: counter(schetchik);
+  display: table-cell;
+  vertical-align: middle;
+  color: #978777;
+}
+table {
+margin: auto;
+width:50%;
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+font-size: 14px;
+border-collapse: collapse;
+text-align: center;
+
+}
+th, td:first-child {
+background: #AFCDE7;
+color: white;
+padding: 10px 20px;
+}
+th, td {
+border-style: solid;
+border-width: 0 1px 1px 0;
+border-color: white;
+}
+td {
+background: #D8E6F3;
+}
+th:first-child, td:first-child {
+text-align: left;
+}
+a { 
+text-decoration: none; /* Отменяем подчеркивание у ссылки */
+} 
+body {
+font: 12pt ComicSans,  ComicSans, sans-serif; /* Шрифт на веб-странице */
+/* Цвет фона */
+}
+h2 {
+font-size: 1.1em; /* Размер шрифта */
+color: #800040; /* Цвет текста */
+margin-top: 0; /* Отступ сверху */
+}
+#containerPOTD {
+flex-direction: row;
+margin-top: 5%;
+margin-left: 5%; 
+width: 30%; /* Ширина слоя */
+height:40%;
+float: left; /* Цвет фона левой колонки */
+}
+#reviews {
+position: absolute;
+margin-top: 5%;
+margin-left: 35%; 
+overflow: auto;
+width: 45%; /* Ширина слоя */
+height: 65%;
+}
+#reviews-inspection {
+position: absolute;
+margin-left: 15%;
+overflow: auto;
+width: 70%; /* Ширина слоя */
+}
+#review {
+margin-top: 10px;
+margin-left: 10px; 
+margin-bottom: 10px; 
+margin-right: 10px;
+overflow: auto;
+width: 95%;
+height:130;
+border: 3px solid #079BCF;
+}
+#questionnaire{
+align-items: center;
+margin-top: 400px;
+margin-left: 100px;
+width:350px;
+height: 50px;
+}
+#linker{
+color:#fff;
+}
+#left { text-align: left; }
+#right { text-align: right; }
+#center { text-align: center; }
+.topnav {
+  background-color: #6ED0F6;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: #6ED0F6;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+>>>>>>> d608201fddcdca238b0ee3cc95fbbd973194beec
 }
