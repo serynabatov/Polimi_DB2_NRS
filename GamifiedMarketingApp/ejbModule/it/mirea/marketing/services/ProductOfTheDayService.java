@@ -45,7 +45,7 @@ public class ProductOfTheDayService {
 			for (String qText : questions) {
 				Questions q = new Questions();
 				q.setText(qText);
-				em.persist(q);
+				//em.persist(q);
 				qList.add(q);
 			}
 			
