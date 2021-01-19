@@ -7,16 +7,24 @@
 </head>
 <body>
 	<h1>Admin Panel</h1>
-	 	
-	<p>
-		<a id=center th:href="@{/Admin/Creation}">Creation page</a>
-	</p>
-	<p>
-		<a id=center th:href="@{/Admin/Inspection}">Inspection page</a>
-	</p>
-	<p>
-		<a id=center th:href="@{/Admin/Deletion}">Deletion page</a>
-	</p>
 		
+	<section id="admin-panel" class="links">		
+		<div>
+			<a style="color: #079BCF; font-size: 25" th:href="@{/Admin/Creation}">Creation page</a>
+		</div>
+		
+		<div>
+			<a style="color: #079BCF; font-size: 25" th:href="@{/Admin/Inspection}">Inspection page</a>
+		</div>
+		
+		<div>
+			<a style="color: #079BCF; font-size: 25"  th:href="@{/Admin/Deletion}">Deletion page</a>
+		</div>
+		
+		<div>
+			<a style="color: #079BCF; font-size: 25" th:href="@{/Logout}">Logout</a>
+		</div>
+
+	</section>
 </body>
 </html>

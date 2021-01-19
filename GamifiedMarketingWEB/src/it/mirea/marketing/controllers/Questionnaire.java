@@ -52,6 +52,7 @@ public class Questionnaire extends HttpServlet {
 		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
 		
 		if (todayPOTD != null) {
+			System.out.println(productQuestions);
 			ctx.setVariable("prodQuestionsKeys", productQuestions.keySet());
 			ctx.setVariable("prodQuestionsValues", productQuestions.values());
 			ctx.setVariable("prodQuestions", productQuestions);

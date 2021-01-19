@@ -99,6 +99,7 @@ select {
     width: 80%;
     height: 90%;
     margin: auto;
+    overflow: auto;
     border: 5px solid #6ED0F6;
     padding: 20px;
     font-family: 'Raleway', sans-serif;
@@ -195,7 +196,7 @@ select {
 }
 table {
 margin: auto;
-width:50%;
+width:100%;
 font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 font-size: 14px;
 border-collapse: collapse;
@@ -239,12 +240,11 @@ height:40%;
 float: left; /* Цвет фона левой колонки */
 }
 #reviews {
-position: absolute;
 margin-top: 5%;
 margin-left: 35%; 
 overflow: auto;
-width: 45%; /* Ширина слоя */
-height: 65%;
+width: 50%; /* Ширина слоя */
+height: 600px;
 }
 #reviews-inspection {
 position: absolute;
@@ -264,7 +264,7 @@ border: 3px solid #079BCF;
 }
 #questionnaire{
 align-items: center;
-margin-top: 400px;
+margin-top: 50px;
 margin-left: 100px;
 width:350px;
 height: 50px;

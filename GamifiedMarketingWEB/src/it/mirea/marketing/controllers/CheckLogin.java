@@ -81,7 +81,9 @@ public class CheckLogin extends HttpServlet {
 		// If the user exists, add info to the session and go to home page, otherwise
 		// show login page with error message
 		//ServletContext servletContext = getServletContext();
-
+		
+		System.out.println("USER "+ user.getUserId() + " " + user.getUserName() );
+		
 		if (user == null) {
 			ServletContext servletContext = getServletContext();
 			final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());

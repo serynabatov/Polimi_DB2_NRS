@@ -7,7 +7,7 @@
 	<style type="text/css"></style>
 </head>
 <body>
-	<h1>Leaderboard</h1>
+	<h1>Leaderboard of all time</h1>
 	 	
 	<div class="container">
  		<table>
@@ -17,11 +17,36 @@
     	</table>
     	<div class="values">
 		  	<table>
+<<<<<<< HEAD
 		    	 <tr th:each="lb, ib : ${leaderBoard}">
 		    	 	<td width=5% th:text="${ib.index + 1}"></td>
 					<td width=50% th:text="${lb.userName}"></td>
 					<td width=15% th:text="${lb.points}"></td>
 			     </tr>
+=======
+		    	 <tr th:each="lb : ${leaderBoardAll}">
+					<td th:text="${lb.userName}"></td>
+					<td th:text="${lb.points}"></td>
+			    </tr>
+		  	</table>
+		</div>
+	</div>
+	
+	<h1>Leaderboard of the day</h1>
+	 	
+	<div class="container">
+ 		<table>
+			<th width=5%>Place</th>
+ 			<th width=50%>Login</th>
+ 			<th width=15%>Score</th>
+    	</table>
+    	<div class="values">
+		  	<table>
+		    	 <tr th:each="lb : ${leaderBoardDay}">
+					<td th:text="${lb.userName}"></td>
+					<td th:text="${lb.points}"></td>
+			    </tr>
+>>>>>>> d608201fddcdca238b0ee3cc95fbbd973194beec
 		  	</table>
 		</div>
 	</div>

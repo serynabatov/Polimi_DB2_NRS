@@ -5,13 +5,33 @@
 	<title>Admin Creation Page</title>
 </head>
 <body>  
-
+	
 	<h1>Admin Creation Page</h1>
+	
+	<h2>Add product</h2>
+	<form action="Creation" method="POST">
+		<div>
+			<p>Enter product name:</p>
+			<input type="text" name="prodName"></input>
+		</div>
+		
+		<div>
+			<p>Select image:</p>
+        	<input type="file" name="prodImage" accept="image/png, image/jpeg" />
+		</div>
 
-	<form action="Creation/Questions" method="POST">
+		
+       <!--  <input type="hidden" value="addProduct" >  -->
+        <input type="submit" value="Add product" name="button">
+		<p th:text=" ${errorMsg}"></p>
+	</form>
+	
+	
+	<h2>Add product of the day:</h2>
+	<form action="Creation" method="POST">
 		<div>
 			<p>Select product:</p>
-			<select name="productId">
+			<select name="prodId">
 				<option th:each="p : ${products}" th:value="${p.productId}"
 						th:text="${p.productName}">
 				</option>
@@ -26,47 +46,23 @@
 		</div>
 		
 		<div>
-			<p>Select image:</p>
-        	<input type="file" name="prodImage">
-		</div>
-		
-		<div>
 			<p>Enter the questions' number:</p>
-        	<input type="text"  name="numQuestion">
-       		<input type="submit" name ="button" value="Add number">
+            <input type="text" size="3" maxlength="2" value="1" name="numQuestion">
+            <!--  <input type="hidden" value="addRow" name="buttonAction"> !-->
+           
+            <input type="submit" value="Add number" name="button" >
+            <th:block th:each="i: ${#numbers.sequence(0, numQuestion - 1)}">
+            	<div>
+               		<input type="text" name="prodQuestions" th:placeholder="'Question #' + ${i + 1}">
+               	</div>		   
+			</th:block>
+
 		</div>  
-         
-        <input type="submit" name ="button" value="Submit">
+		
+        <!--<input type="hidden"  value="addPOTD" name="buttonAction"> !-->
+        <input type="submit" value="Submit" name="button">
 		<p th:text=" ${errorMsg}"></p>
 	</form>
 		
-	<!-- 
-	<div class="element-wrapper">
-		<div class="row">
-			<input type="text" name="prodQuestion">
-			<button class="btn-remove-row">Remove row</button>
-		</div>
-	</div>
-	<button class="btn-add-row">Add new row</button>
-	
-	
-	<script src="jquery-3.0.0.min.js">
-	
-	 /* create new row */
-	 $(document).on("click", ".btn-add-row", function() {
-	 	/* clone row class element index 0 */
-	 	var row = $(".row").eq(0).clone().show();
-	 	/* append row clone to element-wrapper */
-	 	$(".element-wrapper").append(row);
-	 });
-	 /* remove row handle */
-	 $(document).on("click", ".btn-remove-row", function() {
-	 	/* get btn index first */
-	 	var index = $(".btn-remove-row").index(this);
-	 	/* do remove row */
-	 	$(".row").eq(index).remove();
-	 });
-	</script>
-	 -->
 </body>
 </html>

@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.transaction.UserTransaction;
@@ -31,7 +32,7 @@ public class ProductOfTheDayService {
 	public ProductOfTheDayService() { }
 	
 	// get the list of the products and choose from them
-	public Boolean createProductOfTheDayAsProduct(Date productOTD, int p) {
+	public Boolean createProductOfTheDayAsProduct(Date productOTD, int p, List<String> questions) {
 		
 		if (checkForTheDate(productOTD)) {
 			System.out.println("test if");
@@ -39,6 +40,20 @@ public class ProductOfTheDayService {
 			pOTD.setProductOTD((java.sql.Date)productOTD);
 			pOTD.setProductId(p);
 			em.persist(pOTD);
+			
+			ProductOfTheDay pp = getPOTDT(productOTD);
+
+			List<Questions> qList = new ArrayList<Questions>();
+			
+			for (String qText : questions) {
+				Questions q = new Questions();
+				q.setText(qText);
+
+				q.setPOTDId(pp.getProductOfTheDayId());
+				em.persist(q);
+				qList.add(q);
+			}
+			
 			return true;
 		} else {
 			return false;
@@ -116,13 +131,30 @@ public class ProductOfTheDayService {
 			return null;
 	}
 	
-	private ProductOfTheDay getPOTD(Date d) {
+	private ProductOfTheDay getPOTDT(Date d) {
+	
 		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", ProductOfTheDay.class)
 					   	 	 	    .setParameter(1, d)
 					   	 	 	    .getResultList();
 		
-		if(p.size() == 1)
-			return p.get(0);
+		if(p.size() == 1) {
+			return p.get(0);	
+		}
+		else
+			return null;
+	}
+
+	private ProductOfTheDay getPOTD(Date d) {
+		
+		em.clear();
+		List<ProductOfTheDay> p = em.createNamedQuery("ProductOfTheDay.findByDate", ProductOfTheDay.class)
+					   	 	 	    .setParameter(1, d)
+					   	 	 	    .setHint("javax.persistence.cache.storeMode", "REFRESH")
+					   	 	 	    .getResultList();
+		
+		if(p.size() == 1) {
+			return p.get(0);	
+		}
 		else
 			return null;
 	}
@@ -185,8 +217,10 @@ public class ProductOfTheDayService {
 		List<Questions> qList = null;
 		
 		try {
+			em.clear();
 			qList = em.createNamedQuery("Questions.findByProductId", Questions.class)
 					  .setParameter(1, id)
+		   	 	 	  .setHint("javax.persistence.cache.storeMode", "REFRESH")
 					  .getResultList();
 		} catch (PersistenceException e) {
 			System.out.println("Mya");
@@ -202,19 +236,21 @@ public class ProductOfTheDayService {
 		List<Questions> questionObj = getQuestions(p.getProductOfTheDayId());
 		
 		//List<Questions> questionObj = p.getQuestions();
+
 		Map<String, List<String>> questionsNicknames = new HashMap<String, List<String>>();
 		
 		Iterator<Questions> iter = questionObj.iterator();
 		
 		while(iter.hasNext()) {
-			Questions q = (Questions) iter.next();
+			Questions q = (Questions) iter.next(); System.out.println(q.getText());
 			List<Response> r = q.getResponses();
 			List<String> st = new ArrayList<String>();
 			
 			Iterator<Response> set = r.iterator();
 			while(set.hasNext()) {
-				Response text = (Response) set.next();
+				Response text = (Response) set.next(); System.out.println(text.getText());
 				st.add(text.getText());
+				System.out.println(st);
 			}
 			
 			questionsNicknames.put(q.getText(), st);

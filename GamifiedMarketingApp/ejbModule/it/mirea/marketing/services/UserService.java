@@ -123,15 +123,40 @@ public class UserService {
 			return uList;
 	}
 	
-	
+	public Boolean submitted(int id, int t, Date d) {
+		
+		List<Canceled> cancList = null;
+		
+		try {
+			cancList = em.createNamedQuery("canceled.getCancel", Canceled.class)
+					     .setParameter(1, t)
+					     .setParameter(2, d)
+					     .getResultList();
+		} catch (PersistenceException e) {
+			return null;
+		}
+		
+		Boolean submit = false;
+		
+		for (Canceled c : cancList) {
+			if (c.getUserId() == id) {
+				submit = true;
+				break;
+			}
+		}
+		
+		return submit;
+	}
 
 	public List<User> getLeaderBoard() {
 
 		List<User> uList = null;
 		try {
+			em.clear();
 			uList = em.createNamedQuery("user.leaderboard", User.class)
 					  .setParameter(1, "admin")
 					  .setParameter(2, true)
+					  .setHint("javax.persistence.cache.storeMode", "REFRESH")
 					  .getResultList();
 		} catch (PersistenceException e) {
 			return null;
@@ -145,9 +170,11 @@ public class UserService {
 	public List<User> getLeaderBoardProduct() {
 		List<User> uList = null;
 		try {
+			em.clear();
 			uList = em.createNamedQuery("user.leaderboardProduct", User.class)
 					  .setParameter(1, "admin")
 					  .setParameter(2, true)
+					  .setHint("javax.persistence.cache.storeMode", "REFRESH")
 					  .getResultList();
 		} catch (PersistenceException e) {
 			return null;
