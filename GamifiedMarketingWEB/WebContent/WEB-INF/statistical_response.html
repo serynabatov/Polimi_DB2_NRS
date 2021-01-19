@@ -11,21 +11,39 @@
 	
 	<form action="Congratulation" method="POST">
 		<div>
-			<p>Age:</p>
-        	<input type="text" id="age" name="age" required>
+			<p>Age category:</p>
+        	<input type="radio" id="18-25" name="age" value="1" >
+			<label for="1">18-25</label>
+			<input type="radio" id="25-35" name="age" value="2">
+			<label for="2">25-35</label>
+			<input type="radio" id="35-50" name="age" value="3">
+			<label for="3">35-50</label>
+			<input type="radio" id="50+" name="age" value="4">
+			<label for="4">50+</label>
+			<input type="radio" id="not specified" name="age" value="0" checked>
+			<label for="not specified">Not specified</label>
 		</div>
 		
 		<div>
 			<p>Sex:</p>
-        	<input type="radio" id="male" name="gender" value="1" checked>
+        	<input type="radio" id="male" name="gender" value="2" >
 			<label for="male">Male</label>
-			<input type="radio" id="female" name="gender" value="0">
+			<input type="radio" id="female" name="gender" value="1">
 			<label for="female">Female</label>
+			<input type="radio" id="not specified" name="gender" value="0" checked>
+			<label for="not specified">Not specified</label>
 		</div>
 		
 		<div>
 			<p>Expertise level:</p>
-        	<input type="text" id="exp_lvl" name="exp_lvl" required>
+        	<input type="radio" id="high" name="exp_lvl" value="3" >
+			<label for="high">High</label>
+			<input type="radio" id="medium" name="exp_lvl" value="2">
+			<label for="medium">Medium</label>
+			<input type="radio" id="low" name="exp_lvl" value="1">
+			<label for="low">Low</label>
+			<input type="radio" id="not specified" name="exp_lvl" value="0" checked>
+			<label for="not specified">Not specified</label>
 		</div>
 		
 		<input type="hidden" th:value="${userID}" name="userID"/>
